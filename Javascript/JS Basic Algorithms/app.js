@@ -104,6 +104,102 @@ let i = c * m;
 console.log(i);
 
 
+/*----------ITERACIÓN4 ARRAYS-------------*/
+
+/*1.1 Consigue el valor "HULK" del array de avengers y muestralo por consola.
+const avengers = ["HULK", "SPIDERMAN", "BLACK PANTHER"]*/
+
+const avengers = ["HULK", "SPIDERMAN", "BLACK PANTHER"];
+console.log(avengers.find(element => element="HULK"));
+
+
+ 
+/*1.2 Cambia el primer elemento de avengers a "IRONMAN"
+const avengers = ["HULK", "SPIDERMAN", "BLACK PANTHER"];*/
+
+avengers[0]= "IRON MAN";
+console.log(avengers);
+
+/*1.3 console numero de elementos en el array usando la propiedad correcta de Array.
+const avengers = ["HULK", "SPIDERMAN", "BLACK PANTHER"];*/
+
+console.log(avengers.length);
+
+/*1.4 Añade 2 elementos al array: "Morty" y "Summer". 
+Muestra en consola el último personaje del array
+const rickAndMortyCharacters = ["Rick", "Beth", "Jerry"];*/
+
+const rickAndMortyCharacters = ["Rick", "Beth", "Jerry"];
+rickAndMortyCharacters.push("Morty", "Summer");
+console.log(rickAndMortyCharacters.splice(4,5));
+
+/*//TODAVIA NO
+1.5 Elimina el último elemento del array y muestra el primero y el último por consola.
+const rickAndMortyCharacters = ["Rick", "Beth", "Jerry", "Morty", "Summer", "Lapiz Lopez"];*/
+let rickAndMortyCharactersTwo = ["Rick", "Beth", "Jerry", "Morty", "Summer", "Lapiz Lopez"];
+rickAndMortyCharactersTwo.pop();
+let first = rickAndMortyCharactersTwo[0];
+let last = rickAndMortyCharactersTwo[rickAndMortyCharactersTwo.length-1];
+console.log(first + " " + last);
+
+//MÉTODO ALTERNATIVO
+//rickAndMortyCharactersTwo.splice(1,3);
+//console.log(rickAndMortyCharactersTwo);
+
+
+// TODAVIA NO
+//1.6 Elimina el segundo elemento del array y muestra el array por consola.
+//const rickAndMortyCharacters = ["Rick", "Beth", "Jerry", "Morty", "Summer", "Lapiz Lopez"];
+
+const rickAndMortyCharactersThree = ["Rick", "Beth", "Jerry", "Morty", "Summer", "Lapiz Lopez"];
+rickAndMortyCharactersThree.splice(0,1);
+console.log(rickAndMortyCharactersThree);
+
+
+/***Iteración #5: Condicionales**
+
+En base al código siguiente, muestra los mensajes correctos por consola.*/
+
+const number1 = 10;
+const number2 = 20;
+const number3 = 2;
+
+if (number2 / number1 ===2) {
+	console.log("number2 dividido entre number1 es igual a 2");
+}
+
+if (number1 != number2) {
+	console.log("number1 es estrictamente distinto a number2");
+  }
+
+  if (number3 != number1) {
+	console.log("number3 es distinto number1");
+  }
+
+  if (number3 * 5 === number1) {
+	console.log("number3 por 5 es igual a number1");
+  }
+  
+  if (number3 * 5 === number1 && number1 * 2 === number2) {
+	console.log("number3 por 5 es igual a number1 Y number1 por 2 es igual a number2");
+  }
+
+ 
+
+  if (number2 / 2 === number1 || number1/5 === number3) {
+	console.log("number2 entre 2 es igual a number1 O number1 entre 5 es igual a number3");
+  }
+
+
+  //1.1 Crea un bucle for que vaya desde 0 a 9 y muestralo por consola.
+
+
+  for (numberNine = 0; numberNine <= 9; numberNine++)
+  {
+	console.log(numberNine)
+  }
+
+
 
 
 
