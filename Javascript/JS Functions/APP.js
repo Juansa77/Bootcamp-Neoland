@@ -85,14 +85,10 @@ const mixedElements = [6, 1, "Rayo", 1, "vallecano", "10", "upgrade", 8, "hub"];
 function averageWord(param) {
   const sumString = param.filter((item) => typeof item === "string");
   let stringMap = sumString.map((item) => item.length);
-  let sumTotal = stringMap.reduce(
-    (a, b) => a + b
-  );
+  let sumTotal = stringMap.reduce((a, b) => a + b);
 
   const sumNumbers = param.filter((item) => typeof item === "number");
-  let sumTotalNumbers = sumNumbers.reduce(
-    (a, b) => a + b
-  );
+  let sumTotalNumbers = sumNumbers.reduce((a, b) => a + b);
 
   console.log(
     "La suma de la longitud de los strings es " + sumTotal,
@@ -149,64 +145,67 @@ removeDuplicates2(duplicates);
 Crea una función que reciba por parámetro un array y el valor que desea comprobar que existe dentro de dicho array - comprueba si existe el elemento, en caso que existan nos devuelve un true y la posición de dicho elemento y por la contra un false. Puedes usar este array para probar tu función:*/
 
 const nameFinder = [
-  'Peter',
-  'Steve',
-  'Tony',
-  'Natasha',
-  'Clint',
-  'Logan',
-  'Xabier',
-  'Bruce',
-  'Peggy',
-  'Jessica',
-  'Marc'
+  "Peter",
+  "Steve",
+  "Tony",
+  "Natasha",
+  "Clint",
+  "Logan",
+  "Xabier",
+  "Bruce",
+  "Peggy",
+  "Jessica",
+  "Marc",
 ];
 function finderName(listaArray, nombre) {
+  const nameDetection = listaArray.some((item) => item === nombre);
+  const findIndex = listaArray.indexOf(nombre);
 
-
-  const nameDetection= listaArray.some( item =>item === nombre)
-  const findIndex = listaArray.indexOf(nombre)
-
-
-  if (findIndex === -1){
-
-console.log("Es totalmente "+ nameDetection + " que " + nombre +" está en el Array y, por lo tanto, no tiene Index")
-
-  }
-
-  else {
-    console.log("De verdad que es "+ nameDetection + " que " + nombre +" está en el Array y, de hecho, su Index es " + findIndex)
+  if (findIndex === -1) {
+    console.log(
+      "Es totalmente " +
+        nameDetection +
+        " que " +
+        nombre +
+        " está en el Array y, por lo tanto, no tiene Index"
+    );
+  } else {
+    console.log(
+      "De verdad que es " +
+        nameDetection +
+        " que " +
+        nombre +
+        " está en el Array y, de hecho, su Index es " +
+        findIndex
+    );
   }
 }
- 
-  
 
-finderName(nameFinder, "Marc")
+finderName(nameFinder, "Marc");
 
 /***Iteration #8: Contador de repeticiones**
 
 Crea una función que nos devuelva el número de veces que se repite cada una de las palabras que lo conforma.  Puedes usar este array para probar tu función:*/
 
 const counterWords = [
-  'code',
-  'repeat',
-  'eat',
-  'sleep',
-  'code',
-  'enjoy',
-  'sleep',
-  'code',
-  'enjoy',
-  'upgrade',
-  'code'
+  "code",
+  "repeat",
+  "eat",
+  "sleep",
+  "code",
+  "enjoy",
+  "sleep",
+  "code",
+  "enjoy",
+  "upgrade",
+  "code",
 ];
 
 let result = [];
-const countingWords = (elements) =>{
+const countingWords = (elements) => {
   elements.forEach((word) => {
-      result[word] = result[word] + 1 || 1;
-  })
+    result[word] = result[word] + 1 || 1;
+  });
   return result;
-}
+};
 console.log(countingWords(counterWords));
-
