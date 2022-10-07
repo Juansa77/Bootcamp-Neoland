@@ -134,45 +134,24 @@ Usa un bucle **for...of** para recorrer todos los juguetes y añade los que teng
 
 let popularToys = [];
 
-
-
 const toys2 = [
-	{id: 5, name: 'Buzz MyYear', sellCount: 10}, 
-	{id: 11, name: 'Action Woman', sellCount: 24}, 
-	{id: 23, name: 'Barbie Man', sellCount: 15}, 
-	{id: 40, name: 'El gato con Guantes', sellCount: 8},
-	{id: 40, name: 'El gato felix', sellCount: 35}
-]
+  { id: 5, name: "Buzz MyYear", sellCount: 10 },
+  { id: 11, name: "Action Woman", sellCount: 24 },
+  { id: 23, name: "Barbie Man", sellCount: 15 },
+  { id: 40, name: "El gato con Guantes", sellCount: 8 },
+  { id: 40, name: "El gato felix", sellCount: 35 },
+];
 
 for (const index of toys2) {
-
-  if (index.sellCount >= 15 ){
-
+  if (index.sellCount >= 15) {
     let objeto = {
+      id: index.id,
+      name: index.name,
+      sellCount: index.sellCount,
+    };
 
-    id: index.id,
-    name: index.name,
-    sellCount: index.sellCount
-    }
-      
-   popularToys.push(objeto)   
-
-    
-   
-    
-     
-  
-  
-
-
+    popularToys.push(objeto);
   }
- 
-  
-
-
-  
-
-  
 }
 
-console.log(popularToys)
+console.log(popularToys);
