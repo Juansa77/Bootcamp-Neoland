@@ -201,7 +201,10 @@ const counterWords = [
   "code",
 ];
 
+
 let result = [];
+let result2 = [];
+
 const countingWords = (elements) => {
   elements.forEach((word) => {
     result[word] = result[word] + 1 || 1;
@@ -209,3 +212,14 @@ const countingWords = (elements) => {
   return result;
 };
 console.log(countingWords(counterWords));
+
+
+/* CON BUCLE Y SIN MÉTODO*/
+
+var resul4=[]
+for (const key of counterWords) {
+  
+ resul4[key] = resul4[key] + 1 || 1;
+
+}
+console.log(resul4)
