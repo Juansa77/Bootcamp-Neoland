@@ -10,6 +10,8 @@
 
 /*2.1 Inserta dinamicamente en un html un div vacio con javascript.
 
+
+
 2.2 Inserta dinamicamente en un html un div que contenga una p con javascript.
 
 2.3 Inserta dinamicamente en un html un div que contenga 6 p utilizando un loop con javascript.
@@ -29,26 +31,34 @@
 
 
 
-var div = document.createElement("div");
-div.innerHTML = "Inserta dinamicamente en un html un div vacio con javascript";
-document.body.appendChild(div);
 
-let b = [];
+
+let div =document.createElement("div")
+div.innerHTML=  "/*2.1 Inserta dinamicamente en un html un div vacio con javascript."
+document.body.appendChild(div)
+
 
 let nuevoParrafo = document.createElement("p");
-nuevoParrafo.innerHTML = "Esto es un nuevo párrafo";
-document.body.appendChild(nuevoParrafo);
+nuevoParrafo.innerHTML = "2.2 Inserta dinamicamente en un html un div que contenga una p con javascript.";
+div.appendChild(nuevoParrafo);
+
+
 
 let nuevoParrafo2 = document.createElement("p");
 nuevoParrafo2.innerHTML = "Soy dinámico";
 document.body.appendChild(nuevoParrafo2);
 
+
+
 let pLoop = [];
+
+let nuevoDiv= document.createElement("div")
+document.body.appendChild(nuevoDiv)
 
 for (let index = 0; index < 6; index++) {
   pLoop = document.createElement("p");
   pLoop.innerHTML = "Estoy haciendo párrafos con loops y este es el número " + (index+1);
-  document.body.appendChild(pLoop);
+  nuevoDiv.appendChild(pLoop);
 }
 
 

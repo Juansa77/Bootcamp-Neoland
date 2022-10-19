@@ -238,9 +238,3 @@ for (let sheeps =0; sheeps <10; sheeps++ ){
 
 
 
-
-
-
-
-
-

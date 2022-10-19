@@ -81,6 +81,10 @@ countriesTwo.forEach(function callback(item, index) {
 
 })
 
+array.forEach(element => {
+  
+});
+
 /*1.5 Basandote en el ejercicio anterior. Crea un botón que elimine el último 
 elemento de la lista.*/
 
