@@ -157,14 +157,10 @@ const furgolistas = [
   "Ronalguiño",
 ];
 
-const swap = (array, valorA, valorB) =>
+const swap = (array, valorA, valorB) => {
+  [array[valorA], array[valorB]] = [array[valorB], array[valorA]];
 
-{
+  console.log(array);
+};
 
- [array[valorA], array[valorB]] = [array[valorB], array[valorA]]
- 
-  console.log(array)
-
-}
-
-swap(furgolistas, 1, 3)
+swap(furgolistas, 1, 3);
