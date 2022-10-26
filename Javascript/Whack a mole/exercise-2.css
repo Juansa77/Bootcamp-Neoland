@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+@font-face {
+  font-family: VT323;
+  src: URL(https://fonts.googleapis.com/css2?family=VT323&display=swap);
+  font-display: block;
+}
+
+
+body{
+
+    background-color: black;
+    
+    background-size: cover;
+
+}
+
+
+.contenedor {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  height: 200px;
+  margin: 0 auto;
+  justify-content: center;
+
+  
+
+
+}
+
+.b-square {
+  width: 200px;
+  height: 200px;
+  border: 3px solid #131212;
+  background-size: 100%;
+  background-position: center;
+  background-image: url(https://i.pinimg.com/originals/85/8e/25/858e25a5e5af68ad050f3f7b56e57679.jpg);
+  
+
+
+}
+
+
+
+.b-grid {
+  padding-top: 50px;
+  padding-bottom: 200px;
+    display: flex;
+   
+ 
+
+  flex-flow: row wrap;
+  justify-content: center;
+
+  width: 65%;
+  height: 400px;
+  margin: 0 auto;
+  border: 3px solid #020e53;
+  border-radius: 60px;
+  background-color: rgb(158, 150, 150);
+  background-image: url(https://manestreethome.files.wordpress.com/2019/07/furinkazan.jpg);
+  opacity: 1;
+
+  box-shadow: 0px 0px 25px #222;
+  
+ 
+}
+
+.ryu {
+  background-image: url(https://i.ytimg.com/vi/hO7JEqIPQv0/hqdefault.jpg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+}
+
+.scorer {
+  align-items: center;
+
+  width: 30%;
+  order:-2;
+  color: rgb(250,232,0);
+  vertical-align: bottom;
+  font-family: VT323;
+  font-size: 35px;
+}
+
+.score {
+  align-items: center;
+  color: white;
+  font-family: VT323;
+  
+  
+}
+
+.timeLeft{
+
+    color: white;
+    font-family: VT323;
+  
+}
+
+.title {
+  font-family: VT323;
+  color: rgb(250,232,0);
+  font-size: 45px;
+  text-align: center;
+  width: 40%;
+  font-smooth: always;
+
+  align-items: center;
+
+
+}
+
+
+
+.timing {
+
+  width: 30%;
+  text-align: right;
+  color: rgb(250,232,0);
+  font-family: VT323;
+  font-size: 35px;
+}
