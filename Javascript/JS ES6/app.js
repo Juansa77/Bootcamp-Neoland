@@ -59,11 +59,11 @@ variables name y itv con sus respectivos valores. Posteriormente crea
 3 variables usando igualmente el destructuring para cada uno de los años 
 y comprueba que todo esta bien imprimiendolo.*/
 
-const car = { name: "Mazda 6", itv: [2015, 2011, 2020] };
+const car = { name2: "Mazda 6", itv: [2015, 2011, 2020] };
 const { name2, itv } = car;
 
 const [year1, year2, year3] = itv;
-console.log(year1, year2, year3);
+console.log(name2, itv, year1, year2, year3);
 
 ///Iteración #3: Spread Operator///
 
@@ -228,26 +228,16 @@ const streamersThree = [
   { name: "AuronPlay", age: 33, gameMorePlayed: "Among Us" },
 ];
 
-const toFilterStreamers = (string) => {
-  //string= document.getElementById("letra")
-  let filtered = streamersThree.filter((element) =>
-    element.name.includes(string)
+const input = document.querySelector("input");
+
+const filtering = () => {
+  const streamU = streamersThree.filter((element) =>
+    element.name.includes(document.querySelector("input").value)
   );
-  alert(filtered);
+  return console.log(streamU);
 };
 
-//var input= document.getElementById("theInput")
-//var toFilter = document.getElementById("theInput").value
-function toFilterStreamersTwo(toFilter) {
-  let filtered = streamersThree.filter((element) =>
-    element.name.includes(toFilter)
-  );
-  return filtered;
-}
-
-function toConsole() {
-  console.log(toFilterStreamersTwo(toFilter));
-}
+input.addEventListener("input", filtering);
 
 /*</meta>5.7 Dado el siguiente html y javascript, utiliza .filter() para mostrar por consola 
 los streamers que incluyan la palabra introducida en el input. De esta forma, si 
@@ -258,10 +248,32 @@ const streamers = [
 	{name: 'Rubius', age: 32, gameMorePlayed: 'Minecraft'},
 	{name: 'Ibai', age: 25, gameMorePlayed: 'League of Legends'},
 	{name: 'Reven', age: 43, gameMorePlayed: 'League of Legends'},
-	{name: 'AuronPlay', age: 33, gameMorePlayed: 'Among Us'}
-];
+	{name: 'AuronPlay', age: 33, gameMorePlayed: 'Among Us'}*/
 
-*/
+const button = document.createElement("button");
+const input2 = document.createElement("input");
+input2.id = "inputLetters";
+button.innerHTML = "Fíltrame";
+var resultado = document.createElement("p");
+document.body.append(resultado);
+input2.type = "text";
+document.body.append(button);
+document.body.append(input2);
+
+button.addEventListener("click", function filtering() {
+  const filtrado = [];
+  const target = document.querySelector("#inputLetters");
+
+  streamersThree.filter((element) => {
+    if (element.name.toLowerCase().includes(target.value)) {
+      filtrado.push(element.name);
+    }
+
+    return filtrado;
+  });
+
+  resultado.innerHTML = filtrado;
+});
 
 /*6.1 Dado el siguiente array, usa .find() para econtrar el número 100.*/
 const numbers = [32, 21, 63, 95, 100, 67, 43];
@@ -380,12 +392,12 @@ const videogames = [
 
 const rpg = videogames.filter((element) => element.genders.includes("RPG"));
 const notasVG = [];
-console.log(rpg)
+console.log(rpg);
 for (const iterator of rpg) {
   notasVG.push(iterator.score);
 }
 
 const mediaVg = notasVG.reduce((acuu, curr, media) => {
-  return ( (acuu + curr) / media);
+  return (acuu + curr) / media;
 });
 console.log(mediaVg);

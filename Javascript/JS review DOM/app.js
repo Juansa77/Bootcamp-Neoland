@@ -96,6 +96,7 @@ var buttonOne = document.createElement("button");
 buttonOne.innerHTML = "borrar"
 document.body.appendChild(buttonOne)
 buttonOne.id = buttonOne
+
 buttonOne.addEventListener("click", function eraser() {
   var div =   document.getElementById("div4")
   var buttonOne =   document.getElementById("buttonOne")

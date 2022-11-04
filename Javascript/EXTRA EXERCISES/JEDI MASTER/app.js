@@ -55,22 +55,18 @@ for (const key in countriesTwo) {
 
   var buttonTwo = document.createElement("button");
 
-buttonTwo.textContent = "erase me";
+  buttonTwo.textContent = "erase me";
 
-buttonTwo.addEventListener("click", function buttonEraserTwo() {
-  let div = document.getElementById("div"+key);
+  buttonTwo.addEventListener("click", function buttonEraserTwo() {
+    let div = document.getElementById("div" + key);
 
-  let h4 = document.getElementById("h4"+key);
-  let img = document.getElementById("img"+key);
-  div.removeChild(img);
-  div.removeChild(h4);
-});
+    let h4 = document.getElementById("h4" + key);
+    let img = document.getElementById("img" + key);
+    div.removeChild(img);
+    div.removeChild(h4);
+  });
 
-div.append(h4, img, buttonTwo);
-
-
-
-
+  div.append(h4, img, buttonTwo);
 }
 
 var button = document.createElement("button");
@@ -86,7 +82,9 @@ button.addEventListener("click", function buttonEraser() {
   divLast.removeChild(h4erase);
 });
 
-
 /*Basandote en el ejercicio anterior. Crea un botón para cada uno de los elementos de las listas que elimine ese mismo elemento del html.*/
+
+
+
 
 
