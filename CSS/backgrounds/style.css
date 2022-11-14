@@ -1,0 +1,18 @@
+body{
+
+    background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
+    background-attachment: fixed;
+}
+
+
+h1{
+
+    background-color: aquamarine;
+}
+
+.content{
+
+    background-color: blue;
+    background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
+    background-size: 10%;
+}
