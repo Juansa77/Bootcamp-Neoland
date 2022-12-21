@@ -1,0 +1,39 @@
+.figureLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  height: 80vh;
+
+}
+
+.figureLogin > .loginDiv {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  gap:1rem;
+  justify-items: center;
+
+
+}
+
+.figureLogin > .loginDiv > input {
+  height: 3vh;
+  width: 30vh;
+  background-color: var(--gb-colorFont);
+  color: var(--gb-background);
+  font-size: 20px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+
+figure > .loginDiv > button{
+
+    background-color: var(--gb-background);
+    border-radius: 2px;
+    color: var(--gb-colorFont);
+    border: 4px solid var(--gb-colorFont);
+    width: 30vh;
+    font-family: 'Press Start 2P', cursive;
+}

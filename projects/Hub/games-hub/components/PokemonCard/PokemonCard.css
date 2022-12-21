@@ -1,0 +1,55 @@
+
+
+.pokemonDiv {
+  display: grid;
+  height: 70vh;
+  grid-template-columns: repeat(4, 1fr);
+
+  width: 100vh;
+  margin-top: 1rem;
+  justify-items: center;
+}
+
+.pokemonBarNav{
+  display:flex;
+  font-size: 12px;
+
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pokemonBarNav>ul{
+
+  display:flex;
+  list-style: none;
+  gap:1rem;
+  font-size: 12px;
+  align-items: center;
+
+
+}
+
+.pokemonDiv > .figureCardPokemon {
+  text-align: center;
+  width: 80%;
+
+  padding: 10px;
+
+  background-color: var(--gb-colorFont);
+  color: var(--gb-background);
+}
+
+.pokemonDiv > .figureCardPokemon > img {
+  object-fit: cover;
+  background-color: var(--gb-background);
+  width: 100%;
+
+  filter: grayscale(100%);
+}
+
+.buttomSearcher{
+
+  border: 1px solid var(--gb-colorFont);
+}

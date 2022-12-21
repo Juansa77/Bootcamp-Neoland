@@ -1,0 +1,52 @@
+.divPokemonSearch{
+    display:flex;
+    flex-direction: column;
+
+
+color: var(--gb-background);
+grid-template-columns: 1fr 1fr;
+grid-template-rows: 1fr;
+height: 80vh;
+width: 100vh;
+align-items: center;
+justify-items: center;
+
+
+}
+
+.divPokemonSearch>.divPokemonCard{
+display: flex;
+flex-direction: column;
+    background-color: var(--gb-colorFont);
+    border-radius: 20px;
+    height: 80vh;
+    width: 50vh;
+    text-align: center;
+    flex-wrap: wrap;
+    align-content: space-around;
+    border: 20px solid var(--gb-darkGreen);
+  
+ 
+
+
+}
+
+.divPokemonSearch>h5{
+
+ 
+    }
+
+.divPokemonSearch> .divPokemonCard> img{
+    padding: 10px;
+    border-radius: 20px;
+    border: 20px solid var(--gb-darkGreen);
+  
+   
+
+    object-fit: cover;
+    background-color: var(--gb-background);
+    width: 70%;
+    align-content: flex-start;
+  
+    filter: grayscale(100%);
+}    

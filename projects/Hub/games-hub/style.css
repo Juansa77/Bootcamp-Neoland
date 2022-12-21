@@ -1,0 +1,35 @@
+:root {
+  --gb-background: #c3cfa1;
+  --gb-colorFont: #0f380f;
+  --gb-darkGreen: #306230;
+  --gb-lightGreen: #8bac0f;
+  font-family: "Press Start 2P", cursive;
+}
+
+body {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+
+  /* esto es para MÓVIL*/
+  background-color: var(--gb-background);
+  color: var(--gb-colorFont);
+ 
+
+  
+}
+
+main {
+  
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+
+  
+  height: 80vh;
+  background-color: var(--gb-background);
+
+  border-radius: 5% 5% 5% 5%;
+
+}

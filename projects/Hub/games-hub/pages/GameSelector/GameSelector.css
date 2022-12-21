@@ -1,0 +1,41 @@
+.divGameSelector{
+
+   display: flex;
+   justify-content: center;
+   align-content: center;
+
+   justify-items: center;
+   text-align: center;
+   height: 80vh;
+   width: 100vh;
+
+   
+}
+
+
+.divGameSelector > .figureGameSelector{
+    border: 4px solid var(--gb-colorFont);
+    border-radius: 10px;
+    justify-items: center;
+    background-color: var(--gb-colorFont);
+    color: var(--gb-background);
+    height: 35vh;
+   
+   
+
+
+ 
+}
+
+.divGameSelector > .figureGameSelector > .coverGame{
+    object-fit: cover;
+   
+    height: 50%;
+    width: 70%;
+    border-radius: 10px;
+    border: 4px solid var(--gb-colorFont);
+   
+   
+ 
+
+}
