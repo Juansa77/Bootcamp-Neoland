@@ -7,7 +7,7 @@
    justify-items: center;
    text-align: center;
    height: 80vh;
-   width: 100vh;
+   width: 140vh;
 
    
 }
@@ -19,7 +19,7 @@
     justify-items: center;
     background-color: var(--gb-colorFont);
     color: var(--gb-background);
-    height: 35vh;
+    height: 30vh;
    
    
 

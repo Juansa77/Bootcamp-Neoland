@@ -25,21 +25,19 @@ flex-direction: column;
     flex-wrap: wrap;
     align-content: space-around;
     border: 20px solid var(--gb-darkGreen);
+    text-shadow:5px 1px var(--gb-darkGreen);
   
  
 
 
 }
 
-.divPokemonSearch>h5{
 
- 
-    }
 
 .divPokemonSearch> .divPokemonCard> img{
     padding: 10px;
     border-radius: 20px;
-    border: 20px solid var(--gb-darkGreen);
+    border: 10px solid var(--gb-darkGreen);
   
    
 
