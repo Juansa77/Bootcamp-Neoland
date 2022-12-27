@@ -26,6 +26,8 @@ export const pokeApiSearch = () => {
       }
     }
     PokemonSearchCard(pokemonArray)
+   
+    
   }
 
   fetcher();

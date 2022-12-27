@@ -19,7 +19,7 @@ export const PokemonSearchCard = (array) => {
   <buttom class="type" id ="electric">Electric</buttom>
   <buttom class="type" id ="fighting">Fighting</buttom>
   <buttom class="type" id ="fire">fire</buttom>
-  <buttom class="type" id ="flying">flying</buttom>
+
   <buttom class="type" id ="ghost">ghost</buttom>
   <buttom class="type" id ="grass">grass</buttom>
   <buttom class="type" id ="ground">ground</buttom>
@@ -35,6 +35,57 @@ export const PokemonSearchCard = (array) => {
   
   `
 
+  const addEventType =(buttID)=>{
+    const idB= buttID.id
+    buttID.addEventListener("click", () => {
+      pokeApiAddType(idB);
+    })
+  }
+  
+  
+    const buttonBug = document.querySelector("#bug");
+    addEventType(buttonBug)
+   
+    const buttoDragon = document.querySelector("#dragon");
+    addEventType(buttoDragon)
+  
+    const buttoElectric = document.querySelector("#electric");
+    addEventType(buttoElectric)
+  
+    const buttoFighting = document.querySelector("#fighting");
+    addEventType(buttoFighting)
+  
+    const buttoFire = document.querySelector("#fire");
+    addEventType(buttoFire)
+  
+  
+    const buttoGhost = document.querySelector("#ghost");
+    addEventType(buttoGhost)
+  
+    const buttoGrass = document.querySelector("#grass");
+    addEventType(buttoGrass)
+  
+    const buttonGround = document.querySelector("#ground");
+    addEventType(buttonGround)
+  
+    const buttoIce = document.querySelector("#ice");
+    addEventType(buttoIce)
+  
+    const buttoNormal = document.querySelector("#normal");
+    addEventType(buttoNormal)
+  
+    const buttoPoison = document.querySelector("#poison");
+    addEventType(buttoPoison)
+  
+    const buttoPsychic = document.querySelector("#psychic");
+    addEventType(buttoPsychic)
+  
+    const buttoRock = document.querySelector("#rock");
+    addEventType(buttoRock)
+    const buttoWater = document.querySelector("#water");
+    addEventType(buttoWater)
+  
+
   
   var buttom =document.querySelector("#pokemonSearcher")
   buttom.addEventListener("click", ()=>{pokeApiSearch()})
@@ -44,16 +95,7 @@ export const PokemonSearchCard = (array) => {
 
     pokeApi(main)})
 
-    const buttonType =document.querySelectorAll(".type")
-    console.log(buttonType)
-  
-  for (let index = 0; index < buttonType.length; index++) {
-    
-    const idb= buttonType[index].id
-     buttonType.forEach(buttom =>{buttom.addEventListener("click", ()=>{pokeApiAddType(idb)})})
-    
-  }
-  
+
   
 
 

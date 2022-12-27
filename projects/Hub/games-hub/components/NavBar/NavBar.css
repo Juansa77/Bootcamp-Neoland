@@ -16,11 +16,17 @@
  
 }
 
-.navGeneral >.navList{
 
-    display:flex;
-    list-style: none;
-    gap:1rem;
-    font-size: 9px;
-    align-items: center;
+
+.navGeneral> buttom{
+
+border: 2px solid var(--gb-background);
+font-size: 12px;
+height: 3vh;
+line-height: 3vh;
+width: 14vh;
+text-align: center;
+
+
+
 }
