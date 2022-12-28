@@ -71,6 +71,12 @@ export const allWords = [
     category: "Personaje de DC cómics",
     words: ["Batman", "Supermán", "Linterna Verde"],
   },
+
+
+  {
+    category: "Cosas de oficina",
+    words: ["Ordenador", "Grapadora", "folio", "impresora"],
+  }
 ];
 
 export var wordRandom = "";
