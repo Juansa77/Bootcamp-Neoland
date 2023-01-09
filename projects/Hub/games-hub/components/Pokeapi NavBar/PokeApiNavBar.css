@@ -1,0 +1,27 @@
+.pokemonBarNav {
+  height: 5vh;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+
+  margin-top: 1vh;
+  grid-template-columns: repeat(16, 1fr);
+}
+
+.type {
+  height: 5vh;
+  object-fit: cover;
+}
+
+.pokemonBarNav > .type > img {
+  height: 5vh;
+
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pokemonBarNav > .type > img:hover {
+  transform: scale(1.5);
+}

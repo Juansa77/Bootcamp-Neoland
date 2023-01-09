@@ -1,32 +1,22 @@
 import "./pokeApiSearch.css";
+import { pokemonArray } from "../pokeApi/pokeapi";
 
 import "./pokeApiSearch.css";
 import { PokemonSearchCard } from "../../components/pokemonSearchCard/pokemonSearchCard";
 
 export const pokeApiAddEvent = (name) => {
-  async function fetcher() {
-    const pokemonArray = [];
-    for (let index = 1; index < 160; index++) {
-      const urlPokemon2 = `https://pokeapi.co/api/v2/pokemon/${index}`;
-
-      const raw = await fetch(urlPokemon2);
-      const formattedNewFetch = await raw.json();
-
-      if (name.toUpperCase() === formattedNewFetch.name.toUpperCase()) {
-        pokemonArray.push({
-          name: formattedNewFetch.name.toUpperCase(),
-          weight: formattedNewFetch.weight,
-          image: formattedNewFetch.sprites.front_default,
-          height: formattedNewFetch.height,
-          type: formattedNewFetch.types[0].type.name,
-          ability: formattedNewFetch.abilities[0].ability.name,
-        });
-      }
-
-     
+  const pokemonEventArray = [];
+  for (let index = 0; index < pokemonArray.length; index++) {
+    if (name.toUpperCase() === pokemonArray[index].name.toUpperCase()) {
+      pokemonEventArray.push({
+        name: pokemonArray[index].name.toUpperCase(),
+        weight: pokemonArray[index].weight,
+        image: pokemonArray[index].image2,
+        height: pokemonArray[index].height,
+        type: pokemonArray[index].type,
+        ability: pokemonArray[index].ability,
+      });
     }
-    PokemonSearchCard(pokemonArray);
   }
-
-  fetcher();
+  PokemonSearchCard(pokemonEventArray);
 };

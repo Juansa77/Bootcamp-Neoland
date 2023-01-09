@@ -1,10 +1,11 @@
 import "./login.css";
-import { GameSelector } from "../GameSelector/GameSelector";
+
 import { CleanerPage } from "../../utils/CleanerPage";
+import { init } from "../../main";
 
 export const login = `
 <figure class="figureLogin">
-<h1 id="gameHubLink">GamesHub</h1>
+<h1 class="gameHubText">GamesHub</h1>
 <div class="loginDiv">
 
 <h3>Introduce tu nombre</h3>
@@ -27,11 +28,13 @@ export const localStorage = () => {
   button.addEventListener("click", () => {
     var userName = document.querySelector("#userName").value;
     window.localStorage.setItem("test", userName);
+    if(userName==""){confirm("Tienes que introducir un nombre de usuario")}
+    else{
     const main = document.querySelector("main");
     CleanerPage(main);
-    GameSelector(main);
+    init("GameHub");
     const userID = document.querySelector("#userID");
-    userID.innerHTML = userName;
+    userID.innerHTML = userName;}
   });
 };
 

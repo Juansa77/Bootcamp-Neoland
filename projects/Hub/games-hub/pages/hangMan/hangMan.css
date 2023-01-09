@@ -1,27 +1,127 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
+
 .hangManContainer {
-  display: flex;
-  height: 100%;
+  display: grid;
+  height: 80vh;
+  width: 100vh;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: 1fr;
+
+  margin-top: 7vh;
+  background-image: url("https://st3.depositphotos.com/10325516/16045/i/450/depositphotos_160456738-stock-photo-grunge-green-blackboard.jpg");
+  border-radius: 10px;
+
+  background-size: 2000px 1200px;
+
+  border: 20px solid black;
+
+  font-family: "Shadows Into Light", cursive;
+  color: white;
+  justify-items: center;
 }
 
+@media (max-width: 767px) {
+
+  .hangManContainer {
+    display: grid;
+    height: 80vh;
+    width: 80vh;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 1fr;
+  
+    margin-top: 7vh;
+    background-image: url("https://st3.depositphotos.com/10325516/16045/i/450/depositphotos_160456738-stock-photo-grunge-green-blackboard.jpg");
+    border-radius: 10px;
+  
+    background-size: 2000px 1200px;
+  
+    border: 20px solid black;
+  
+    font-family: "Shadows Into Light", cursive;
+    color: white;
+    justify-items: center;
+
+
+  }
+
+  .hangManPic {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    width: 95%;
+    height: 80%;
+  
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    grid-template-rows: repeat(24, 1fr);
+    padding: 1vh;
+  }
+  
+
+  .HangManHeaderDiv {
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+    width: 50%;
+    height: 50%;
+  
+    grid-row: 1/2;
+    padding-top: 2vh;
+    text-align: center;
+  }
+  
+  #startHangman {
+    max-height: 4vh;
+  
+    font-size: 10vw;
+  }
+  
+  #wordDescription {
+    font-size: 3vw;
+  }
+  
+  #secretWordText {
+    max-height: 2vh;
+    font-size: 2vw;
+    width: 100%;
+    text-align: center;
+    font-family: "Rubik Vinyl", cursive;
+  }
+  
+  #textLetter {
+    margin-top: 2vh;
+  
+    width: 20vh;
+    font-size: 20px;
+  }
+  
+  #letterPush {
+    font-size: 30px;
+  }
+  
+
+
+
+
+}
 .hangManPic {
-  height: 100%;
-  width: 50%;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  width: 95%;
+  height: 70%;
   display: grid;
   grid-template-columns: repeat(24, 1fr);
   grid-template-rows: repeat(24, 1fr);
+  padding: 1vh;
 }
 
-
-
-
 .hangManPic > div {
-  background-color: var(--gb-colorFont);
+  background-color: white;
 }
 
 .hang1 {
   grid-column: 1/14;
   grid-row: 24/25;
-
 }
 
 .hang2 {
@@ -74,23 +174,62 @@
   rotate: 220deg;
 }
 
+.hangManGame {
+  grid-column: 2/3;
+  grid-row: 1/2;
 
-.hangManGame{
-
-  background-color: var(--gb-colorFont);
   height: 100%;
-  width: 50%;
-  padding: 1vh;
-  display:grid;
-  color: var(--gb-background);
+  width: 100%;
+
+  display: grid;
+
   grid-template-columns: 1fr;
   grid-template-rows: repeat(3, 1fr);
   justify-items: center;
+  justify-content: center;
   text-align: center;
-  align-items: center;
+  align-items: start;
+
+  filter: none;
 }
 
-.HangManHeaderDiv{
+.HangManHeaderDiv {
+  font-size: 3vw;
+  color: white;
+  font-weight: 600;
+  width: 50%;
+  height: 50%;
 
   grid-row: 1/2;
+  padding-top: 2vh;
+  text-align: center;
+}
+
+#startHangman {
+  max-height: 4vh;
+
+  font-size: 3vw;
+}
+
+#wordDescription {
+  font-size: 1.5vw;
+}
+
+#secretWordText {
+  max-height: 2vh;
+  font-size: 3vw;;
+  width: 100%;
+  text-align: center;
+  font-family: "Rubik Vinyl", cursive;
+}
+
+#textLetter {
+  margin-top: 2vh;
+
+  width: 20vh;
+  font-size: 2vw;
+}
+
+#letterPush {
+  font-size: 3vw;
 }

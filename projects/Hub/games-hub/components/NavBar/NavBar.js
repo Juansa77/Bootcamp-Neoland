@@ -1,40 +1,38 @@
 import "./NavBar.css";
-
+import { init } from "../../main";
+import { CleanerPage } from "../../utils/CleanerPage";
 
 export const NavBar = `
-<nav class="navGeneral"><h1 id="gameHubLink">GamesHub</h1>
+<nav class="navGeneral" ><buttom id="gameHubLink" >GamesHub</buttom>
 
-<buttom class="colorChanger" id="originalColor">ORIGINAL</buttom> 
-<buttom class="colorChanger" id="randomColor">RANDOM COLOR</buttom> 
+<buttom class="colorChanger" id="originalColor">Original</buttom> 
+<buttom class="colorChanger" id="randomColor">Random</buttom> 
 <h4 id= "userID">Usuario</h4>
-<buttom class="loggerOut" id="logOut">logout</buttom> 
+<buttom class="loggerOut" id="logOut">Logout</buttom> 
+<buttom class="icon">MENÚ
+ </buttom>
 </nav>
 
 `;
 
-export const colorRandom = () => {
-  const colorRandom = document.querySelector("#randomColor");
-  colorRandom.addEventListener("click", () => {
-    var random1 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
-    var random2 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
-    var random3 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+export const NavBarlinks = () => {
+  var main = document.querySelector("main");
 
-    console.log(random1);
+  var buttom = document.querySelector("#gameHubLink");
+  buttom.addEventListener("click", () => {
+  
+      CleanerPage(main);
+      init("GameHub")
 
-    const main = document.querySelector("main");
-    main.style.backgroundColor = `rgb(${random1},${random2},${random3})`;
-    document.body.style.backgroundColor = `rgb(${random1},${random2},${random3})`;
+    
   });
 };
 
-export const colorOriginal = () => {
-  const originalColor = document.querySelector("#originalColor");
-  originalColor.addEventListener("click", () => {
-    const main = document.querySelector("main");
-    main.style.backgroundColor = "#c3cfa1";
-
-    document.body.style.backgroundColor = "#c3cfa1";
-  });
+export const responsiveNavBar = () => {
+  var x = document.querySelector(".navGeneral");
+  if (x.className === ".navGeneral") {
+    x.className += " responsive";
+  } else {
+    x.className = ".navGeneral";
+  }
 };
-
-

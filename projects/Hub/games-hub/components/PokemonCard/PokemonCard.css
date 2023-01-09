@@ -1,62 +1,156 @@
-.type{
 
-  border: 1px solid var(--gb-colorFont);
-  font-size: 9px;
 
-  height: 2vh;
-line-height: 2vh;
-width: 6vh;
+
+.type {
+  height: 5vh;
+
+  width: 5vh;
 }
 
 .pokemonDiv {
   display: grid;
-  height: 70vh;
-  grid-template-columns: repeat(4, 1fr);
 
-  width: 140vh;
-  margin-top: 1rem;
-  justify-items: center;
-}
-
-.pokemonBarNav{
-  display:flex;
-  font-size: 12px;
+  grid-auto-columns: 1fr;
   text-align: center;
 
-  padding: 1rem;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+
+  width: 100%;
+  margin-top: 1rem;
+  justify-items: center;
+  align-content: initial;
+
+  align-items:initial;
+  min-height: 87vh;
 }
 
-.pokemonBarNav>input{
-height: 2vh;
+.inputSearch{
+grid-column: 1/5;
+height: 5vh;
+width: 100%;
+background-color: var(--gb-darkGreen);
+padding-top: 1vh;
 
+border-radius: 10px;
+
+
+}
+
+.inputPoke{
+  font-size: 28px;
+
+  height: 3vh;
+  width: 30vh;
+  background-color: var(--gb-background);
+  color: var(--gb-colorFont)
+}
+
+.hide{
+
+  display: none;
 }
 
 .pokemonDiv > .figureCardPokemon {
   text-align: center;
-  width: 80%;
-
-  padding: 10px;
+  width: 90%;
+  height: 29vh;
+  border: 3px solid #306230;
+  border-radius: 5px;
+  font-size: 1vw;
+ 
 
   background-color: var(--gb-colorFont);
   color: var(--gb-background);
+  transition: all 0.3s ease-in-out;
 }
+
+.pokemonDiv > .figureCardPokemon:hover {
+
+ transform: scale(1.1);
+ cursor:pointer;
+ 
+}
+
 
 .pokemonDiv > .figureCardPokemon > img {
   object-fit: cover;
   background-color: var(--gb-background);
+  border-radius: 5px;
   width: 100%;
-
-  filter: grayscale(100%);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+  rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+  rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  
 }
 
-.buttomSearcher{
-height: 2vh;
-line-height: 2vh;
-  border: 1px solid var(--gb-colorFont);
-  background: var(--gb-colorFont);
-  color: var(--gb-background);
-  width: 6vh;
+.pokemonDiv > .figureCardPokemon.bug {
+  background-color: #6ab700;
 }
+
+.pokemonDiv > .figureCardPokemon.dragon {
+  background-color: #086ec0;
+}
+
+.pokemonDiv > .figureCardPokemon.electric {
+  background-color: #fbd200;
+}
+
+.pokemonDiv > .figureCardPokemon.fighting {
+  background-color: #e12c6a;
+
+}
+
+.pokemonDiv > .figureCardPokemon.fire {
+  background-color: #be4141;
+
+}
+
+.pokemonDiv > .figureCardPokemon.ghost {
+  background-color: #594593;
+
+}
+
+.pokemonDiv > .figureCardPokemon.grass {
+  background-color: #05923c;
+
+}
+
+.pokemonDiv > .figureCardPokemon.ground {
+  background-color: #e97333;
+
+}
+
+.pokemonDiv > .figureCardPokemon.ice {
+  background-color: #4bd2c1;
+
+}
+
+.pokemonDiv > .figureCardPokemon.fairy {
+  background-color: #fb8aec;
+
+}
+
+.pokemonDiv > .figureCardPokemon.normal {
+  background-color: #929ba3;
+
+}
+
+.pokemonDiv > .figureCardPokemon.poison {
+  background-color: #b667cf;
+
+}
+
+.pokemonDiv > .figureCardPokemon.psychic {
+  background-color: #ff6676;
+
+}
+
+.pokemonDiv > .figureCardPokemon.rock {
+  background-color: #c9b787;
+
+}
+
+.pokemonDiv > .figureCardPokemon.water {
+  background-color: #3393dd;
+
+}
+

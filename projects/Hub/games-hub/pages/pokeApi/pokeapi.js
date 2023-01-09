@@ -1,33 +1,42 @@
 import "./pokeapi.css";
+import { PokemonPrintTemplate } from "../../components/PokemonCard/PokemonCard";
+import { pokeApiNavBar } from "../../components/Pokeapi NavBar/PokeApiNavBar";
 
-import { PokemonCard } from "../../components/PokemonCard/PokemonCard";
+export var pokemonArray =new Array();
+
 
 export const pokeApi = () => {
+  pokemonArray=[]
+  
+
+pokeApiNavBar()
+
+
+
+
   async function fetcher() {
-    const pokemonArray = [];
     for (let index = 1; index < 160; index++) {
       const urlPokemon2 = `https://pokeapi.co/api/v2/pokemon/${index}`;
 
       const raw = await fetch(urlPokemon2);
       const formattedNewFetch = await raw.json();
-     
 
       pokemonArray.push({
         name: formattedNewFetch.name.toUpperCase(),
-        weight: formattedNewFetch.weight,
+            weight: formattedNewFetch.weight,
+            image2: formattedNewFetch.sprites.other.dream_world.front_default,
+            height: formattedNewFetch.height,
+            type:formattedNewFetch.types[0].type.name,
+            ability:formattedNewFetch.abilities[0].ability.name,
+
         image: formattedNewFetch.sprites.front_default,
-        height: formattedNewFetch.height,
-        type:formattedNewFetch.types[0].type.name,
-        ability1:formattedNewFetch.abilities[0].ability.name
-      
-
-
       });
     }
 
-
-    PokemonCard(pokemonArray);
+    PokemonPrintTemplate(pokemonArray);
   }
   fetcher();
 };
 
+
+console.log(pokemonArray)

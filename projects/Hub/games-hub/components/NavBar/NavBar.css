@@ -1,32 +1,140 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 
+@media (max-width: 767px) {
+
+
+
+
+
+  #originalColor, #userID, #logOut, #randomColor{
+
+        display: none;
+    }
+
+    #gameHubLink{
+
+
+        grid-area: gamehub;
+    width: 250%;
+    font-size: 3vw;
+    float: left;
+    display: block;
+    
+    
+    }
+
+     .icon {
+        visibility: visible;
+        float: right;
+        color: white;
+        font-size: 3vw;
+        width: 2vh;
+      }
+    
+
+  }
+  
+
+
 
 .navGeneral{
-    display:flex;
-    justify-content: space-around;
-    background-color: var(--gb-colorFont);
+    display:grid;
+    grid-template-columns: repeat(16, 1fr);
+    
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+    "gamehub originalColor randomColor none none none none none none none none userID loggerOut"
+    ;
+    justify-items: center;
+    justify-content: center;
+    
+  
     color:var(--gb-background);
-    border-radius: 2%;
-    height: 6vh;
-    width: 140vh;
+    min-height: 3vh;
+    align-content: center;
     align-items: center;
+    gap: 0.5rem;
+    padding-left: 4rem;
+  
    
-    align-content: initial;
+
+    width: 100%;
+       
+
+
  
 }
 
+.navGeneral .icon {
+   visibility: hidden;
+  }
 
 
 .navGeneral> buttom{
 
-border: 2px solid var(--gb-background);
-font-size: 12px;
-height: 3vh;
-line-height: 3vh;
-width: 14vh;
+
+font-size: 0.6vw;
+padding: 0.1vw;
+height: 90%;
+line-height: 5vh;
+width: 100%;
+
+
 text-align: center;
+background-color: var(--gb-darkGreen);
+
+cursor: pointer;
+transition: all 0.3s ease-in-out ;
 
 
 
+}
+
+.navGeneral> buttom:hover{
+
+
+    background-color: var(--gb-background);
+    color: var(--gb-colorFont);
+    transform: scale(1.1);
+ 
+    
+    
+    }
+
+
+
+#gameHubLink{
+
+
+    grid-area: gamehub;
+
+
+}
+
+#originalColor{
+
+    grid-area: originalColor
+
+}
+
+#randomColor{
+
+grid-area: randomColor;
+
+}
+
+#userID{
+
+    grid-area: userID;
+    height: 100%;
+    line-height: 6vh;
+
+
+}
+
+#logOut{
+
+grid-area: loggerOut;
+padding-left: 1vh;
 }

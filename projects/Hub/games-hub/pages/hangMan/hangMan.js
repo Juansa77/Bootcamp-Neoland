@@ -25,13 +25,13 @@ export const hangMan = () => {
     
     <div class ="HangManHeaderDiv">
     <buttom id ="startHangman">PLAY</buttom>
-    <h3 id ="wordDescription">Pista</h3>
-    <h1 id = "secretWordText">Secret word</h1>
+    <h3  class="hideInOut" id ="wordDescription">Pista</h3>
+    <h1  class="hideInOut" id = "secretWordText">Secret word</h1>
     </div>
     <div class ="HangManUserInputDiv">
-    <h4 id ="usedWords"></h4>
-    <input id="textLetter"></input>
-    <buttom id ="letterPush">Envía</buttom>
+    <h4 class="hideInOut" id ="usedWords"></h4>
+    <input class="hideInOut" id="textLetter"></input>
+    <buttom class="hideInOut" id ="letterPush">Envía</buttom>
 
     </div>
     <div class ="HangManTimerDiv"></div>
@@ -44,6 +44,13 @@ export const hangMan = () => {
     `;
 
   var buttomPlay = document.querySelector("#startHangman");
+
+  document.querySelector("#secretWordText").style.visibility = "hidden";
+  document.querySelector("#usedWords").style.visibility = "hidden";
+  document.querySelector("#textLetter").style.visibility = "hidden";
+  document.querySelector("#letterPush").style.visibility = "hidden";
+  document.querySelector("#wordDescription").style.visibility = "hidden";
+
   buttomPlay.addEventListener("click", () => wordRandomizer(allWords));
 
   var buttomPlay = document.querySelector("#letterPush");
@@ -64,25 +71,35 @@ export const allWords = [
 
   {
     category: "Personaje de los Vengadores",
-    words: ["Capitán América", "Bruja Escarlata", "Hulk", "Thor", "Iron Man"],
+    words: ["Spiderman", "Lobezno", "Hulk", "Thor", "Iron Man"],
   },
 
   {
     category: "Personaje de DC cómics",
-    words: ["Batman", "Supermán", "Linterna Verde"],
+    words: ["Batman", "Supermán", "Flash"],
   },
-
 
   {
     category: "Cosas de oficina",
     words: ["Ordenador", "Grapadora", "folio", "impresora"],
-  }
+  },
 ];
 
 export var wordRandom = "";
 export var secretWord = "";
 export var limit = 0;
+export var pastWords = "";
 export const wordRandomizer = (array) => {
+  document.querySelector("#secretWordText").style.visibility = "visible";
+  document.querySelector("#usedWords").style.visibility = "visible";
+  document.querySelector("#textLetter").style.visibility = "visible";
+  document.querySelector("#letterPush").style.visibility = "visible";
+  document.querySelector("#wordDescription").style.visibility = "visible";
+
+
+  limit = 0;
+  pastWords = document.querySelector("#usedWords");
+  pastWords.textContent = "";
   var wordCategory = document.querySelector("#wordDescription");
 
   var randomWordCategory = Math.floor(
@@ -102,7 +119,7 @@ export const wordRandomizer = (array) => {
 
   for (let index = 1; index < 11; index++) {
     var hangmanDivs = document.querySelector(`.hang${index}`);
-    hangmanDivs.style.background = "#c3cfa1";
+    hangmanDivs.style.background = "transparent";
   }
 
   wordTransform(randomWord);
@@ -122,7 +139,7 @@ export const wordTransform = (palabra) => {
 
 export const playing = (palabra) => {
   const regEx2 = /[a-zA-Z\u00C0-\u017F]/g;
-  var pastWords = document.querySelector("#usedWords");
+  pastWords = document.querySelector("#usedWords");
   var inputLetter = document.querySelector("#textLetter");
   var letter = inputLetter.value.toUpperCase();
   pastWords.innerHTML += letter;
@@ -141,10 +158,16 @@ export const playing = (palabra) => {
     limit++;
 
     var hangmanDivs = document.querySelector(`.hang${limit}`);
-    hangmanDivs.style.background = "#0f380f";
+    hangmanDivs.style.background = "white";
 
     if (limit === 10) {
-      alert("game over");
+      alert(`game over, la palabra era ${wordRandom}`);
+      document.querySelector(".hangManGame").style.backgroundColor = "";
+      document.querySelector("#secretWordText").style.visibility = "hidden";
+      document.querySelector("#usedWords").style.visibility = "hidden";
+      document.querySelector("#textLetter").style.visibility = "hidden";
+      document.querySelector("#letterPush").style.visibility = "hidden";
+      document.querySelector("#wordDescription").style.visibility = "hidden";
     }
   }
 
@@ -157,6 +180,13 @@ export const playing = (palabra) => {
   inputSecretWord.innerHTML = inputSecret;
   if (inputSecretWord.innerHTML === wordRandom) {
     alert(`has ganado, la palabra era ${wordRandom}`);
+    limit = 0;
+    document.querySelector(".hangManGame").style.backgroundColor = "";
+    document.querySelector("#secretWordText").style.visibility = "hidden";
+    document.querySelector("#usedWords").style.visibility = "hidden";
+    document.querySelector("#textLetter").style.visibility = "hidden";
+    document.querySelector("#letterPush").style.visibility = "hidden";
+    document.querySelector("#wordDescription").style.visibility = "hidden";
   }
 
   inputLetter.value = "";

@@ -1,8 +1,10 @@
 import "./GameSelector.css";
-import { CleanerPage } from "../../utils/CleanerPage";
-import { pokeApi } from "../pokeApi/pokeapi";
-import { hangMan } from "../hangMan/hangMan";
-import { mole } from "../whackAMole/mole";
+
+
+import { init } from "../../main";
+
+
+
 
 export const GameSelector = () => {
   const main = document.querySelector("main");
@@ -10,9 +12,9 @@ export const GameSelector = () => {
 
 
 <div class="divGameSelector">
-<figure class= "figureGameSelector" id="pokeApiFigure"><img class="coverGame" src="pokemonCover.jpg"> <h3>Pokeapi</h3></figure>
-<figure class= "figureGameSelector" id="hangManFigure"><img class="coverGame"  src="pokemonCover.jpg"> <h3>HangMan</h3></figure>
-<figure class= "figureGameSelector" id= "moleFigure" ><img class="coverGame" src="pokemonCover.jpg"> <h3>Juego</h3></figure>
+<figure class= "figureGameSelector" id="pokeApiFigure"><h1>Pokeapi</h1></figure>
+<figure class= "figureGameSelector" id="hangManFigure"><h1>HangMan</h1></figure>
+<figure class= "figureGameSelector" id= "moleFigure" > <h1>Whack a mole</h1></figure>
 
 
 </div>
@@ -23,29 +25,19 @@ export const GameSelector = () => {
   const pokeapiSelect = document.querySelector("#pokeApiFigure");
 
   pokeapiSelect.addEventListener("click", () => {
-    CleanerPage(main);
-
-    pokeApi(main);
+    init("PokeApi");
   });
 
   const hangManSelect = document.querySelector("#hangManFigure");
 
   hangManSelect.addEventListener("click", () => {
-    CleanerPage(main);
-
-    hangMan(main);})
-
-    const moleSelect = document.querySelector("#moleFigure");
-
-    moleSelect.addEventListener("click", () => {
-      CleanerPage(main);
-  
-      mole(main);
-
-
-
+    init("HangMan");
   });
 
+  const moleSelect = document.querySelector("#moleFigure");
 
-
+  moleSelect.addEventListener("click", () => {
+    init("Mole");
+  });
 };
+

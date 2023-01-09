@@ -1,50 +1,353 @@
-.divPokemonSearch{
-    display:flex;
-    flex-direction: column;
+.divPokemonSearch {
+  display: grid;
 
+  margin-top: 2rem;
+  border-radius: 20px;
 
-color: var(--gb-background);
-grid-template-columns: 1fr 1fr;
-grid-template-rows: 1fr;
-height: 80vh;
-width: 100vh;
-align-items: center;
-justify-items: center;
-
-
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  height: 52vh;
+  width: 90vh;
+  align-items: center;
+  color:beige;
+  justify-items: center;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 22%,
+    rgba(0, 212, 255, 1) 79%,
+    rgba(12, 213, 171, 1) 100%,
+    rgba(238, 238, 233, 0.9248074229691877) 100%,
+    rgba(15, 56, 15, 1) 100%
+  );
 }
 
-.divPokemonSearch>.divPokemonCard{
-display: flex;
-flex-direction: column;
-    background-color: var(--gb-colorFont);
-    border-radius: 20px;
-    height: 80vh;
-    width: 50vh;
-    text-align: center;
-    flex-wrap: wrap;
-    align-content: space-around;
-    border: 20px solid var(--gb-darkGreen);
-    text-shadow:5px 1px var(--gb-darkGreen);
+
+
+.divPokemonSearch > .divPokemonCard > h1 {
+  grid-row: 1/2;
+
+  font-size: 3vw;
+  margin-right: 3vh;
   
+
+
+
+  text-align: right;
+}
+
+.divPokemonSearch > .divPokemonCard > h3 {
+  font-size: 1vw;
+  height: 1vh;
+  font-size: 25px;
+
+  line-height: 1vh;
+  text-align: right;
+
+  padding-right: 5vh;
+}
+
+.pokemonName{
+
+    color:beige;
+    font-family: 'Luckiest Guy', cursive;
+  
+}
+
+.pokemonPic {
+  grid-column: 1/2;
+  grid-row: 1/9;
+  
+
+
+
+  object-fit: fill;
+  background-color: var(--gb-background);
+  height: 45vh;
+
+  width: 100%;
+}
+
+ .typeIMG {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  height: 5vh;
+  margin-left: 1vh;
+  margin-top: 1vh;
+
+  
+
+
+
+  
+  
+  
+  border: 3px solid var(--gb-darkGreen);
+
+  background-color: var(--gb-background);
+  border-radius: 50%;
  
 
+}
 
+.pokemonHeight{
+
+    grid-column: 2/3;
+    grid-row:3/4 ;
+    font-family: 'Luckiest Guy', cursive;
+    color:beige;
+}
+
+.pokemonType {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  font-family: 'Luckiest Guy', cursive;
+  color:beige;
+}
+
+.pokemonAbility{
+
+    grid-column: 2/3;
+    grid-row: 4/5;
+    font-family: 'Luckiest Guy', cursive;
+    color:beige;
 }
 
 
+.pokemonPeso{
+grid-column: 2/3;
+grid-row: 5/6;
+font-family: 'Luckiest Guy', cursive;
+color:beige;
 
-.divPokemonSearch> .divPokemonCard> img{
-    padding: 10px;
-    border-radius: 20px;
-    border: 10px solid var(--gb-darkGreen);
-  
-   
+}
 
-    object-fit: cover;
-    background-color: var(--gb-background);
-    width: 70%;
-    align-content: flex-start;
+.divPokemonCard.bug {
+  background-color: #6ab700;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.fairy {
+  background-color: #fb8aec;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+
+.divPokemonCard.dragon {
+  background-color: #086ec0;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
   
-    filter: grayscale(100%);
-}    
+
+}
+
+.divPokemonCard.electric {
+  background-color: #fbd200;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+  
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.fighting {
+  background-color: #e12c6a;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.fire {
+  background-color: #be4141;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+  
+
+  
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(12, 1fr);
+}
+
+.divPokemonCard.ghost {
+  background-color: #594593;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.grass {
+  background-color: #05923c;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.ground {
+  background-color: #e97333;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+  
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.ice {
+  background-color: #4bd2c1;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.normal {
+  background-color: #929ba3;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.poison {
+  background-color: #b667cf;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+ 
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.psychic {
+  background-color: #ff6676;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.rock {
+  background-color: #c9b787;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.divPokemonCard.water {
+  background-color: #3393dd;
+  height: 45vh;
+  width: 86vh;
+  display: grid;
+
+  border-radius: 20px;
+
+  height: 45vh;
+  width: 86vh;
+  text-align: center;
+  color: black;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: repeat(6, 1fr);
+}

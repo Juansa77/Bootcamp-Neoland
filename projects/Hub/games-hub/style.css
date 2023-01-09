@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
 :root {
   --gb-background: #c3cfa1;
   --gb-colorFont: #0f380f;
@@ -7,31 +9,45 @@
 }
 
 body {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
+
 
   /* esto es para MÓVIL*/
   background-color: var(--gb-background);
   color: var(--gb-colorFont);
- 
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  align-content: start;
 
-  
+  width: 100%;
+  min-height: 90vh;
+
 }
 
 main {
-  width: 140vh;
-  
+ 
+  display: grid;
+
   align-items: stretch;
-  display: flex;
-  flex-direction: column;
+
+
+  justify-items: center;
   justify-content: center;
 
+ height: auto;
+ min-height: 87vh;
+  width: 100%;
+  background-color: inherit;
   
-  height: 80vh;
-  background-color: var(--gb-background);
 
-  border-radius: 5% 5% 5% 5%;
 
+
+}
+
+
+header{
+
+  height: 5vh;
+  width: 100%;
+  background-color: var(--gb-colorFont);
 }
