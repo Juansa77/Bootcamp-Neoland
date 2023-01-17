@@ -1,0 +1,34 @@
+.pokegallery{
+
+    display: grid;
+    background-color: brown;
+    grid-template-columns: repeat(4, 30vh);
+
+    
+    
+    color:azure;
+}
+
+.card{
+
+border: 2px solid whitesmoke;
+height: 20vh;
+align-items:initial;
+align-content:initial;
+justify-items: center;
+justify-content: center;
+
+
+
+}
+
+.pokemonPic{
+
+    max-width: 40%;
+    max-height: 40%;
+   object-fit: contain;
+ 
+
+
+
+}

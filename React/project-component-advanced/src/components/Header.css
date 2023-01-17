@@ -1,0 +1,13 @@
+.header {
+  position: absolute;
+
+  background-color: #586479;
+  height: 10vh;
+  line-height: 10vh;
+
+  color:#faf3f7;
+
+  top: 0px;
+  width: 100%;
+  text-align: center;
+}
