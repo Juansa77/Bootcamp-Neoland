@@ -30,7 +30,7 @@ function App() {
         </List>
       </Main>
       
-      <Footer author={"Juansa García"} src={"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Marvel_Logo.svg/800px-Marvel_Logo.svg.png"} copyright={"Copyright by Marvel"}/>
+      <Footer author={"Juansa"} src={"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Marvel_Logo.svg/800px-Marvel_Logo.svg.png"} copyright={"Copyright by Marvel"}/>
 
     </div>
   );
