@@ -23,6 +23,7 @@ function App() {
       <Main>
         <SubTitle text="X weapon" />
         <List>
+      
           <Paragraph text="James Howlett" />
           <Image src={"https://sm.ign.com/t/ign_latam/screenshot/default/marvel-comics-return-of-wolverine-miniseries-announced-will_8b1r.1200.jpg"} height="300px" width="300px"/>
           <Paragraph text="Alive" />

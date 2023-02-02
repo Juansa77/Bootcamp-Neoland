@@ -22,17 +22,17 @@ export const HOBBIES = {
       {
         name: "Football",
         indoor: false,
-        favoriteTeam: "",
+        favoriteTeam: "Ninguno",
       },
       {
-        name: "",
+        name: "No se me ocurre",
         indoor: false,
-        favoriteTeam: "",
+        favoriteTeam: "Tampoco",
       },
       {
-        name: "Football",
+        name: "Que va",
         indoor: true,
-        favoriteTeam: "",
+        favoriteTeam: "Pues lo mismo",
       },
     ],
     movies: [

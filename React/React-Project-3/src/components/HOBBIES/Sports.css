@@ -1,0 +1,10 @@
+.sportsDiv{
+
+    display:grid;
+    max-height: 60vh;
+    max-width: 65vh;
+    background-color: indianred;
+    border-radius: 5%;
+
+    color:white;
+}

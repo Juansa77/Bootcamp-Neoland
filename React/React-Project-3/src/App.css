@@ -9,6 +9,8 @@
 
 .App{
   display:grid;
-  grid-template: repeat(2,1fr)/repeat(2,1fr);
+  grid-template: repeat(2, 1fr)/repeat(2, 1fr);
+  width: 140vh;
   column-gap: 2vh;
+  row-gap: 2vh;
 }
