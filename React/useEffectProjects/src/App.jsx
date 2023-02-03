@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import EffectOnLoad from './components/EffectOnLoad'
 import CodeEffectUnmount from './components/CodeEffectUnmount'
+import CodeEffectUpdate from './components/CodeEffectUpdate'
 
 import './App.css'
 
@@ -12,6 +13,7 @@ function App() {
 
    <EffectOnLoad/>
    <CodeEffectUnmount/>
+   <CodeEffectUpdate/>
     </div>
   )
 }
