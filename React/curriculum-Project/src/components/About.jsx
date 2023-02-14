@@ -3,8 +3,9 @@ import "./About.css";
 const About = ({hero}) => {
   return (
     <div className="about">
+      <div className="aboutTitle"> <h3>About me</h3></div>
       <div className="aboutCard">
-      <h3>About me</h3>
+ 
 
 {hero.aboutMe.map((element) => {
   return (

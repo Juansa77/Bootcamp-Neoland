@@ -5,15 +5,16 @@ const More = ({languages,habilities, volunteer}) => {
     <div className="more">
 
 <div className="moreCard">
+<div className="titleMore" id="lenguaguesDiv"><h3>Languages</h3></div>
       <div className="lenguagesCard">
-      <h3>Languages</h3>
+    
         <p>Language: {languages.language}</p>
         <p>WrLevel: {languages.wrlevel}</p>
         <p>SLevel: {languages.splevel}</p>
       </div>
-
+      <div className="titleMore" id="habilitiesDiv"><h3>Habilities</h3></div>
       <div className="habilitiesCard">
-      <h3>Habilities</h3>
+    
         {habilities.map((element) => {
           return (
             <div key={JSON.stringify(element)}>
@@ -23,9 +24,9 @@ const More = ({languages,habilities, volunteer}) => {
           );
         })}
       </div>
-
+      <div className="titleMore" id="volunteerDiv"><h3>Volunteer</h3></div>
       <div className="volunteerCard">
-      <h3>Volunteer</h3>
+
         {volunteer.map((element) => {
           return (
             <div key={JSON.stringify(element)}>

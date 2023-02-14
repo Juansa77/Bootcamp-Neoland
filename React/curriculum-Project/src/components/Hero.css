@@ -2,26 +2,56 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    grid-column: 1/2;
+    grid-row: 1/9;
+ 
+    width: 100%;
+    border:3px solid #78c0e0;
+   
+min-height: 70vh;
+    margin-bottom: 1rem;
+    background-color:#78c0e0 ;
+
     
   }
-  .card {
-    padding-left: 20px;
-    padding-right: 20px;
+  .heroCard {
+    display: grid;
+
     text-align: center;
-    border-radius: 12px;
-    width: 80%;
-    background-color:cadetblue;
+
+    width: 95%;
+    min-height: 55%;
+    background-color: #0e0e52;
+    border-radius: 3%;
+
+
+    
+
+
+
+
   }
   img {
-    width: 150px;
+    width: 300px;
     margin: 20px;
-    border-radius: 20px;
+    border-radius: 100%;
+    
   }
+
+  .heroCard >h1{
+
+  color: whitesmoke;
+
+
+
+}
+
   h2 {
     color: black;
     text-shadow: 2px 2px rgba(240, 248, 255, 0.241);
   }
   a {
-    color: #0b0089;
+
+    color:#78c0e0;
     text-decoration: none;
   }

@@ -1,12 +1,12 @@
 export const CV = {
     hero: {
-      name: "Anthony",
-      surname: "Edward Stark",
-      city: "Avengers Tower / New York",
-      email: "tony@starkindustries.com",
-      birthDate: "29/05/1970",
-      phone: "(+12) 767333841",
-      image: "https://avatars.githubusercontent.com/u/5529450?v=4",
+      name: "Juan Salvador",
+      surname: "García",
+      city: "Sevilla",
+      email: "dedalus1977@gmail.com",
+      birthDate: "27/12/1977",
+      phone: "622484028",
+      image: "public/FOTOJSG.jpg",
       gitHub: "https://github.com/tonystark",
       aboutMe: [
         {
@@ -25,35 +25,31 @@ export const CV = {
     },
     education: [
       {
-        name: "Master in physics",
-        date: "1985",
-        where: "MIT",
+        name: "Grado en psicología",
+        date: "2007",
+        where: "UNED",
       },
       {
-        name: "Aeronautical Engineering",
-        date: "1995",
-        where: "ATI Vaughn College",
+        name: "Gestión hostelera y turismo",
+        date: "1999",
+        where: "IES Heliopolis, Sevilla",
       },
-      {
-        name: "Weapons Engineer",
-        date: "1998",
-        where: "Firearm Collegue, Queens",
-      },
+      
     ],
     experience: [
       {
-        name: "Consultant",
-        date: "01/01/2013 – Nowadays",
-        where: "S.H.I.E.L.D",
+        name: "Growth Marketing Manager",
+        date: "2016-2022",
+        where: "Portal del escritor S.L.",
         description:
-          "It builds the helicarriers used by S.H.I.E.L.D. It produces the Quinjets used by the Avengers.",
+          "Responsable de estrategias de Inbound marketing. Creación y gestión de campañas SEM/SEO. Community manager. Content creator. Redactor . Gestión y administración de clientes. Creación de herramientas Low-code. ",
       },
       {
-        name: "CEO",
-        date: "01/01/2000 – 28/02/2012",
-        where: "Stark Industries",
+        name: "Gestor cultural",
+        date: "2014-2021",
+        where: "La Casa Ensamblá",
         description:
-          "Manage the company, which is a multi-billion dollar multinational corporation that develops and manufactures advanced weapon and defense technologies. The company manufactures the armor worn by Iron Man and War Machine.",
+          "Creador y gestor del proyecto cultural. Creación, planificación y desarrollo de eventos culturales en colaboración con entidades públicas y privadas.",
       },
     ],
     languages: {
@@ -62,27 +58,22 @@ export const CV = {
       splevel: "Native",
     },
     habilities: [
-      "Robotics",
-      "Robot Programming",
-      "Physics",
-      "Weaponery",
-      "Engineer",
-      "Money",
-      "Dating",
-      "Saving the world",
+      "Gestión de equipos de trabajo",
+
+
     ],
     volunteer: [
       {
-        name: "September Foundation",
-        where: "MIT",
+        name: "Dinamización cultural en estorno penitenciario, Centro Penitenciario Sevilla I",
+        where: "Solidarios para el desarrollo, Sevilla",
         description:
-          "The September Foundation is a program by Tony Stark to fund schools and young prodigies in their education. The foundation was named by Stark after a lyric from The Fantasticks song, 'Try to Remember,' which he heard his mother sing and play on the piano before her death.",
+          "Coordinador principal durante 4 años de la dinamización cultural del programa Aula de cultura en el centro penitenciario Sevilla I.",
       },
       {
-        name: "Damage Control",
-        where: "U.S.A.",
+        name: "Dinamización cultural con menores refugiados",
+        where: "Solidarios para el desarrollo",
         description:
-          "The United States Department of Damage Control, occasionally known as the DODC, is a department of the United States of America. Initially a subsidiary of S.H.I.E.L.D., Damage Control was an organization specializing in post-battle clean-up. Following the Battle of New York, Damage Control was made into an executive branch of the United States government, and in a joint venture with Stark Industries, was tasked with acquiring alien and other dangerous artifacts along with cleaning up damages caused by enhanced individuals.",
+          "Dinamización cultural en actividades infantiles realizadas con los usuarios de C.A.R. Sevilla",
       },
     ],
   };
