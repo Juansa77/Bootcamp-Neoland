@@ -10,14 +10,14 @@ const Counter = () => {
   console.log(`Counter rendered`);
   const [countOne, setCountOne] = useState(0);
   const [countTwo, setCountTwo] = useState(0);
-  const memorizedSetCountOne = useCallback(()=> setCountOne(countOne+1), [countOne])
-  const memorizedSetCountTwo = useCallback(()=> setCountTwo(countTwo+1), [countTwo]) 
+  const memoizedSetCountOne = useCallback(()=> setCountOne(countOne+1), [countOne])
+  const memoizedSetCountTwo = useCallback(()=> setCountTwo(countTwo+1), [countTwo]) 
 
   return (
     <div>
       {countOne} {countTwo}
-      <Button handleClick={memorizedSetCountOne} name="Botón 1" />
-      <Button handleClick={memorizedSetCountTwo} name="Botón 2" />
+      <Button handleClick={memoizedSetCountOne} name="Botón 1" />
+      <Button handleClick={memoizedSetCountTwo} name="Botón 2" />
     </div>
   );
 };

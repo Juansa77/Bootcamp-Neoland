@@ -1,0 +1,16 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  
+}
+
+.App{
+  display: grid;
+  justify-items: center;
+min-height: 90vh;
+font-size: 2vh;
+color: var(--fontWhite);
+  background-color: var(--backgroundBlue);
+}

@@ -21,14 +21,14 @@ const CodeUseCallback = () => {
         onChange={(e) => setUser({ ...user, name: e.target.value })}
       />
 
-      <input value={user.lastName} 
-      onChange= {(e) => setUser({...user, lastName: e.target.value})}
+      <input
+        value={user.lastName}
+        onChange={(e) => setUser({ ...user, lastName: e.target.value })}
       />
 
-      <DeleteUser deleteUser= {deleteUserCallback}>Reset name</DeleteUser>
-
+      <DeleteUser deleteUser={deleteUserCallback}>Reset name</DeleteUser>
     </div>
   );
 };
 
-export default CodeUseCallback
+export default CodeUseCallback;

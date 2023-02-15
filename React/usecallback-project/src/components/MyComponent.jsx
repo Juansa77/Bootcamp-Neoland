@@ -1,24 +1,13 @@
-import { useCallback } from "react"
+import { useCallback } from "react";
 
-const MyComponent =({prop})=>{
+const MyComponent = ({ prop }) => {
+  const callback = () => {
+    return "result";
+  };
 
-const callback =()=>{
+  const memorizedCallback = useCallback(callback, [prop]);
 
-    return"result"
-}
+  return <div>CallBack={memorizedCallback}</div>;
+};
 
-const memorizedCallback = useCallback(callback, [prop])
-
-return(
-<div>
-
-CallBack={memorizedCallback}
-
-</div>
-
-
-)
-
-}
-
-export default MyComponent
+export default MyComponent;

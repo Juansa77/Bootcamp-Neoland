@@ -1,17 +1,9 @@
-import { memo } from "react"
+import { memo } from "react";
 
-const DeleteUser = memo(({deleteUser})=>{
+const DeleteUser = memo(({ deleteUser }) => {
+  console.log("Me renderizo una vez");
 
+  return <button onClick={deleteUser}>Delete User</button>;
+});
 
-console.log("Me renderizo una vez")
-
-
-return(
-
-<button onClick={deleteUser}>Delete User</button>
-
-)
-
-})
-
-export default DeleteUser
+export default DeleteUser;

@@ -1,0 +1,50 @@
+.titleDiv {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  max-height: 20%;
+  max-width: 40%;
+  background-color: var(--backgroundBlue);
+  justify-items: center;
+  gap: 2vh;
+}
+
+.titleDiv > input {
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #5e98b1;
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+.titleDiv > button {
+  width: 180px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 18px;
+  padding-left: 10px;
+  border: none;
+  color: #e7e7e6;
+  background-color: #006cbf;
+}
+
+.pokemonDisplayed{
+    font-size: 1.2vh;
+    border-radius: 10px;
+    min-width: 40vh;
+    max-width: 70vh;
+    min-height: 50vh;
+    max-height: min-content;
+    padding: 2vh;
+
+    text-transform: capitalize;
+    background-color: var(--darkPokemon);
+}
+
+.pokemonDisplayed >img{
+
+    min-height: 20vh;
+
+
+}
