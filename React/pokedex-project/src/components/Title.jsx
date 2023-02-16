@@ -1,6 +1,7 @@
 import "./Title.css";
 import { useState } from "react";
 import Axios from "axios";
+import searchPokemon from "./SearchPokemon";
 
 const Title = () => {
   const [pokemonName, setPokemonName] = useState("");
