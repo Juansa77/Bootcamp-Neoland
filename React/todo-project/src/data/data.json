@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "task": "Hacer compra",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "task": "Fregar",
+    "completed": false
+  },
+
+  {
+    "id": 3,
+    "task": "Limpiar",
+    "completed": false
+  },
+
+  {
+    "id": 4,
+    "task": "Cocinar",
+    "completed": false
+  }
+  ,
+
+  {
+    "id": 5,
+    "task": "Sacar a Godi",
+    "completed": false
+  }
+]

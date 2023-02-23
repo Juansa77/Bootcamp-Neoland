@@ -1,0 +1,14 @@
+
+.container{
+  margin:auto;
+  width: 50%;
+  border: 1px solid bisque;
+  padding: 10px;
+  background-color:burlywood
+}
+
+.add-btn{
+float:right;
+background-color: black;
+color: beige;
+}
