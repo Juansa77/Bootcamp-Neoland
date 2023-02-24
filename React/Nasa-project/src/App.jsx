@@ -4,6 +4,8 @@ import Figure from "./components/figure";
 
 import { useState, useEffect } from "react";
 
+//Prueba de cambio en rama
+
 function App() {
 //La fecha en formato ISO(año, mes, día)
   const today = new Date(Date.now()).toISOString().slice(0,10);
