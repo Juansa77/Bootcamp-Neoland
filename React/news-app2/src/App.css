@@ -9,3 +9,8 @@
   justify-items: center;
 }
 
+.App{
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+}

@@ -19,77 +19,78 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserContextProvider>
-      <DateSystem/>
-      <Title/>
+        <DateSystem />
+        <Title />
         <NavBar />
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route index element={<Home />} />
-          <Route
-            path="/noticias"
-            element={
-              <ProtectedRoute>
-                <Noticias />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/noticias/deportes"
-            element={
-              <ProtectedRoute>
-                <Deportes />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/noticias/economia"
-            element={
-              <ProtectedRoute>
-                <Economia />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/noticias/tecnologia"
-            element={
-              <ProtectedRoute>
-                <Tecnologia />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/noticias/sport/:newsID"
-            element={
-              <ProtectedRoute>
-                <Detail />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/noticias/economy/:newsID"
-            element={
-              <ProtectedRoute>
-                <Detail />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/noticias/tecnology/:newsID"
-            element={
-              <ProtectedRoute>
-                <Detail />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <div>
-                <h1>404</h1>
-                <p>La página no existe</p>
-              </div>
-            }
-          />
+          <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
+            <Route
+              path="/noticias"
+              element={
+                <ProtectedRoute>
+                  <Noticias />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/noticias/deportes"
+              element={
+                <ProtectedRoute>
+                  <Deportes />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/noticias/economia"
+              element={
+                <ProtectedRoute>
+                  <Economia />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/noticias/tecnologia"
+              element={
+                <ProtectedRoute>
+                  <Tecnologia />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/noticias/sport/:newsID"
+              element={
+                <ProtectedRoute>
+                  <Detail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/noticias/economy/:newsID"
+              element={
+                <ProtectedRoute>
+                  <Detail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/noticias/tecnology/:newsID"
+              element={
+                <ProtectedRoute>
+                  <Detail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <div>
+                  <h1>404</h1>
+                  <p>La página no existe</p>
+                </div>
+              }
+            />
+          </Route>
         </Routes>
       </UserContextProvider>
     </BrowserRouter>
