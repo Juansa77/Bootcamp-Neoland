@@ -6,6 +6,8 @@
 .randomNew{
   min-width: 115vh;
   max-width: 115vh;
+  min-height: 72vh;
+  max-height: 72vh;
   background-color: black;
   color: white;
 }

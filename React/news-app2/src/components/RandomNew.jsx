@@ -14,7 +14,7 @@ const RandomNew = ({ data }) => {
  
   return (
     <div className="randomNew">
-      {randomIndex  && (
+      {randomIndex  !=0 && (
         <Link
           to={`/noticias/${data[randomIndex].topic}/${data[randomIndex].id}`}
         >
