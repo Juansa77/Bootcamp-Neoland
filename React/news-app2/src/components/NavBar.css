@@ -5,8 +5,8 @@
   align-items: center;
   min-width: 55%;
   max-width: 120vh;
-  min-height: 4vh;
-  max-height: 4vh;
+  min-height: 5vh;
+  max-height: 5vh;
   margin-top: 7vh;
   position: sticky;
   top: 0;
@@ -24,9 +24,10 @@ ul {
   align-items: center;
   justify-content: center;
   justify-content: space-around;
-  min-height: 2vh;
+  min-height: 4vh;
+  top:0;
 
-  max-height: 2vh;
+  max-height: 4vh;
 
   list-style-type: none;
   background-color: white;
@@ -47,6 +48,15 @@ ul > li > a {
 
   font-weight: 500;
 }
+
+ul > li > a:hover {
+
+  color:slategrey;
+  text-decoration: underline;
+
+  
+}
+
 
 .userName {
 
