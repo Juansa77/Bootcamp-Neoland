@@ -1,0 +1,15 @@
+.randomNew >a {
+  text-decoration: none;
+  color: white;
+
+}
+.randomNew{
+  min-width: 115vh;
+  max-width: 115vh;
+  background-color: black;
+  color: white;
+}
+
+ .cardRandom>img{
+  max-width: 60vh;
+}
