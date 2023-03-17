@@ -1,5 +1,5 @@
 import React from 'react'
-import { newsArrayComplete } from './Noticias'
+
 import Cards from '../components/Cards'
 import useRequest from '../Hooks/useRequest'
 

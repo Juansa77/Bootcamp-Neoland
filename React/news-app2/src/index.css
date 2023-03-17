@@ -3,8 +3,10 @@
 :root {
   font-family: 'Assistant', sans-serif;
   font-weight: 400;
+  min-height: 70vh;
   min-width: 150vh;
   max-width: 150vh;
+  display: grid;
 
 background-color: #ffffff;
 
@@ -19,3 +21,8 @@ background-color: #ffffff;
   margin: 0 auto;
 }
 
+.body{
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+}

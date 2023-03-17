@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Cards.css";
 import { useState } from "react";
+import SearchBar from "./SearchBar";
 
-const Cards = ({ data, topic }) => {
+const Cards = ({ data, topic}) => {
 
 
   const [searchInput, setSearchinput] = useState("");
@@ -12,6 +13,7 @@ const Cards = ({ data, topic }) => {
    
     data = data.filter((element) => element.topic == topic);
   }
+  
   const searchItems = (searchValue) => {
     setSearchinput(searchValue);
 

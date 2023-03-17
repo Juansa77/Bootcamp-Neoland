@@ -4,6 +4,7 @@
 
 }
 .randomNew{
+  display: grid;
   min-width: 115vh;
   max-width: 115vh;
   min-height: 72vh;

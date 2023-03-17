@@ -13,4 +13,5 @@
   display: grid;
   justify-content: center;
   justify-items: center;
+  min-height: 70vh;
 }

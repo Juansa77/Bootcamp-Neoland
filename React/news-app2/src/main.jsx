@@ -14,6 +14,7 @@ import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Title from "./components/Title";
 import DateSystem from "./components/Date";
+import Footer from "./components/Footer";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -92,6 +93,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             />
           </Route>
         </Routes>
+        <Footer/>
       </UserContextProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -1,6 +1,5 @@
 import React from 'react'
 import Cards from '../components/Cards'
-import { newsArrayComplete } from './Noticias'
 import useRequest from '../Hooks/useRequest'
 
 const Deportes = () => {
