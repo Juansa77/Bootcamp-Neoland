@@ -8,14 +8,12 @@ const RandomNew = ({ data }) => {
   var newsLength = data.length;
 
   useEffect(() => {
-    setRandomIndex(Math.floor(Math.random() * (newsLength-1)+1));
+    setRandomIndex(Math.floor(Math.random() * (newsLength - 1) + 1));
   }, [newsLength]);
-  
- 
+
   return (
     <div className="randomNew">
-    
-      {randomIndex  !=0 && (
+      {randomIndex != 0 && (
         <Link
           to={`/noticias/${data[randomIndex].topic}/${data[randomIndex].id}`}
         >

@@ -1,3 +1,9 @@
 .loginContainer {
     margin-top: 10vh;
 }
+
+button{
+    background-color: black;
+    color: white;
+    border-radius: 0;
+}

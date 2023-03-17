@@ -1,28 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
 
-.title{
-    height: 5vh;
-    margin-bottom: 3vh;
+.title {
+  height: 5vh;
+  margin-bottom: 3vh;
 }
 
+.title > h1 {
+  font-family: "Righteous", cursive;
+  font-size: 6vh;
+  margin-bottom: -3vh;
 
-.title>h1{
-    font-family: 'Righteous', cursive;
-    font-size: 6vh;
-    margin-bottom: -3vh;
-
-    border-bottom: 1px solid grey;
-
-
-
-
-
+  border-bottom: 1px solid grey;
 }
 
-.title>h4{
-    margin-top: 3.5vh;
-    font-style: normal;
-    font-size: 1.3vh;
-
-  
+.title > h4 {
+  margin-top: 3.5vh;
+  font-style: normal;
+  font-size: 1.3vh;
 }
