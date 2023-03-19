@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 
 const RandomNew = ({ data }) => {
   const [randomIndex, setRandomIndex] = useState(0);
-  var newsLength = data.length;
+  const newsLength = data.length;
+  
 
   useEffect(() => {
     setRandomIndex(Math.floor(Math.random() * (newsLength - 1) + 1));
   }, [newsLength]);
-
+  
   return (
     <div className="randomNew">
       {randomIndex != 0 && (

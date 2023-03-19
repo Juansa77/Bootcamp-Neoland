@@ -3,15 +3,22 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useOutletContext } from "react-router-dom";
 import "./Detail.css"
 
 const Detail = () => {
   const { newsID } = useParams();
   var thisNews = [];
+
+
+
+
+
   const urlNewsApi = import.meta.env.VITE_APP_NEWS;
   const [data, setData] = useState([]);
-
+//Traerme la data del context para evitar el LOCALSTORAGE
   //Hacemos la petición a axios de la Api
+  
   useEffect(() => {
     axios
       .get(urlNewsApi)
@@ -39,6 +46,7 @@ const Detail = () => {
 
   return (
     <div className="newsContainer">
+ 
       {thisNews && (
         <div className="new">
         <h4>{thisNews.topic}</h4>

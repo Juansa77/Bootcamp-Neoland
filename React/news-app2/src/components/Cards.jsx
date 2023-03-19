@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Cards.css";
 import { useState } from "react";
-import SearchBar from "./SearchBar";
+
 
 const Cards = ({ data, topic}) => {
 

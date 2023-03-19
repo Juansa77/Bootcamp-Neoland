@@ -21,7 +21,7 @@
   padding-bottom: 1vh;
   border-bottom: 1px solid rgb(204, 201, 201);
   min-height: 25vh;
-  max-height: 50vh;
+  max-height: min-content;
   align-content: baseline;
   width: 80%;
 
@@ -33,6 +33,7 @@
 }
 
 .card > img {
+  margin-top: -9vh;
   max-height: 25vh;
   min-height: 25vh;
   min-width: 50vh;
@@ -48,6 +49,8 @@
   background-color: white;
   font-size: 2.4vh;
   grid-row: 2/3;
+max-height: 1vh;
+
 }
 
 .card > h3 {
