@@ -1,13 +1,14 @@
 import React from 'react'
 import Cards from '../components/Cards'
 import useRequest from '../Hooks/useRequest'
+import { useOutletContext } from 'react-router-dom'
 
 const Deportes = () => {
-  const urlNewsApi = import.meta.env.VITE_APP_NEWS
-  const fetch = useRequest(urlNewsApi)
+
+  const [requestNews] =useOutletContext()
  
   return (
-    <div><Cards data={fetch} topic={"sport"}/></div>
+    <div><Cards data={requestNews} topic={"sport"}/></div>
   )
 }
 
