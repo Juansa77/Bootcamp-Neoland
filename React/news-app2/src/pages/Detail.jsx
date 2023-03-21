@@ -8,10 +8,14 @@ import "./Detail.css"
 
 const Detail = () => {
   const { newsID } = useParams();
-  var thisNews = [];
+  
 
+  const [requestNews] =useOutletContext()
+  const thisNews =requestNews.find((element) => element.id === newsID)
 
+/*  OPCIONAL; UTILIZAR EL LOCALSTORAGE PARA LA PERSISTENCIA DE DATOS
 
+Primero hacemos el fetch y almacenamos los resultados en localStorage
 
 
   const urlNewsApi = import.meta.env.VITE_APP_NEWS;
@@ -40,7 +44,7 @@ const Detail = () => {
     }
   }, []);
   //filtramos
-  thisNews = data.find((element) => element.id === newsID);
+  thisNews = data.find((element) => element.id === newsID); b*/
 
 
 
