@@ -6,6 +6,7 @@ import RandomNew from '../components/RandomNew'
 
 
 
+
 const Noticias = () => {
   const [requestNews] =useOutletContext()
 
@@ -15,6 +16,7 @@ const Noticias = () => {
   return (
 
     <div className='news'>
+   
         <RandomNew data={requestNews}/>
     <Cards data={requestNews}/>
     </div>

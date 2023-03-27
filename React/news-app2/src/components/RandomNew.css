@@ -5,10 +5,10 @@
 }
 .randomNew{
   display: grid;
-  min-width: 115vh;
-  max-width: 115vh;
+  min-width: 55vw;
+  max-width: min-content;
   min-height: 72vh;
-  max-height: 72vh;
+  max-height: min-content;
   background-color: black;
   color: white;
 }
