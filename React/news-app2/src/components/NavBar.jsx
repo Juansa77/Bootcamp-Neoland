@@ -55,7 +55,7 @@ const NavBar = () => {
           <style jsx>{`
             .navigation {
               width: 100%;
-              height: 2vh;
+              height: 4vh;
               margin-bottom: 3vh;
             }
 
@@ -79,16 +79,18 @@ const NavBar = () => {
             @media (max-width: 767px) {
 
               .navigation{
-                margin-left:20vw;
+             margin-right:${hamburgerOpen && "110%"};
             
               }
               
               .hamburger {
                 display:flex;
+                margin-left:3.2vw;
                 position:${hamburgerOpen && "fixed"};
+          
 
                padding-top: 10px;
-                margin-left: 23px;
+              
                
                 z-index: 6;
               }
@@ -102,7 +104,8 @@ const NavBar = () => {
                 color: black;
                 height: 70vh;
                 width: 50vw;
-             
+        
+          
                 position: fixed;
                 margin-bottom:1vh;
               }

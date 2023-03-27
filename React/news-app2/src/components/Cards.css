@@ -84,3 +84,60 @@
   text-decoration: none;
   color: black;
 }
+
+
+@media (max-width: 767px) {
+
+  .cardContainer {
+  
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 100%;
+    justify-content: center;
+    justify-items: center;
+  
+    min-width: 80vw;
+    max-width: 80vw;
+    margin-top: 1vh;
+  }
+
+  .card {
+    display: grid;
+
+    border-bottom: 1px solid rgb(204, 201, 201);
+    min-height: 25vh;
+    max-height: min-content;
+    align-content: baseline;
+    width: 80%;
+  
+    grid-template-rows: 1fr 5fr 4fr;
+    overflow: hidden;
+    justify-content: left;
+    justify-items: left;
+
+  }
+  
+  .card > h1 {
+    text-align: left;
+    color: black;
+    background-color: white;
+    font-size: 3vh;
+    grid-row: 2/3;
+    height: min-content;
+  
+  
+    
+  }
+  
+
+  .card > img {
+    
+    max-height: 40vh;
+    min-height: 25vh;
+    min-width: 100%;
+    max-width: 100%;
+  
+    overflow: hidden;
+  }
+  
+}

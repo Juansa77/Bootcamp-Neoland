@@ -3,7 +3,7 @@ import "./Title.css"
 
 const Title = () => {
   return (
-    <div className='title'><h1>LAS NOTICIAS</h1><h4>PERIÓDICO DIGITAL</h4></div>
+    <div className='title'><h3>LAS</h3><h1>NOTICIAS</h1><h4>PERIÓDICO DIGITAL</h4></div>
   )
 }
 
