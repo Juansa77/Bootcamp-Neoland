@@ -1,0 +1,48 @@
+.cardContainer {
+  display: grid;
+  grid-template-columns: 70vh 70vh;
+  justify-content: center;
+  grid-template-rows: repeat(10 1fr);
+
+  max-width: 200vh;
+}
+
+.cardContainer>input{
+  grid-column: 1/3;
+  grid-row: 1/2;
+  width: 20%;
+}
+.card {
+  display: grid;
+  border: 1px solid black;
+  min-height: 35vh;
+  max-height: 35vh;
+  align-content: baseline;
+  gap: 1fr;
+  grid-template-rows:1fr 5fr 4fr;
+}
+
+
+.card>h1{
+
+    color: white;
+    background-color: black;
+    height: 100%;
+    grid-row: 2/3;
+
+}
+
+.card>h5{
+ 
+    grid-row: 1/2;
+}
+
+.cardContainer>a{
+
+text-decoration: none;
+color: black;
+}
+.card:hover{
+  background-color: rgb(233, 229, 222);
+}
+

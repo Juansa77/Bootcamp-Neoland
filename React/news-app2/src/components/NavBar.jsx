@@ -79,7 +79,8 @@ const NavBar = () => {
             @media (max-width: 767px) {
 
               .navigation{
-             margin-right:${hamburgerOpen && "110%"};
+             margin-right:${hamburgerOpen && "100%"};
+            
             
               }
               
@@ -103,7 +104,8 @@ const NavBar = () => {
                 background-color: white;
                 color: black;
                 height: 70vh;
-                width: 50vw;
+                width: 100%;
+                margin-left:0vw;
         
           
                 position: fixed;

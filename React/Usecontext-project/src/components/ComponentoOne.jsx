@@ -13,7 +13,7 @@ const ComponentOne = () => {
   <div>
   <UserContext.Provider value={user}>
   <h1>{`Hello ${user}`}</h1>
-  <Component2 user={user}/>
+  <Component2/>
   </UserContext.Provider>
   </div>
   

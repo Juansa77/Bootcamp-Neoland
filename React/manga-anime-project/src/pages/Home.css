@@ -1,0 +1,27 @@
+.loginButton {
+  width: 20rem;
+  height: 5rem;
+  font-size: 1.5rem;
+  background-color: #646cff;
+  border-radius: 10px;
+}
+.containerLogin {
+  width: 40rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+.containerLogin2 {
+  width: 100%;
+}
+
+input {
+  width: 20rem;
+  height: 2rem;
+  background-color: rgba(255, 255, 255, 0.368);
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+}

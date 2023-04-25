@@ -1,0 +1,38 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+color:white;
+  color-scheme: light dark;
+  background-color: #000000;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  background-image: url("https://e0.pxfuel.com/wallpapers/698/0/desktop-wallpaper-anime-dark-blue-anime.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-attachment: fixed;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: whitesmoke;
+}
+.active {
+  color: whitesmoke;
+}
+
+li:has(> a.active) {
+  color: white;
+  background-color: rgba(8, 10, 48, 0.847);
+  opacity: 1;
+  box-shadow: rgba(255, 255, 255, 0.516) 0px 2px 8px 0px;
+  size: 220%;
+}

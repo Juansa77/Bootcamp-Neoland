@@ -1,0 +1,31 @@
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("https://w0.peakpx.com/wallpaper/586/862/HD-wallpaper-anime-anime-girls-digital-art-artwork-portrait-display-vertical-2d.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-attachment: fixed;
+  width: 80%;
+  border-radius: 40px;
+  opacity: 0.8;
+}
+ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+li {
+  padding: 1rem;
+  margin: 0 0rem 0rem 4rem;
+  list-style: none;
+  border-radius: 20px;
+  font-size: 2rem;
+}
+
+a {
+  color: whitE;
+  font-family: "Rubik Vinyl", cursive;
+}
