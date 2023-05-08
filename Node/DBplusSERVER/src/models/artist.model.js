@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 
 const ArtistSchema = new Schema(
     {
-        title: { type: String, required: true },
-    cover: { type: String, required: true },
-    artist: { type: String, required: true },
-    year: { type: Number, required: false },
-    },
+        name: { type: String, required: true },
+        origin: { type: String, required: true },
+        genre: { type: String, required: true },
+        age: { type: Number, required: false },
+      },
     {
         timestamps:true
     }

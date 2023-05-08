@@ -56,7 +56,7 @@ const albumDataSet = [
 //------------------------------------------------------------------------------
 
 
-const seedGrow = () => {
+const seedGrowAlbum = () => {
 
 
 
@@ -87,4 +87,4 @@ const seedGrow = () => {
     .finally(() => mongoose.disconnect());
 };
 
-module.exports = seedGrow;
+module.exports = seedGrowAlbum;

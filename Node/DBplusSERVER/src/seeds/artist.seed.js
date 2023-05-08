@@ -30,7 +30,7 @@ const artistDataSet =[
     },
   ];
 
-const seedGrow =()=>{
+const seedGrowArtist =()=>{
    
     //Recorremos al array y creamos uno nuevo con los difeentes modelos
     const artistsDocuments= artistDataSet.map((element)=> new Artist(element))
@@ -53,7 +53,7 @@ const seedGrow =()=>{
     
         await Artist.insertMany(artistsDocuments)
         console.log("colección creada")
-    }).catch((error)=>{console.log("NO SE HA PODIDO INYECTAR LA COLECCIÓN DE DATOS") }).finally(()=> mongoose.disconnect())
+    }).catch((error)=>{console.log("NO SE HA PODIDO INYECTAR LA COLECCIÓN DE DATOS", error) }).finally(()=> mongoose.disconnect())
 }
 
 module.exports= seedGrowArtist
