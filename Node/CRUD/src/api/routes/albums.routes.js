@@ -43,8 +43,9 @@ router.get("/:id", async (req, res, next) => {
 
 //-------------ENDPONT  POR NOMBRE
 
-router.get("/title/:tittle", async (req, res, next) => {
+router.get("/title/:title", async (req, res, next) => {
   try {
+    console.log("request de título aceptada")
     const { title } = req.params;
     //LO HACEMOS CON EL MÉTOFDO FIND ONE PARA QUE NOS DEVUELVA UN OBJETO, SINO TRAERÍA UN ARRAY
     const albumByName = await Albums.findOne({ title: title });
@@ -70,7 +71,7 @@ router.post("/create", async (req, res, next) => {
       year: year,
     });
     //Si existe, devuelve que nanay
-    if (findByArtist) {
+    if (findByArtist.length > 0) {
       return next("Album already exits");
     } else {
       //Si no existe, creamos un nuevo album con los datos del body
