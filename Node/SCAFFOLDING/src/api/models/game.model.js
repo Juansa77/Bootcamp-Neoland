@@ -2,7 +2,7 @@ const { Schema } = require("mongoose");
 
 const mongoose = require("mongoose");
 
-const EventSchema = new Schema(
+const GameSchema = new Schema(
   {
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -18,6 +18,6 @@ const EventSchema = new Schema(
   }
 );
 
-const Event = mongoose.model("Event", EventSchema);
+const Game = mongoose.model("Event", EventSchema);
 
-module.exports = Event;
+module.exports = Game;

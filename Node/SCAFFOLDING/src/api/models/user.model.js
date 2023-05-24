@@ -23,8 +23,8 @@ const UserSchema = new Schema(
     image: { type: String },
     confirmationCode: { type: Number, required: true },
     check: { type: Boolean, required: true, default: false },
-    events: [{ type: mongoose.Types.ObjectId, ref: "Event" }],
-    scores: [{ type: mongoose.Types.ObjectId, ref: "Score" }],
+    games: [{ type: mongoose.Types.ObjectId, ref: "Game" }],
+  
   },
   {
     timestamps: true,

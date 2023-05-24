@@ -4,7 +4,6 @@ const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
 const setError = require("../../helpers/handleError");
 const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
-//!Falta el .env en el token
 const { generateToken } = require("../../utils/token");
 const randomPassword = require("../../utils/randomPassword");
 dotenv.config();
@@ -111,6 +110,18 @@ const checkNewUser = async (req, res, next) => {
           .json({ testCheckOk: updateUser.check == true ? true : false });
       } else {
         //si se equivoca con el código, lo borramos de la base de datos y lo mandamos al registro
+        await User.findByIdAndDelete(userExists._id);
+        //Borramos la imagen
+        deleteImgCloudinary(userExists._id);
+
+        //ahora devolvemos el objeto con un test para ver si el borrado se ha hecho bien
+        return res.status(200).json({
+          userExists,
+          check: false,
+          delet: (await User.findById(userExists._id))
+            ? "Error deleting user"
+            : "User deleted",
+        });
       }
     }
   } catch (error) {
@@ -197,7 +208,7 @@ const login = async (req, res, next) => {
 };
 
 //!-------------------------------------------------------------------------------------
-//?-----------CAMBIO CONTRASEÑA SIN ESTAR LOGEADO--------------------------------
+//?-----------FORGOT PASSWORD SIN ESTAR LOGEADO--------------------------------
 //!-------------------------------------------------------------------------------------
 
 const forgotPassword = async (req, res, next) => {
@@ -212,62 +223,102 @@ const forgotPassword = async (req, res, next) => {
       return res.redirect(
         `http://localhost:8081/api/v1/users/forgotpassword/sendPassword/${userDb._id}`
       );
-    }
-
-    else{
+    } else {
       // Si el usuario no está en la base de datos, devolvemos un 404
-      return res.status(404).json("User not registered")
+      return res.status(404).json("User not registered");
     }
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 };
 
-const sendPassword = async(req, res, next)=>{
+const sendPassword = async (req, res, next) => {
   try {
     //recibimos la id por parámetros
-  const {id} =req.params;
-  //el id lo utilizamos para buscar el usuario en la base de datos
-  const userDb = await User.findById(id)
+    const { id } = req.params;
+    //el id lo utilizamos para buscar el usuario en la base de datos
+    const userDb = await User.findById(id);
 
-  //Aquí configuramos el correo electrónico para enviar el password
-  const email = process.env.EMAIL
-  const password = process.env.PASSWORD
+    //Aquí configuramos el correo electrónico para enviar el password
+    const email = process.env.EMAIL;
+    const password = process.env.PASSWORD;
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: email, 
-      pass: password,
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: email,
+        pass: password,
+      },
+    });
+    let passwordSecure = randomPassword();
+    const mailOptions = {
+      from: email,
+      to: userDb.email,
+      subject: "----------",
+      text: `User: ${userDb.name}. Your new code login is ${passwordSecure} Hemos enviado esto porque tenemos una solicitud de cambio de contraseña, si no has sido ponte en contacto con nosotros, gracias.`,
+    };
+
+    //enviamos el correo y en el envío gestionamos el envío de la contraseña
+
+    transporter.sendMail(mailOptions, async function (error, info) {
+      if (error) {
+        console.log(error);
+
+        //si no se envía el correo retornamos un 404 y le decimos que no se ha hecho nada
+        return res.status(404).json("Email dont sent, User not updated");
+      } else {
+        //encriptamos la contraseña que hemos generado arriba
+        const newPasswordHash = bcrypt.hashSync(passwordSecure, 10);
+        //Guardamos la contraseña en el backend
+        await User.findByIdAndUpdate(id, { password: newPasswordHash });
+        //Testeamos si todo se ha hecho bien. Nos traemos el user actualizado y hacemos un If para las contraseñas
+        const updateUser = await User.findById(id);
+        if (bcrypt.compareSync(passwordSecure, updateUser.password)) {
+          //Si la contraseña hace math, mandamos 200
+          return res.status(200).json({
+            updateUser: false,
+            sendPassword: true,
+          });
         }
-  })
-let passwordSecure = randomPassword()
-const mailOptions ={
-  from: email,
-  to: userDb.email,
-  subject: "----------",
-  text: `User: ${userDb.name}. Your new code login is ${passwordSecure} Hemos enviado esto porque tenemos una solicitud de cambio de contraseña, si no has sido ponte en contacto con nosotros, gracias.`,
-}
-
-//enviamos el correo y en el envío gestionamos el envío de la contraseña
-
-transporter.sendMail(mailOptions, async function(error, info){
-  if(error){
-    console.log(error)
-
-    //si no se envía el correo retornamos un 404 y le decimos que no se ha hecho nada
+      }
+    });
+  } catch (error) {
+    return next(error);
   }
-})
+};
 
+//!-------------------------------------------------------------------------------------
+//?-----------CAMBIO CONTRASEÑA SIN ESTAR LOGEADO--------------------------------
+//!-------------------------------------------------------------------------------------
 
-} catch (error) {
-    
+const modifyPassword = async () => {
+  try {
+    //nos traemos password y new del req.body
+    const { password, newPassword } = req.body;
+    const { _id } = req.user;
+    //comparamos las contraseñas, si es correcta, creamos la nueva contraseña y la hasheamos
+    if (bcrypt.compareSync(password, req.user.password)) {
+      const newPasswordHash = bcrypt.hashSync(newPassword, 10);
+      //buscamps el usuario por id y le decimos que actualice la contraseña con la nueva que acabamos de crear
+      await User.findByIdAndUpdate(_id, { password: newPasswordHash });
+
+      const updateUser = await User.findById(_id);
+      if (bcrypt.compareSync(newPassword, updateUser.password)) {
+        return es.status(200).json({
+          updateUser: true,
+        });
+      } else {
+        return res.status(404).json({
+          updateUser: false,
+        });
+      }
+    } else {
+      return res.status(404).json("Password not matching");
+    }
+  } catch (error) {
+    return next(error);
   }
-
-
-}
-
-
+};
 
 //!---------------------------------------
 //?-----------UPDATE USER--------------
@@ -354,5 +405,7 @@ module.exports = {
   deleteUser,
   resendCode,
   login,
-  forgotPassword
+  forgotPassword,
+  sendPassword,
+  modifyPassword,
 };
