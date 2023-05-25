@@ -32,7 +32,7 @@ const register = async (req, res, next) => {
     //Creamos el código que enviará nodemail
 
     const confirmationCode = Math.floor(
-      Math.random() * (99999999 - 10000000) + 100000000
+      Math.random() * (999999 - 100000) + 100000
     );
 
     //Hacer una nueva estancia de usuario

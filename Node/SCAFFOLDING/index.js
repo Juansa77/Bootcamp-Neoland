@@ -40,20 +40,25 @@ app.use((req, res, next) => {
 //!-----------------------------------------
 
 //Indicamos que vamos a usar JSON y el límite de data
-app.use(express.json({limit:"5mb"}))
+app.use(express.json({ limit: "5mb" }));
 //ponemos urlencoded a true àra los POST  y los PUT porque enviamos data que queremos los almacene el servidor (esto no es necesario si solo vamos a tener get o delete)
-app.use(express.urlencoded({limit:"5mb", extended:true}))
+app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 //------------indicamos las rutas
 
-const UserRoutes = require("./src/api/routes/user.routes")
+const UserRoutes = require("./src/api/routes/user.routes");
 
 //Indicamos que app use las controladores de usuario definidos en user.routes
-app.use("/api/v1/users", UserRoutes)
+app.use("/api/v1/users", UserRoutes);
 //definimos la respuesta para ruta desconocida
-app.use("*", (req, res, next)=>{
-    const error = new Error("Route not found")
-    error.status = 404
-    next(error)
+app.use("*", (req, res, next) => {
+  const error = new Error("Route not found");
+  error.status = 404;
+  next(error);
+});
 
-})
+//iniciamos el servidor en el puerto definido
+
+app.listen(PORT, () => {
+  console.log(`Server running on  http://localhost:${PORT}`);
+});
