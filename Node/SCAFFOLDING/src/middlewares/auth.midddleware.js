@@ -6,7 +6,7 @@ dotenv.config();
 const isAuth = async (req, res, next) => {
   //Bearer es lo que autentifica el token, le quitamos el prefijo para que pueda ser autentificado
 
-  const token = req.headers.authorization?.replace("Bearer ", "");
+  const token = req.headers.authorization?.replace("Bearer ", '');
 
   //Si no hay token, instanciamos un nuevo error
   if (!token) {
@@ -45,7 +45,7 @@ const isAuthAdmin = async (req, res, next) => {
     req.user = await User.findById(decoded.id);
     //Si el usuario no es el admin, devolvemos mensaje de error
     if (req.user.role != "admin") {
-      return next(new Error("Error, user its not an admin"));
+      return next(new Error("Unauthorized"));
     }
     next();
   } catch (error) {

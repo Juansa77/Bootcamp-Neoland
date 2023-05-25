@@ -19,10 +19,10 @@ UserRoutes.post("/register", upload.single("image"), register);
 UserRoutes.post("/check", checkNewUser);
 UserRoutes.post("/resend", resendCode);
 UserRoutes.post("/login", login);
-UserRoutes.get("/forgotpassword", forgotPassword);
+UserRoutes.post("/forgotpassword", forgotPassword);
 UserRoutes.patch("/changepassword", [isAuth], modifyPassword);
 UserRoutes.patch("/update/update", [isAuth], upload.single("image"), updateUser );
-UserRoutes.delete("/", [isAuth] , deleteUser);
+UserRoutes.delete("/:id", [isAuth] , deleteUser);
 
 //?--------------------
 //*---REDIRECT ROUTE 

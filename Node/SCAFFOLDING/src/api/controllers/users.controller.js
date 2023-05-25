@@ -92,6 +92,7 @@ const checkNewUser = async (req, res, next) => {
     //Del req.body desestructuramos el email y el confirmation code para comprobar si existe
     const { email, confirmationCode } = req.body;
     const userExists = await User.findOne({ email });
+  
     if (!userExists) {
       //Si no existe
       return res.status(404).json("User not found");
@@ -221,7 +222,7 @@ const forgotPassword = async (req, res, next) => {
     if (userDb) {
       //si el usuario existe, redirect al controlador que se encarga del envío y actualización
       return res.redirect(
-        `http://localhost:8081/api/v1/users/forgotpassword/sendPassword/${userDb._id}`
+        `http://localhost:8095/api/v1/users/forgotpassword/sendPassword/${userDb._id}`
       );
     } else {
       // Si el usuario no está en la base de datos, devolvemos un 404
@@ -291,20 +292,29 @@ const sendPassword = async (req, res, next) => {
 //?-----------CAMBIO CONTRASEÑA SIN ESTAR LOGEADO--------------------------------
 //!-------------------------------------------------------------------------------------
 
-const modifyPassword = async () => {
+const modifyPassword = async (req, res, next) => {
   try {
-    //nos traemos password y new del req.body
+    // Nos traemos password y newPassword del req.body
     const { password, newPassword } = req.body;
     const { _id } = req.user;
-    //comparamos las contraseñas, si es correcta, creamos la nueva contraseña y la hasheamos
-    if (bcrypt.compareSync(password, req.user.password)) {
+
+    // Verificamos que password y newPassword sean cadenas de texto válidas
+    if (typeof password !== 'string' || typeof newPassword !== 'string') {
+      return res.status(400).json('Invalid password format');
+    }
+
+    // Comparamos las contraseñas, si es correcta, creamos la nueva contraseña y la hasheamos
+    const isPasswordMatch = bcrypt.compareSync(password, req.user.password);
+    if (isPasswordMatch) {
       const newPasswordHash = bcrypt.hashSync(newPassword, 10);
-      //buscamps el usuario por id y le decimos que actualice la contraseña con la nueva que acabamos de crear
+
+      // Buscamos el usuario por id y actualizamos la contraseña con la nueva
       await User.findByIdAndUpdate(_id, { password: newPasswordHash });
 
       const updateUser = await User.findById(_id);
-      if (bcrypt.compareSync(newPassword, updateUser.password)) {
-        return es.status(200).json({
+      const isNewPasswordMatch = bcrypt.compareSync(newPassword, updateUser.password);
+      if (isNewPasswordMatch) {
+        return res.status(200).json({
           updateUser: true,
         });
       } else {
@@ -319,7 +329,6 @@ const modifyPassword = async () => {
     return next(error);
   }
 };
-
 //!---------------------------------------
 //?-----------UPDATE USER--------------
 //!---------------------------------------
@@ -386,7 +395,7 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
-    await User.findByIdAndUpdate(_id);
+    await User.findByIdAndDelete(_id);
     if (await User.findById(_id)) {
       return res.status(404).json("User not deleted");
     } else {
