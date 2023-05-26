@@ -4,20 +4,24 @@ const mongoose = require("mongoose");
 
 const GameSchema = new Schema(
   {
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    date: { type: Date, requitred: true },
-    users: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-    location: { type: String, required: true },
-    hour: { type: String, required: true },
-    day: [{ type: mongoose.Types.ObjectId, ref: "Calendar" }],
-    scores: [{ type: mongoose.Types.ObjectId, ref: "Score" }],
+    title: { type: String, required: true },
+    rating: { type: Number, required: false },
+    gameRank: { type: Number, requitred: false },
+    image: { type: String, required: false },
+    year: { type: String, required: false },
+    players: { type: String, required: true },
+    playTime: { type: String, required: true },
+    age: { type: String, required: true },
+    weight: { type: String, required: false },
+    typesList:[ { type: String, required: false }],
+    owners: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+
   },
   {
     timestamps: true,
   }
 );
 
-const Game = mongoose.model("Event", EventSchema);
+const Game = mongoose.model("Game", GameSchema);
 
 module.exports = Game;
