@@ -47,9 +47,15 @@ app.use(express.urlencoded({ limit: "5mb", extended: true }));
 //------------indicamos las rutas
 
 const UserRoutes = require("./src/api/routes/user.routes");
+const GamesRoutes = require("./src/api/routes/game.routes")
 
 //Indicamos que app use las controladores de usuario definidos en user.routes
 app.use("/api/v1/users", UserRoutes);
+
+//Indicamos que app use las controladores de usuario definidos en games.routes
+
+app.use("/api/v1/games", GamesRoutes)
+
 //definimos la respuesta para ruta desconocida
 app.use("*", (req, res, next) => {
   const error = new Error("Route not found");
