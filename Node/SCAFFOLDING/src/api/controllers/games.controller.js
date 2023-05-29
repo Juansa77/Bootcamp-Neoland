@@ -148,15 +148,14 @@ const gameByOwners = async (req, res, next) => {
 const gamesByCities = async (req, res, next) => {
   const { title, city } = req.params;
   //Utilizamos la función para verificar si la ciudad es válida antes de hacer nada
-  const cityIsValid = cityValidation(city)
+  const cityIsValid = cityValidation(city);
 
-if(cityIsValid===false){
-  return res.status(404).json("City is not valid")
-}
+  if (cityIsValid === false) {
+    return res.status(404).json("City is not valid");
+  }
   try {
     //Obtenemos el juego
     const games = await Game.find({ title: title });
-
 
     if (games.length > 0) {
       //Usamos un Promise all para poder usar el await y manejar la asincronía
@@ -177,7 +176,7 @@ if(cityIsValid===false){
       );
       //aplanamos el array para devolverlo
       const flattenedOwners = ownersInCity.flat();
-      //Ternario para manejar si hay propietarios del título y manejar la respuesta 
+      //Ternario para manejar si hay propietarios del título y manejar la respuesta
 
       return flattenedOwners.length === 0
         ? res.status(404).json({ message: "Game not found in city" })
@@ -191,6 +190,53 @@ if(cityIsValid===false){
   }
 };
 
+//!----------------------------------------------
+//?-----------GAME  BY PLAYING TIME------------
+//!----------------------------------------------
+
+const byPlayingTime = async (req, res, next) => {
+  const { playingTime } = req.params;
+
+  try {
+    //PARA ENCONTRAR ELEMENTOS IGUALES O SUPERIORES A LA PUNTUACIÓN ELEGIDA, PONEMOS EL OPERADOR DE MONGO $gte
+    const games = await Game.find({ playTime:playingTime });
+    if (games) {
+      return res.status(200).json(games);
+    }
+  } catch (error) {
+    return res.status(404).json("Games not found");
+  }
+};
+
+//!----------------------------------------------
+//?-----------GAME  BY TYPE------------
+//!----------------------------------------------
+
+const byType = async (req, res, next) => {
+  const { type } = req.query;
+  
+
+  try {
+    let typesArray = type.split(","); // Obtener un array de strings separados por comas
+//mapeamos para tener un array con la primera letra en mayúscula
+    typesArray = typesArray.map(type => {
+      //
+      return type.charAt(0).toUpperCase() + type.slice(1);
+    });
+
+    const games = await Game.find({ typesList: { $in: typesArray } });
+
+    if (games.length > 0) {
+      return res.status(200).json(games);
+    } else {
+      return res.status(404).json({ message: "Games not found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 module.exports = {
   title,
   gameByID,
@@ -199,4 +245,6 @@ module.exports = {
   gameByRating,
   gameByOwners,
   gamesByCities,
+  byPlayingTime,
+  byType,
 };
