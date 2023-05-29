@@ -12,12 +12,15 @@ const generateToken = (id, email) => {
 
 //* -------------FUNCIÓN PARA VERIFICAR EL TOKEN
 
-const verifyToken = (token) => {
+const verifyToken = (token, secret) => {
   if (!token) {
     throw new Error("Missing token");
   }
 
-  return jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    return jwt.verify(token, secret);
+  } catch (error) {
+    throw new Error("Invalid token");
+  }
 };
-
-module.exports = { generateToken, verifyToken };
+module.exports = { generateToken, verifyToken, };

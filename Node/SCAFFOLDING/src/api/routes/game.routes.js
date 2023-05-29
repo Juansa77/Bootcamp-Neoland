@@ -8,9 +8,9 @@ const {
   gameByRating,
   gameByOwners,
   gamesByCities,
-  byPlayingTime, byType
+  byPlayingTime, byType, updateGame
 } = require("../controllers/games.controller");
-const { isAuth } = require("../../middlewares/auth.midddleware");
+const { isAuth, isAuthAdmin } = require("../../middlewares/auth.midddleware");
 
 const GamesRoutes = express.Router();
 
@@ -40,5 +40,8 @@ GamesRoutes.get("/playing-time/:playingTime", byPlayingTime);
 
 //?Ruta GAME BY TYPE-------------
 GamesRoutes.get("/bytype", byType);
+
+//?Ruta UPDATE GAME--------
+GamesRoutes.patch("/update/:id/:title/:rating/:players", [isAuthAdmin], upload.single("image"), updateGame);
 
 module.exports = GamesRoutes;

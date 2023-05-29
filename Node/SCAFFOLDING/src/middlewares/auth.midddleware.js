@@ -29,24 +29,20 @@ const isAuth = async (req, res, next) => {
 //?--------------------------------------------------------------
 
 const isAuthAdmin = async (req, res, next) => {
-  //Bearer es lo que autentifica el token, le quitamos el prefijo para que pueda ser autentificado
-
-  const token = req.headers.authorization?.replace("Bearer", "");
+  const token = req.headers.authorization?.replace("Bearer ", "");
 
   if (!token) {
-    //Si no hay token, devolvemos la instancia de un nuevo error
-    return res.status(new Error("Unauthorized"));
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
   try {
-    //Decodificamos el token con la función verify  y sacamos la id y el email, que es con lo que hemos creado el token
     const decoded = verifyToken(token, process.env.JWT_SECRET);
-    //con la id que hemos sacado de decoded, lo buscamos
     req.user = await User.findById(decoded.id);
-    //Si el usuario no es el admin, devolvemos mensaje de error
-    if (req.user.role != "admin") {
-      return next(new Error("Unauthorized"));
+
+    if (!req.user || req.user.role !== "admin") {
+      return res.status(403).json({ message: "Unauthorized" });
     }
+
     next();
   } catch (error) {
     return next(error);

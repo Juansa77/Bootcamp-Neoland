@@ -1,5 +1,6 @@
 const Game = require("../models/game.model");
 const bcrypt = require("bcrypt");
+const mongoose = require("mongoose")
 const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
 const setError = require("../../helpers/handleError");
@@ -7,6 +8,7 @@ const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
 const { generateToken } = require("../../utils/token");
 const User = require("../models/user.model");
 const cityValidation = require("../../utils/cityValidation");
+
 
 dotenv.config();
 
@@ -237,6 +239,64 @@ const byType = async (req, res, next) => {
 };
 
 
+//!---------------------------------------
+//?-----------UPDATE GAME--------------
+//!---------------------------------------
+
+const updateGame = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title, rating, players } = req.params;
+
+    // Verificamos si la ID es válida
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid game ID" });
+    }
+
+    // Creamos un objeto con los datos a actualizar
+    const updatableData = {};
+
+    // Verificamos los valores a actualizar y los agregamos al objeto
+    if (title) {
+      updatableData.title = title;
+    }
+    if (rating) {
+      updatableData.rating = rating;
+    }
+    if (players) {
+      updatableData.players = players;
+    }
+
+    // Verificamos si hay datos proporcionados para actualizar
+    if (Object.keys(updatableData).length === 0) {
+      return res.status(400).json({ message: "No data provided for update" });
+    }
+
+    // Actualizamos el juego
+    const updatedGame = await Game.findByIdAndUpdate(id, updatableData, { new: true });
+
+    // Verificamos si se ha actualizado correctamente
+    if (!updatedGame) {
+      return res.status(404).json({ message: "Game not found" });
+    }
+
+    // Creamos una respuesta con el resultado de la actualización
+    const updateResult = {
+      id: id,
+      title: updatedGame.title,
+      rating: updatedGame.rating,
+      players: updatedGame.players,
+      success: true,
+      image: updatedGame.image,
+    };
+
+    return res.status(200).json(updateResult);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+
 module.exports = {
   title,
   gameByID,
@@ -247,4 +307,5 @@ module.exports = {
   gamesByCities,
   byPlayingTime,
   byType,
+  updateGame
 };
