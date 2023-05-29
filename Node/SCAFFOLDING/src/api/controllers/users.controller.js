@@ -407,6 +407,47 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+
+//!-------------------------------------------
+//?-----------ADD FRIEND------------
+//!-------------------------------------------
+
+const addFriendToUser = async (req, res, next) => {
+  //Nos traemos la id del usuario y su am imigo de los params
+  const { userId, friendId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+    const friend = await User.findById(friendId);
+//Si no hay usuario, devolvemos error
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    //Si no hay friend, devolvemos error
+    if (!friend) {
+      return res.status(404).json({ message: "Friend not found" });
+    }
+    //Hacemos un includes para no meter amigos repetidos
+    if (user.friends.includes(friend)) {
+      return res.status(400).json({ message: "Friend already added to user" });
+    } else {
+      //hacemos push del juego en el array del usuario y del usuario en el array owners del juego
+      user.friends.push(friendId);
+      friend.friends.push(userId);
+      await user.save();
+      await friend.save();
+      return res.status(200).json({ message: "Friend added to user" });
+    }
+  } catch (error) {
+    console.log("Error adding friend to user", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
 module.exports = {
   register,
   checkNewUser,
@@ -417,4 +458,5 @@ module.exports = {
   forgotPassword,
   sendPassword,
   modifyPassword,
+  addFriendToUser,
 };

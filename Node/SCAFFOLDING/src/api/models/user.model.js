@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const UserSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
+    city:{ type: String, enum:["Sevilla", "Madrid", "Cádiz", "Barcelona", "Oviedo", "Huelva"] },
     email: {
       type: String,
       required: true,
@@ -24,6 +25,7 @@ const UserSchema = new Schema(
     confirmationCode: { type: Number, required: true },
     check: { type: Boolean, required: true, default: false },
     games: [{ type: mongoose.Types.ObjectId, ref: "Game" }],
+    friends: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   
   },
   {

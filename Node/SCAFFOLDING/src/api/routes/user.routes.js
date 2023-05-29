@@ -10,19 +10,38 @@ const {
   forgotPassword,
   sendPassword,
   modifyPassword,
+  addFriendToUser
 } = require("../controllers/users.controller");
 const { isAuth } = require("../../middlewares/auth.midddleware")
 
 const UserRoutes = express.Router()
 
+//?Ruta REGISTER USER--------
 UserRoutes.post("/register", upload.single("image"), register);
+
+//?Ruta CHECK CONFIRMATION--------
 UserRoutes.post("/check", checkNewUser);
+
+//?Ruta RESEND--------
 UserRoutes.post("/resend", resendCode);
+
+//?Ruta LOGIN--------
 UserRoutes.post("/login", login);
+
+//?Ruta FORGOT PASSWORD--------
 UserRoutes.post("/forgotpassword", forgotPassword);
+
+//?Ruta CHANGE PASSWORD USER--------
 UserRoutes.patch("/changepassword", [isAuth], modifyPassword);
+
+//?Ruta UPDATE USER--------
 UserRoutes.patch("/update/update", [isAuth], upload.single("image"), updateUser );
+
+//?Ruta DELETE USER--------
 UserRoutes.delete("/:id", [isAuth] , deleteUser);
+
+//?Ruta ADD FRIEND TO USER--------
+UserRoutes.post("/:userId/add-friend/:friendId",[isAuth], addFriendToUser);
 
 //?--------------------
 //*---REDIRECT ROUTE 
