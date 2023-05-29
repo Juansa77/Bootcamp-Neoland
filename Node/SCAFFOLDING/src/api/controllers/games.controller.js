@@ -6,6 +6,8 @@ const setError = require("../../helpers/handleError");
 const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
 const { generateToken } = require("../../utils/token");
 const User = require("../models/user.model");
+const cityValidation = require("../../utils/cityValidation");
+
 dotenv.config();
 
 //!---------------------------------------
@@ -140,6 +142,55 @@ const gameByOwners = async (req, res, next) => {
   }
 };
 
+//!----------------------------------------------------
+//?-----------GAME TITLE OWNED BY CITY------------
+//!----------------------------------------------------
+const gamesByCities = async (req, res, next) => {
+  const { title, city } = req.params;
+  //Utilizamos la función para verificar si la ciudad es válida antes de hacer nada
+  const cityIsValid = cityValidation(city)
+
+if(cityIsValid===false){
+  return res.status(404).json("City is not valid")
+}
+  try {
+    //Obtenemos el juego
+    const games = await Game.find({ title: title });
+
+
+    if (games.length > 0) {
+      //Usamos un Promise all para poder usar el await y manejar la asincronía
+      const ownersInCity = await Promise.all(
+        games.flatMap(async (game) => {
+          const owners = game.owners;
+          const mappedOwners = await Promise.all(
+            owners.map(async (owner) => {
+              const mappedOwner = await User.findById(owner);
+              if (mappedOwner.city === city) {
+                return owner;
+              }
+            })
+          );
+          //retotnamos el array mappeado controlado que no sea undefined
+          return mappedOwners.filter((owner) => owner !== undefined);
+        })
+      );
+      //aplanamos el array para devolverlo
+      const flattenedOwners = ownersInCity.flat();
+      //Ternario para manejar si hay propietarios del título y manejar la respuesta 
+
+      return flattenedOwners.length === 0
+        ? res.status(404).json({ message: "Game not found in city" })
+        : res.status(200).json(flattenedOwners);
+    } else {
+      // La consulta del título no se realizó correctamente
+      return res.status(400).json({ message: "Title not found in DB" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   title,
   gameByID,
@@ -147,4 +198,5 @@ module.exports = {
   deleteGameInUser,
   gameByRating,
   gameByOwners,
+  gamesByCities,
 };

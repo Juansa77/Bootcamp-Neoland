@@ -1,6 +1,6 @@
 const express = require("express");
 const { upload } = require("../../middlewares/files.middleware");
-const { title, gameByID, addGameToUser, deleteGameInUser, gameByRating, gameByOwners } = require("../controllers/games.controller");
+const { title, gameByID, addGameToUser, deleteGameInUser, gameByRating, gameByOwners, gamesByCities } = require("../controllers/games.controller");
 const { isAuth } = require("../../middlewares/auth.midddleware");
 
 const GamesRoutes = express.Router();
@@ -25,6 +25,7 @@ GamesRoutes.get("/byrate/:rating",gameByRating);
 GamesRoutes.get("/owners/:title",gameByOwners);
 
 
-
+//?Ruta GAME OWNED BY CITY-------------
+GamesRoutes.get("/:title/gamebycity/:city",gamesByCities);
 
 module.exports =GamesRoutes
