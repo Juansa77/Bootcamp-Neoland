@@ -10,7 +10,8 @@ const {
   forgotPassword,
   sendPassword,
   modifyPassword,
-  addFriendToUser
+  addFriendToUser,
+  deleteFriendInUser
 } = require("../controllers/users.controller");
 const { isAuth } = require("../../middlewares/auth.midddleware")
 
@@ -42,6 +43,10 @@ UserRoutes.delete("/:id", [isAuth] , deleteUser);
 
 //?Ruta ADD FRIEND TO USER--------
 UserRoutes.post("/:userId/add-friend/:friendId",[isAuth], addFriendToUser);
+
+//?Ruta DELETE FRIEND IN USER--------
+UserRoutes.post("/:userId/delete-friend/:friendId",[isAuth], deleteFriendInUser);
+
 
 //?--------------------
 //*---REDIRECT ROUTE 

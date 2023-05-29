@@ -445,7 +445,39 @@ const addFriendToUser = async (req, res, next) => {
   }
 };
 
+//!----------------------------------------------
+//?-----------DELETE FRIEND  IN USER------------
+//!----------------------------------------------
 
+const deleteFriendInUser = async (req, res, next) => {
+  const { userId, friendId } = req.params;
+  
+
+  try {
+    const user = await User.findById(userId);
+    const friend = await User.findById(friendId);
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+    if (!friend) {
+      return res.status(404).json({ message: "friend not found" });
+    }
+    //Hacemos un includes para no meter juegos repetidos
+    if (!user.friends.includes(friendId)) {
+      return res.status(400).json({ message: "Friend not found in user" });
+    } else {
+      // Eliminamos el juego del array games del usuario y en el array del juego eliminamos el propietario
+      user.friends.splice(user.friends.indexOf(friendId), 1);
+      friend.friends.splice(friend.friends.indexOf(userId), 1);
+      await user.save();
+      await friend.save();
+      return res.status(200).json({ message: "Friend erased in user" });
+    }
+  } catch (error) {
+    console.log("Error erasing friend in user", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 
 module.exports = {
@@ -459,4 +491,5 @@ module.exports = {
   sendPassword,
   modifyPassword,
   addFriendToUser,
+  deleteFriendInUser
 };
