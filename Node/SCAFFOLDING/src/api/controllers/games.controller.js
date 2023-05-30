@@ -366,11 +366,8 @@ const deleteGameByID = async (req, res, next) => {
 
     // Eliminamos el juego de los usuarios antes de eliminarlo de la base de datos
     const owners = game.owners;
-//Usamos el método updatemany para que nos quite las ID del juego en los Usuarios
-    await User.updateMany(
-      { _id: { $in: owners } },
-      { $pull: { games: id } }
-    );
+    //Usamos el método updatemany para que nos quite las ID del juego en los Usuarios
+    await User.updateMany({ _id: { $in: owners } }, { $pull: { games: id } });
 
     // Eliminamos el juego de la base de datos
     const deletedGame = await Game.findByIdAndDelete(id);
