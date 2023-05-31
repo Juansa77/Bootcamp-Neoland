@@ -281,39 +281,16 @@ const updateGame = async (req, res, next) => {
     // Creamos un objeto con los datos a actualizar
     const updatableData = {};
 
-    // Verificamos los valores a actualizar y los agregamos al objeto
-    if (title) {
-      updatableData.title = title;
-    }
-    if (rating) {
-      updatableData.rating = rating;
-    }
-    if (players) {
-      updatableData.players = players;
-    }
-    if (gameRank) {
-      updatableData.gameRank = gameRank;
-    }
-
-    if (image) {
-      updatableData.image = image;
-    }
-
-    if (year) {
-      updatableData.year = year;
-    }
-
-    if (playTime) {
-      updatableData.playTime = playTime;
-    }
-
-    if (age) {
-      updatableData.age = age;
-    }
-
-    if (weight) {
-      updatableData.weight = weight;
-    }
+    // SHORT CIRCUIT EVALUATION (OPERADOR && NOS DICE QUE SI EXISTE, LA AÑADAMOS Y SI ES UNDEFINED O NULL LO DEJAMOS IGUAL) Verificamos los valores a actualizar y los agregamos al objeto
+    updatableData.title = title && title;
+    updatableData.rating = rating && rating;
+    updatableData.players = players && players;
+    updatableData.gameRank = gameRank && gameRank;
+    updatableData.image = image && image;
+    updatableData.year = year && year;
+    updatableData.playTime = playTime && playTime;
+    updatableData.age = age && age;
+    updatableData.weight = weight && weight;
 
     // Verificamos si hay datos proporcionados para actualizar
     if (Object.keys(updatableData).length === 0) {
