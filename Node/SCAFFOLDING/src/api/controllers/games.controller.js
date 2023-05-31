@@ -359,6 +359,37 @@ const deleteGameByID = async (req, res, next) => {
   }
 };
 
+//!----------------------------------------------
+//?-----------GAME  MULTI FILTER------------
+//!----------------------------------------------
+//Controller for multiple types of game filtering
+
+const multIFilter = async (req, res, next) => {
+  const { type, rating, players, playTime } = req.query;
+
+  console.log(req.query)
+
+  try {
+    let typesArray = type.split(','); // Obtener un array de strings separados por comas
+    //mapeamos para tener un array con la primera letra en mayúscula
+    typesArray = typesArray.map((type) => {
+      //
+      return type.charAt(0).toUpperCase() + type.slice(1);
+    });
+
+    const games = await Game.find({ typesList: { $in: typesArray },  rating: { $gte: rating }, players:players, playTime: playTime });
+
+    if (games.length > 0) {
+      return res.status(200).json(games);
+    } else {
+      return res.status(404).json({ message: 'Games not found' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 module.exports = {
   title,
   gameByID,
@@ -371,4 +402,5 @@ module.exports = {
   byType,
   updateGame,
   deleteGameByID,
+  multIFilter,
 };

@@ -12,6 +12,7 @@ const {
   byType,
   updateGame,
   deleteGameByID,
+  multIFilter
 } = require('../controllers/games.controller');
 const { isAuth, isAuthAdmin } = require('../../middlewares/auth.midddleware');
 
@@ -54,5 +55,8 @@ GamesRoutes.patch(
 
 //?-----Ruta DELETE GAME--------
 GamesRoutes.delete('/delete-game/:id', [isAuthAdmin], deleteGameByID);
+
+//?-----Ruta GAME MULTIFILTERING (TYPE, TIME, PLAYERS, RATING)-------------
+GamesRoutes.get('/gamesort', multIFilter);
 
 module.exports = GamesRoutes;
