@@ -1,16 +1,16 @@
-const User = require("../api/models/user.model");
-const dotenv = require("dotenv");
-const { verifyToken } = require("../utils/token");
+const User = require('../api/models/user.model');
+const dotenv = require('dotenv');
+const { verifyToken } = require('../utils/token');
 dotenv.config();
 
 const isAuth = async (req, res, next) => {
   //Bearer es lo que autentifica el token, le quitamos el prefijo para que pueda ser autentificado
 
-  const token = req.headers.authorization?.replace("Bearer ", '');
+  const token = req.headers.authorization?.replace('Bearer ', '');
 
   //Si no hay token, instanciamos un nuevo error
   if (!token) {
-    return next(new Error("Unauthorized"));
+    return next(new Error('Unauthorized'));
   }
 
   try {
@@ -29,18 +29,18 @@ const isAuth = async (req, res, next) => {
 //?--------------------------------------------------------------
 
 const isAuthAdmin = async (req, res, next) => {
-  const token = req.headers.authorization?.replace("Bearer ", "");
+  const token = req.headers.authorization?.replace('Bearer ', '');
 
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
   try {
     const decoded = verifyToken(token, process.env.JWT_SECRET);
     req.user = await User.findById(decoded.id);
 
-    if (!req.user || req.user.role !== "admin") {
-      return res.status(403).json({ message: "Unauthorized" });
+    if (!req.user || req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Unauthorized' });
     }
 
     next();

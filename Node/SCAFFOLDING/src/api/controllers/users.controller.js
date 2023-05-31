@@ -6,6 +6,7 @@ const setError = require("../../helpers/handleError");
 const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
 const { generateToken } = require("../../utils/token");
 const randomPassword = require("../../utils/randomPassword");
+const { findById } = require("../models/game.model");
 dotenv.config();
 
 //!---------------------------------------
@@ -51,7 +52,7 @@ const register = async (req, res, next) => {
       return next(setError(409, "This users already exits"));
     } else {
       const createUser = await newUser.save();
-      createUser.password = null;
+      createUser.password = null;--fix
 
       //ENVIAMOS EL CORREO DE CONFIRMACIÓN
 
@@ -395,6 +396,11 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
+    //primero vamos a eliminar el usuario de los amigos
+    const user = findById(_id)
+    const userFriends = user.friends;
+    //Usamos el método updatemany para que nos quite las ID del usuario en los amigos
+    await User.updateMany({ _id: { $in: userFriends } }, { $pull: { friends: _id } });
     await User.findByIdAndDelete(_id);
     if (await User.findById(_id)) {
       return res.status(404).json("User not deleted");

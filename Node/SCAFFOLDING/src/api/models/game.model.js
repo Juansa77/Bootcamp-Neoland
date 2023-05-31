@@ -1,6 +1,6 @@
-const { Schema } = require("mongoose");
+const { Schema } = require('mongoose');
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const GameSchema = new Schema(
   {
@@ -13,15 +13,14 @@ const GameSchema = new Schema(
     playTime: { type: String, required: true },
     age: { type: String, required: true },
     weight: { type: String, required: false },
-    typesList:[ { type: String, required: false }],
-    owners: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-
+    typesList: [{ type: String, required: false }],
+    owners: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,
   }
 );
 
-const Game = mongoose.model("Game", GameSchema);
+const Game = mongoose.model('Game', GameSchema);
 
 module.exports = Game;

@@ -1,32 +1,47 @@
-const { Schema } = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
+const { Schema } = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 const UserSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
-    city:{ type: String, enum:["Sevilla", "Madrid", "Cádiz", "Barcelona", "Oviedo", "Huelva"] },
+    city: {
+      type: String,
+      enum: ['Sevilla', 'Madrid', 'Cádiz', 'Barcelona', 'Oviedo', 'Huelva'],
+    },
     email: {
       type: String,
       required: true,
       unique: true,
-      validate: [validator.isEmail, "Email not valid"],
+      validate: [validator.isEmail, 'Email not valid'],
     },
     password: {
       type: String,
       required: true,
       validate: [validator.isStrongPassword],
-      minlength: [8, "Min 8 characters"],
+      minlength: [8, 'Min 8 characters'],
     },
-    gender: { type: String, enum: ["hombre", "mujer", "andrógína", "andrógino", "Trans femenino", "Trans masculino", "Queer", "Andróginx"], required: true },
-    role: { type: String, enum: ["admin", "user"], required: true },
+    gender: {
+      type: String,
+      enum: [
+        'hombre',
+        'mujer',
+        'andrógína',
+        'andrógino',
+        'Trans femenino',
+        'Trans masculino',
+        'Queer',
+        'Andróginx',
+      ],
+      required: true,
+    },
+    role: { type: String, enum: ['admin', 'user'], required: true },
     image: { type: String },
     confirmationCode: { type: Number, required: true },
     check: { type: Boolean, required: true, default: false },
-    games: [{ type: mongoose.Types.ObjectId, ref: "Game" }],
-    friends: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-  
+    games: [{ type: mongoose.Types.ObjectId, ref: 'Game' }],
+    friends: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,
@@ -35,16 +50,16 @@ const UserSchema = new Schema(
 
 ///ANTES DE GUARDAR EL MODELO TENEMOS QUE HACER UN PRESAVE PARA ENCRIPTAR LA CONTRASEÑA
 
-UserSchema.pre("save", async function (next) {
+UserSchema.pre('save', async function (next) {
   try {
     //Encriptamos la contraseña
     this.password = await bcrypt.hash(this.password, 10);
     //metemos el next vacío para que continue
-    next()
+    next();
   } catch (error) {
-    next("Error hashing password", error);
+    next('Error hashing password', error);
   }
 });
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
