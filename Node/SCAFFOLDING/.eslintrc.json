@@ -18,7 +18,9 @@
       "prettier/prettier": [
         "error",
         { "endOfline": "semicolon" },
-        { "usePrettierrc": true }
+        { "usePrettierrc": true }, {
+          "endOfLine": "auto"
+        }
       ]
     }
   }

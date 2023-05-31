@@ -1,11 +1,6 @@
+/* eslint-disable no-unused-vars */
 const Game = require('../models/game.model');
-const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const nodemailer = require('nodemailer');
-const setError = require('../../helpers/handleError');
-const { deleteImgCloudinary } = require('../../middlewares/files.middleware');
-const { generateToken } = require('../../utils/token');
 const User = require('../models/user.model');
 const cityValidation = require('../../utils/cityValidation');
 
@@ -367,7 +362,7 @@ const deleteGameByID = async (req, res, next) => {
 const multIFilter = async (req, res, next) => {
   const { type, rating, players, playTime } = req.query;
 
-  console.log(req.query)
+  console.log(req.query);
 
   try {
     let typesArray = type.split(','); // Obtener un array de strings separados por comas
@@ -377,7 +372,12 @@ const multIFilter = async (req, res, next) => {
       return type.charAt(0).toUpperCase() + type.slice(1);
     });
 
-    const games = await Game.find({ typesList: { $in: typesArray },  rating: { $gte: rating }, players:players, playTime: playTime });
+    const games = await Game.find({
+      typesList: { $in: typesArray },
+      rating: { $gte: rating },
+      players: players,
+      playTime: playTime,
+    });
 
     if (games.length > 0) {
       return res.status(200).json(games);
@@ -388,7 +388,6 @@ const multIFilter = async (req, res, next) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 module.exports = {
   title,

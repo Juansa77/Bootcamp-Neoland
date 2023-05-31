@@ -6,7 +6,7 @@ const GameSchema = new Schema(
   {
     title: { type: String, required: true },
     rating: { type: Number, required: false },
-    gameRank: { type: Number, requitred: false },
+    gameRank: { type: Number, required: false },
     image: { type: String, required: false },
     year: { type: String, required: false },
     players: { type: String, required: true },

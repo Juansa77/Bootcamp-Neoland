@@ -1,12 +1,12 @@
-const User = require("../models/user.model");
-const bcrypt = require("bcrypt");
-const dotenv = require("dotenv");
-const nodemailer = require("nodemailer");
-const setError = require("../../helpers/handleError");
-const { deleteImgCloudinary } = require("../../middlewares/files.middleware");
-const { generateToken } = require("../../utils/token");
-const randomPassword = require("../../utils/randomPassword");
-const { findById } = require("../models/game.model");
+const User = require('../models/user.model');
+const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+const nodemailer = require('nodemailer');
+const setError = require('../../helpers/handleError');
+const { deleteImgCloudinary } = require('../../middlewares/files.middleware');
+const { generateToken } = require('../../utils/token');
+const randomPassword = require('../../utils/randomPassword');
+const { findById } = require('../models/game.model');
 dotenv.config();
 
 //!---------------------------------------
@@ -23,7 +23,7 @@ const register = async (req, res, next) => {
 
     //Configuramos nodeMail para que envíe el código
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: 'gmail',
       auth: {
         user: email,
         pass: password,
@@ -41,7 +41,7 @@ const register = async (req, res, next) => {
     if (req.file) {
       newUser.image = req.file.path;
     } else {
-      newUser.image = "Imagen genérica";
+      newUser.image = 'Imagen genérica';
     }
     const userExits = await User.findOne({
       email: newUser.email,
@@ -49,17 +49,18 @@ const register = async (req, res, next) => {
     });
 
     if (userExits) {
-      return next(setError(409, "This users already exits"));
+      return next(setError(409, 'This users already exits'));
     } else {
       const createUser = await newUser.save();
-      createUser.password = null;--fix
+      createUser.password = null;
+      --fix;
 
       //ENVIAMOS EL CORREO DE CONFIRMACIÓN
 
       const mailOptions = {
         from: email,
         to: req.body.email,
-        subject: "Confirmation code",
+        subject: 'Confirmation code',
         text: `Here is your confirmation code: ${confirmationCode}`,
       };
 
@@ -79,7 +80,7 @@ const register = async (req, res, next) => {
   } catch (error) {
     deleteImgCloudinary(catchImg);
     return next(
-      setError(error.code || 500, error.message || "Error creating user")
+      setError(error.code || 500, error.message || 'Error creating user')
     );
   }
 };
@@ -93,10 +94,10 @@ const checkNewUser = async (req, res, next) => {
     //Del req.body desestructuramos el email y el confirmation code para comprobar si existe
     const { email, confirmationCode } = req.body;
     const userExists = await User.findOne({ email });
-  
+
     if (!userExists) {
       //Si no existe
-      return res.status(404).json("User not found");
+      return res.status(404).json('User not found');
     } else {
       //Si existe, actiualizamos el usuario
       if (confirmationCode === userExists.confirmationCode) {
@@ -121,13 +122,13 @@ const checkNewUser = async (req, res, next) => {
           userExists,
           check: false,
           delet: (await User.findById(userExists._id))
-            ? "Error deleting user"
-            : "User deleted",
+            ? 'Error deleting user'
+            : 'User deleted',
         });
       }
     }
   } catch (error) {
-    return next(setError(500, "General error checking code"));
+    return next(setError(500, 'General error checking code'));
   }
 };
 
@@ -140,7 +141,7 @@ const resendCode = async (req, res, next) => {
     const email = process.env.EMAIL;
     const password = process.env.PASSWORD;
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: 'gmail',
       auth: {
         user: email,
         pass: password,
@@ -155,7 +156,7 @@ const resendCode = async (req, res, next) => {
       const mailOptions = {
         from: email,
         to: req.body.email,
-        subjet: "Confirmation code",
+        subjet: 'Confirmation code',
         text: `Your confirmation code is ${userExists.confirmationCode}`,
       };
 
@@ -170,10 +171,10 @@ const resendCode = async (req, res, next) => {
         }
       });
     } else {
-      return res.status(404).json("User not found");
+      return res.status(404).json('User not found');
     }
   } catch (error) {
-    return next(setError(500, error.message || "General error sending code"));
+    return next(setError(500, error.message || 'General error sending code'));
   }
 };
 
@@ -189,7 +190,7 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email });
     //si no hay user, devolvemos un 404
     if (!user) {
-      return res.status(404).json("User not found");
+      return res.status(404).json('User not found');
     } else {
       //si hay user, comparamos la contraseña recibida del req.body con la almacenada en bcrypt
       if (bcrypt.compareSync(password, user.password)) {
@@ -199,12 +200,12 @@ const login = async (req, res, next) => {
         return res.status(200).json({ user: { email, _id: user._id }, token });
       } else {
         //si la contraseña no es correcta enviamos un 404 con invalid password
-        return res.status(404).json("Invalid password");
+        return res.status(404).json('Invalid password');
       }
     }
   } catch (error) {
     return next(
-      setError(500 || error.code, "Login general error" || error.message)
+      setError(500 || error.code, 'Login general error' || error.message)
     );
   }
 };
@@ -227,7 +228,7 @@ const forgotPassword = async (req, res, next) => {
       );
     } else {
       // Si el usuario no está en la base de datos, devolvemos un 404
-      return res.status(404).json("User not registered");
+      return res.status(404).json('User not registered');
     }
   } catch (error) {
     return next(error);
@@ -246,7 +247,7 @@ const sendPassword = async (req, res, next) => {
     const password = process.env.PASSWORD;
 
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: 'gmail',
       auth: {
         user: email,
         pass: password,
@@ -256,7 +257,7 @@ const sendPassword = async (req, res, next) => {
     const mailOptions = {
       from: email,
       to: userDb.email,
-      subject: "----------",
+      subject: '----------',
       text: `User: ${userDb.name}. Your new code login is ${passwordSecure} Hemos enviado esto porque tenemos una solicitud de cambio de contraseña, si no has sido ponte en contacto con nosotros, gracias.`,
     };
 
@@ -267,7 +268,7 @@ const sendPassword = async (req, res, next) => {
         console.log(error);
 
         //si no se envía el correo retornamos un 404 y le decimos que no se ha hecho nada
-        return res.status(404).json("Email dont sent, User not updated");
+        return res.status(404).json('Email dont sent, User not updated');
       } else {
         //encriptamos la contraseña que hemos generado arriba
         const newPasswordHash = bcrypt.hashSync(passwordSecure, 10);
@@ -313,7 +314,10 @@ const modifyPassword = async (req, res, next) => {
       await User.findByIdAndUpdate(_id, { password: newPasswordHash });
 
       const updateUser = await User.findById(_id);
-      const isNewPasswordMatch = bcrypt.compareSync(newPassword, updateUser.password);
+      const isNewPasswordMatch = bcrypt.compareSync(
+        newPassword,
+        updateUser.password
+      );
       if (isNewPasswordMatch) {
         return res.status(200).json({
           updateUser: true,
@@ -324,7 +328,7 @@ const modifyPassword = async (req, res, next) => {
         });
       }
     } else {
-      return res.status(404).json("Password not matching");
+      return res.status(404).json('Password not matching');
     }
   } catch (error) {
     return next(error);
@@ -397,22 +401,24 @@ const deleteUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
     //primero vamos a eliminar el usuario de los amigos
-    const user = findById(_id)
+    const user = findById(_id);
     const userFriends = user.friends;
     //Usamos el método updatemany para que nos quite las ID del usuario en los amigos
-    await User.updateMany({ _id: { $in: userFriends } }, { $pull: { friends: _id } });
+    await User.updateMany(
+      { _id: { $in: userFriends } },
+      { $pull: { friends: _id } }
+    );
     await User.findByIdAndDelete(_id);
     if (await User.findById(_id)) {
-      return res.status(404).json("User not deleted");
+      return res.status(404).json('User not deleted');
     } else {
       deleteImgCloudinary(req.user.image);
-      return res.status(200).json("User deleted");
+      return res.status(200).json('User deleted');
     }
   } catch (error) {
     return next(error);
   }
 };
-
 
 //!-------------------------------------------
 //?-----------ADD FRIEND------------
@@ -425,29 +431,29 @@ const addFriendToUser = async (req, res, next) => {
   try {
     const user = await User.findById(userId);
     const friend = await User.findById(friendId);
-//Si no hay usuario, devolvemos error
+    //Si no hay usuario, devolvemos error
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     //Si no hay friend, devolvemos error
     if (!friend) {
-      return res.status(404).json({ message: "Friend not found" });
+      return res.status(404).json({ message: 'Friend not found' });
     }
     //Hacemos un includes para no meter amigos repetidos
     if (user.friends.includes(friend)) {
-      return res.status(400).json({ message: "Friend already added to user" });
+      return res.status(400).json({ message: 'Friend already added to user' });
     } else {
       //hacemos push del juego en el array del usuario y del usuario en el array owners del juego
       user.friends.push(friendId);
       friend.friends.push(userId);
       await user.save();
       await friend.save();
-      return res.status(200).json({ message: "Friend added to user" });
+      return res.status(200).json({ message: 'Friend added to user' });
     }
   } catch (error) {
-    console.log("Error adding friend to user", error);
-    return res.status(500).json({ message: "Internal server error" });
+    console.log('Error adding friend to user', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -457,34 +463,32 @@ const addFriendToUser = async (req, res, next) => {
 
 const deleteFriendInUser = async (req, res, next) => {
   const { userId, friendId } = req.params;
-  
 
   try {
     const user = await User.findById(userId);
     const friend = await User.findById(friendId);
     if (!user) {
-      return res.status(404).json({ message: "user not found" });
+      return res.status(404).json({ message: 'user not found' });
     }
     if (!friend) {
-      return res.status(404).json({ message: "friend not found" });
+      return res.status(404).json({ message: 'friend not found' });
     }
     //Hacemos un includes para no meter juegos repetidos
     if (!user.friends.includes(friendId)) {
-      return res.status(400).json({ message: "Friend not found in user" });
+      return res.status(400).json({ message: 'Friend not found in user' });
     } else {
       // Eliminamos el juego del array games del usuario y en el array del juego eliminamos el propietario
       user.friends.splice(user.friends.indexOf(friendId), 1);
       friend.friends.splice(friend.friends.indexOf(userId), 1);
       await user.save();
       await friend.save();
-      return res.status(200).json({ message: "Friend erased in user" });
+      return res.status(200).json({ message: 'Friend erased in user' });
     }
   } catch (error) {
-    console.log("Error erasing friend in user", error);
-    return res.status(500).json({ message: "Internal server error" });
+    console.log('Error erasing friend in user', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 module.exports = {
   register,
@@ -497,5 +501,5 @@ module.exports = {
   sendPassword,
   modifyPassword,
   addFriendToUser,
-  deleteFriendInUser
+  deleteFriendInUser,
 };
