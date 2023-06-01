@@ -48,6 +48,8 @@ app.use(express.urlencoded({ limit: '5mb', extended: false }));
 
 const UserRoutes = require('./src/api/routes/user.routes');
 const GamesRoutes = require('./src/api/routes/game.routes');
+const PlacesRoutes = require('./src/api/routes/place.routes');
+
 
 //Indicamos que app use las controladores de usuario definidos en user.routes
 app.use('/api/v1/users', UserRoutes);
@@ -55,6 +57,12 @@ app.use('/api/v1/users', UserRoutes);
 //Indicamos que app use las controladores de usuario definidos en games.routes
 
 app.use('/api/v1/games', GamesRoutes);
+
+
+//Indicamos que app use las controladores de usuario definidos en games.routes
+
+app.use('/api/v1/places', PlacesRoutes);
+
 
 //definimos la respuesta para ruta desconocida
 app.use('*', (req, res, next) => {

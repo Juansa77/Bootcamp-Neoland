@@ -17,25 +17,25 @@ const { isAuth } = require('../../middlewares/auth.midddleware');
 
 const UserRoutes = express.Router();
 
-//?Ruta REGISTER USER--------
+//?------Ruta REGISTER USER--------
 UserRoutes.post('/register', upload.single('image'), register);
 
-//?Ruta CHECK CONFIRMATION--------
+//?-----Ruta CHECK CONFIRMATION--------
 UserRoutes.post('/check', checkNewUser);
 
-//?Ruta RESEND--------
+//?-------Ruta RESEND--------
 UserRoutes.post('/resend', resendCode);
 
-//?Ruta LOGIN--------
+//?-------Ruta LOGIN--------
 UserRoutes.post('/login', login);
 
-//?Ruta FORGOT PASSWORD--------
+//?-------Ruta FORGOT PASSWORD--------
 UserRoutes.post('/forgotpassword', forgotPassword);
 
-//?Ruta CHANGE PASSWORD USER--------
+//?-------Ruta CHANGE PASSWORD USER--------
 UserRoutes.patch('/changepassword', [isAuth], modifyPassword);
 
-//?Ruta UPDATE USER--------
+//?-------Ruta UPDATE USER--------
 UserRoutes.patch(
   '/update/update',
   [isAuth],
@@ -43,13 +43,13 @@ UserRoutes.patch(
   updateUser
 );
 
-//?Ruta DELETE USER--------
+//?-----Ruta DELETE USER--------
 UserRoutes.delete('/:id', [isAuth], deleteUser);
 
-//?Ruta ADD FRIEND TO USER--------
+//?------Ruta ADD FRIEND TO USER--------
 UserRoutes.post('/:userId/add-friend/:friendId', [isAuth], addFriendToUser);
 
-//?Ruta DELETE FRIEND IN USER--------
+//?------Ruta DELETE FRIEND IN USER--------
 UserRoutes.post(
   '/:userId/delete-friend/:friendId',
   [isAuth],

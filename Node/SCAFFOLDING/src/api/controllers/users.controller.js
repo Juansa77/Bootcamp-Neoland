@@ -53,7 +53,7 @@ const register = async (req, res, next) => {
     } else {
       const createUser = await newUser.save();
       createUser.password = null;
-      --fix;
+    
 
       //ENVIAMOS EL CORREO DE CONFIRMACIÓN
 
