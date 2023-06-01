@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 //Indicamos que vamos a usar JSON y el límite de data
 app.use(express.json({ limit: '5mb' }));
 //ponemos urlencoded a true àra los POST  y los PUT porque enviamos data que queremos los almacene el servidor (esto no es necesario si solo vamos a tener get o delete)
-app.use(express.urlencoded({ limit: '5mb', extended: false }));
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
 //------------indicamos las rutas
 

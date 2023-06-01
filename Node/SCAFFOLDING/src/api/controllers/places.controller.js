@@ -133,7 +133,6 @@ const checkNewPlace = async (req, res, next) => {
   }
 };
 
-
 //!--------------------------------------------------
 //?-----------LOGIN PLACE--------------------------------
 //!--------------------------------------------------
@@ -144,6 +143,7 @@ const loginPlace = async (req, res, next) => {
     const { email, password } = req.body;
     //buscamos el usuario
     const place = await Place.findOne({ email });
+
     //si no hay user, devolvemos un 404
     if (!place) {
       return res.status(404).json('Place not found');
@@ -166,8 +166,197 @@ const loginPlace = async (req, res, next) => {
   }
 };
 
+//!--------------------------------------------------
+//?-----------RESEND CODE CONFIRMATION----------
+//!--------------------------------------------------
 
-module.exports =  registerPlace ;
-module.exports = checkNewPlace;
-module.exports = loginPlace
+const resendPlaceCode = async (req, res, next) => {
+  try {
+    const email = process.env.EMAIL;
+    const password = process.env.PASSWORD;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: email,
+        pass: password,
+      },
+    });
 
+    //comprobamos si el Place existe para enviar el password con findone
+
+    const placeExists = await Place.findOne({ email: req.body.email });
+
+    if (placeExists) {
+      const mailOptions = {
+        from: email,
+        to: req.body.email,
+        subjet: 'Confirmation code',
+        text: `Your confirmation code is ${placeExists.confirmationCode}`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(`Email sent to` + info.response);
+          return res.status(200).json({
+            resend: true,
+          });
+        }
+      });
+    } else {
+      return res.status(404).json('Place not found');
+    }
+  } catch (error) {
+    return next(setError(500, error.message || 'General error sending code'));
+  }
+};
+
+//!-------------------------------------------------------------------------------------
+//?-----------FORGOT PASSWORD PLACES--------------------------------
+//!-------------------------------------------------------------------------------------
+
+//! ------------------REVISAR-------------------------------------
+//!-------------------------------------------------------------
+
+const forgotPlacePassword = async (req, res, next) => {
+  try {
+    //recibimos el email por el req.body
+    const { email } = req.body;
+
+    //comprobamos si existe el usuario
+    const placeDb = await Place.findOne({ email });
+    if (placeDb) {
+      //si el usuario existe, redirect al controlador que se encarga del envío y actualización
+      return res.redirect(
+        `/api/v1/places/forgotpassword/sendpassword/${placeDb._id}`
+      );
+    } else {
+      // Si el usuario no está en la base de datos, devolvemos un 404
+      return res.status(404).json('Place not registered');
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const sendPlacePassword = async (req, res, next) => {
+  console.log('sendPlacePassword middleware executed');
+  try {
+    //recibimos la id por parámetros
+    const { id } = req.params;
+    console.log(req.params);
+    //el id lo utilizamos para buscar el usuario en la base de datos
+    const placeDb = await Place.findById(id);
+
+    //Aquí configuramos el correo electrónico para enviar el password
+    const email = process.env.EMAIL;
+    const password = process.env.PASSWORD;
+    if (!placeDb) {
+      return res.status(404).json('Place not found');
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: email,
+        pass: password,
+      },
+    });
+    let passwordSecure = randomPassword();
+    const mailOptions = {
+      from: email,
+      to: placeDb.email,
+      subject: '----------',
+      text: `User: ${placeDb.name}. Your new code login is ${passwordSecure} Hemos enviado esto porque tenemos una solicitud de cambio de contraseña, si no has sido ponte en contacto con nosotros, gracias.`,
+    };
+
+    //enviamos el correo y en el envío gestionamos el envío de la contraseña
+
+    transporter.sendMail(mailOptions, async function (error, info) {
+      if (error) {
+        console.log(error);
+
+        //si no se envía el correo retornamos un 404 y le decimos que no se ha hecho nada
+        return res.status(404).json('Email dont sent, User not updated');
+      } else {
+        //encriptamos la contraseña que hemos generado arriba
+        const newPasswordHash = bcrypt.hashSync(passwordSecure, 10);
+        //Guardamos la contraseña en el backend
+        await Place.findByIdAndUpdate(id, { password: newPasswordHash });
+        //Testeamos si todo se ha hecho bien. Nos traemos el user actualizado y hacemos un If para las contraseñas
+        const updatePlace = await Place.findById(id);
+        if (bcrypt.compareSync(passwordSecure, updatePlace.password)) {
+          //Si la contraseña hace math, mandamos 200
+          return res.status(200).json({
+            updateUser: false,
+            sendPassword: true,
+          });
+        }
+      }
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+  //! ------------------REVISAR-------------------------------------
+  //!-------------------------------------------------------------
+
+  //!-------------------------------------------------------------------------------------
+  //?-----------CAMBIO CONTRASEÑA SIN ESTAR LOGEADO--------------------------------
+  //!-------------------------------------------------------------------------------------
+
+  const modifyPlacePassword = async (req, res, next) => {
+    try {
+    
+
+      // Nos traemos password y newPassword del req.body
+      const { password, newPassword } = req.body;
+      console.log(req.body)
+      const { _id } = req.place;
+   
+      // Verificamos que password y newPassword sean cadenas de texto válidas
+      if (typeof password !== 'string' || typeof newPassword !== 'string') {
+        return res.status(400).json('Invalid password format');
+      }
+
+      // Comparamos las contraseñas, si es correcta, creamos la nueva contraseña y la hasheamos
+      const isPasswordMatch = bcrypt.compareSync(password, req.place.password);
+      if (isPasswordMatch) {
+        const newPasswordHash = bcrypt.hashSync(newPassword, 10);
+
+        // Buscamos el usuario por id y actualizamos la contraseña con la nueva
+        await Place.findByIdAndUpdate(_id, { password: newPasswordHash });
+
+        const updatePlace = await Place.findById(_id);
+        const isNewPasswordMatch = bcrypt.compareSync(
+          newPassword,
+          updatePlace.password
+        );
+        if (isNewPasswordMatch) {
+          return res.status(200).json({
+            updateUser: true,
+          });
+        } else {
+          return res.status(404).json({
+            updateUser: false,
+          });
+        }
+      } else {
+        return res.status(404).json('Password not matching');
+      }
+    } catch (error) {
+      return next(error);
+    }
+  };
+;
+
+module.exports = {
+  registerPlace,
+  checkNewPlace,
+  loginPlace,
+  resendPlaceCode,
+  forgotPlacePassword,
+  sendPlacePassword,
+ modifyPlacePassword,
+};

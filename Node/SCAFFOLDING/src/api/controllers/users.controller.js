@@ -188,6 +188,7 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     //buscamos el usuario
     const user = await User.findOne({ email });
+    console.log(req.body.email)
     //si no hay user, devolvemos un 404
     if (!user) {
       return res.status(404).json('User not found');
@@ -296,16 +297,18 @@ const sendPassword = async (req, res, next) => {
 
 const modifyPassword = async (req, res, next) => {
   try {
-    // Nos traemos password y newPassword del req.body
+    // Nos traeemos los datos del body y el token
     const { password, newPassword } = req.body;
     const { _id } = req.user;
-
-    // Verificamos que password y newPassword sean cadenas de texto válidas
+    console.log(req.user.password)
+    console.log(password)
+   
+    // Verificamos que password y newPassword sean strings
     if (typeof password !== 'string' || typeof newPassword !== 'string') {
       return res.status(400).json('Invalid password format');
     }
 
-    // Comparamos las contraseñas, si es correcta, creamos la nueva contraseña y la hasheamos
+    // Comparamos las contraseñas con compareSync
     const isPasswordMatch = bcrypt.compareSync(password, req.user.password);
     if (isPasswordMatch) {
       const newPasswordHash = bcrypt.hashSync(newPassword, 10);
@@ -339,56 +342,72 @@ const modifyPassword = async (req, res, next) => {
 //!---------------------------------------
 
 const updateUser = async (req, res, next) => {
+  
   try {
-    const { id, email, password, role, check, confirmationCode } = req.user;
-
-    // Creamos un nuevo modelo de user
+    // actualizamos los indexes de los elementos unicos por si han modificado
+    await User.syncIndexes();
+    // instanciamos un nuevo modelo de user
     const patchUser = new User(req.body);
-
-    //tengo que verificar lo que es modificable y no en el user. No vamos a cambiar; id, password, role, confirmationcode, check
-
-    patchUser._id = id;
-    patchUser.password = password;
-    patchUser.role = role;
-    patchUser.check = check;
-    patchUser.confirmationCode = confirmationCode;
-    patchUser.email = email;
-
-    // actualzamos el user
-
-    await User.findByIdAndUpdate(id, patchUser);
-    //eliminamos la imagen anterior si se recibió una nueva
+    // si tenemos la req.file le metemos el path de cloudinary
     if (req.file) {
-      deleteImgCloudinary(req.user.image);
+      patchUser.image = req.file.path;
     }
+    // estas cosas no quiero que me cambien por lo cual lo cojo del req.user gracias a que esto es con auth
+    patchUser._id = req.user._id;
+    patchUser.password = req.user.password;
+    patchUser.role = req.user.role;
+    patchUser.confirmationCode = req.user.confirmationCode;
+    patchUser.check = req.user.check;
+    patchUser.email = req.user.email;
 
-    //-----------Test RUNTIME para ver si se ha actualizado
-    //buscamos el usuario actualizado
-    const updateUser = await User.findById(id);
-    //cogemos la skeys del body
-    const updateKeys = Object.keys(req.body);
-
-    //creamos una variable para variar los test
-    const testUpdate = [];
-
-    //recorremos las keys y comparamos
-    updateKeys.forEach((item, index) => {
-      if (updateUser[item] == req.body[item]) {
-        testUpdate.push({ [item]: true });
-      } else {
-        testUpdate.push({ [item]: false });
+    // actualizamos en la db con el id y la instancia del modelo de user
+    try {
+      await User.findByIdAndUpdate(req.user._id, patchUser);
+      // borrramos en cloudinary la imagen antigua
+      if (req.file) {
+        deleteImgCloudinary(req.user.image);
       }
-    });
 
-    if (req.file) {
-      updateUser.image == req.file.path
-        ? testUpdate.push({ [item]: true })
-        : testUpdate.push({ [item]: false });
+      //! ----------------TEST RUNTIME 
+      // buscamos el usuario actualizado
+      const updateUser = await User.findById(req.user._id);
+
+      // cogemos la keys del body
+      const updateKeys = Object.keys(req.body);
+      console.log(updateKeys)
+
+      // creamos una variable para  guardar los test
+      const testUpdate = [];
+      // recorremos las keys y comparamos
+      updateKeys.forEach((item) => {
+        if (updateUser[item] == req.body[item]) {
+          testUpdate.push({
+            [item]: true,
+          });
+        } else {
+          testUpdate.push({
+            [item]: false,
+          });
+        }
+      });
+
+      if (req.file) {
+        updateUser.image == req.file.path
+          ? testUpdate.push({
+              file: true,
+            })
+          : testUpdate.push({
+              file: false,
+            });
+      }
+      return res.status(200).json({
+        testUpdate,
+      });
+    } catch (error) {
+      return res.status(404).json(error.message);
     }
-
-    return res.status(200).json(testUpdate);
   } catch (error) {
-    deleteImgCloudinary(req.file.path);
+    if (req.file) deleteImgCloudinary(catchImg);
     return next(error);
   }
 };
