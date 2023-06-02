@@ -8,7 +8,9 @@ const  {
     resendPlaceCode,
     forgotPlacePassword,
     sendPlacePassword,
-   modifyPlacePassword
+   modifyPlacePassword,
+   addGameToCatalog,
+   deleteGameInCatalog
   } = require("../controllers/places.controller")
 
 const PlacesRoutes = express.Router();
@@ -36,5 +38,11 @@ PlacesRoutes.get('/forgotpassword/sendpassword/:id', sendPlacePassword);
 
 //?-------Ruta CHANGE PASSWORD PLACE--------
 PlacesRoutes.patch('/changepassword', [isAuthPlace], modifyPlacePassword);
+
+//?--------Ruta ADD GAME TO PLACE CATALOG--------
+PlacesRoutes.post('/:placeId/add-game-to-catalog/:gameId', [isAuthPlace], addGameToCatalog);
+
+//?--------Ruta DELETE GAME IN PLACE CATALOG--------
+PlacesRoutes.post('/:placeId/delete-game-catalog/:gameId', [isAuthPlace], deleteGameInCatalog);
 
 module.exports = PlacesRoutes;

@@ -15,6 +15,7 @@ const GameSchema = new Schema(
     weight: { type: String, required: false },
     typesList: [{ type: String, required: false }],
     owners: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+    avaliable: [{ type: mongoose.Types.ObjectId, ref: 'Place' }],
   },
   {
     timestamps: true,

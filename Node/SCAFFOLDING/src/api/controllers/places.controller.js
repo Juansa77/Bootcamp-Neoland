@@ -1,4 +1,4 @@
-const User = require('../models/user.model');
+
 const Place = require('../models/place.model');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
@@ -7,7 +7,7 @@ const setError = require('../../helpers/handleError');
 const { deleteImgCloudinary } = require('../../middlewares/files.middleware');
 const { generateToken } = require('../../utils/token');
 const randomPassword = require('../../utils/randomPassword');
-const { findById } = require('../models/game.model');
+const Game = require('../models/game.model');
 
 dotenv.config();
 
@@ -216,8 +216,6 @@ const resendPlaceCode = async (req, res, next) => {
 //?-----------FORGOT PASSWORD PLACES--------------------------------
 //!-------------------------------------------------------------------------------------
 
-//! ------------------REVISAR-------------------------------------
-//!-------------------------------------------------------------
 
 const forgotPlacePassword = async (req, res, next) => {
   try {
@@ -299,8 +297,6 @@ const sendPlacePassword = async (req, res, next) => {
     return next(error);
   }
 }
-  //! ------------------REVISAR-------------------------------------
-  //!-------------------------------------------------------------
 
   //!-------------------------------------------------------------------------------------
   //?-----------CAMBIO CONTRASEÑA SIN ESTAR LOGEADO--------------------------------
@@ -351,6 +347,85 @@ const sendPlacePassword = async (req, res, next) => {
   };
 ;
 
+//!-------------------------------------------
+//?-----------ADD GAME  TO CATALOG------------
+//!-------------------------------------------
+
+const addGameToCatalog = async (req, res, next) => {
+  const { placeId, gameId } = req.params;
+
+  try {
+    //Lo primero es actualizar los indexs
+    await Game.syncIndexes();
+    const place = await Place.findById(placeId);
+    const game = await Game.findById(gameId);
+
+    if (!place) {
+      return res.status(404).json({ message: 'Place not found' });
+    }
+
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+
+    if (place.catalog.includes(gameId)) {
+      return res.status(400).json({ message: 'Game already added to place' });
+    } else {
+      place.catalog.push(gameId);
+      game.avaliable.push(placeId);
+
+      await place.save();
+      await game.save();
+
+      // Utilizamos la función populate para obtener la información completa del usuario y el juego
+      const populatedPlace = await place.populate('catalog');
+      const populatedGame = await game.populate('avaliable');
+
+      return res.status(200).json({
+        message: 'Game added to user',
+        place: populatedPlace,
+        game: populatedGame,
+      });
+    }
+  } catch (error) {
+    console.log('Error adding game to user', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+//!----------------------------------------------
+//?-----------DELETE GAME  IN CATALOG------------
+//!----------------------------------------------
+
+const deleteGameInCatalog = async (req, res, next) => {
+  const { placeId, gameId } = req.params;
+  const game = await Game.findById(gameId);
+
+  try {
+    const place = await Place.findById(placeId);
+    if (!place) {
+      return res.status(404).json({ message: 'Place not found' });
+    }
+    //Hacemos un includes para no meter juegos repetidos
+    if (!place.catalog.includes(gameId)) {
+      return res.status(400).json({ message: 'Game not found in Place' });
+    } else {
+      // Eliminamos el juego del array games del usuario y en el array del juego eliminamos el propietario
+      place.catalog.splice(place.catalog.indexOf(gameId), 1);
+      game.avaliable.splice(game.avaliable.indexOf(placeId), 1);
+      await place.save();
+      await game.save();
+      return res.status(200).json({ message: 'Game erased in place' });
+    }
+  } catch (error) {
+    console.log('Error erasing game in place', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
 module.exports = {
   registerPlace,
   checkNewPlace,
@@ -359,4 +434,6 @@ module.exports = {
   forgotPlacePassword,
   sendPlacePassword,
  modifyPlacePassword,
+ addGameToCatalog,
+ deleteGameInCatalog,
 };
