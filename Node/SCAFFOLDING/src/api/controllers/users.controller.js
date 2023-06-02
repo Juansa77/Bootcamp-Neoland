@@ -420,7 +420,7 @@ const deleteUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
     //primero vamos a eliminar el usuario de los amigos
-    const user = findById(_id);
+    const user = await User.findById(_id);
     const userFriends = user.friends;
     //Usamos el método updatemany para que nos quite las ID del usuario en los amigos
     await User.updateMany(

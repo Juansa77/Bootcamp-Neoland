@@ -30,6 +30,9 @@ const PlaceSchema = new Schema(
       unique: true
     },
     url: { type: String, required: false, unique: true },
+    instagram: { type: String, required: false, unique: true },
+    twitter: { type: String, required: false, unique: true },
+    phone: { type: String, required: false, unique: true },
     googleMapsUrl: { type: String, required: true, unique: true },
     description: {
       type: String,

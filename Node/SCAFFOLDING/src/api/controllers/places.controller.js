@@ -551,6 +551,35 @@ const updatePlace = async (req, res, next) => {
   }
 };
 
+//!---------------------------------------
+//?-----------DELETE  PLACE--------------
+//!---------------------------------------
+
+const deletePlace = async (req, res, next) => {
+  try {
+    const { _id } = req.place;
+    //primero vamos a eliminar el PLACE de los juegos
+    const place = await Place.findById(_id);
+    //obtenemos todas las ID de juegos que tienen en el catalogo
+    const placeCatalog = place.catalog;
+    //Usamos el método updatemany para que nos quite las ID del place en los juegos
+    await Game.updateMany(
+      { _id: { $in: placeCatalog } },
+      { $pull: { avaliable: _id } }
+    );
+    await Place.findByIdAndDelete(_id);
+    if (await Place.findById(_id)) {
+      return res.status(404).json('Place not deleted');
+    } else {
+      deleteImgCloudinary(req.place.image);
+      return res.status(200).json('Place deleted');
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+
 
 
 module.exports = {
@@ -565,4 +594,5 @@ module.exports = {
  deleteGameInCatalog,
  gameInCatalogByCity,
  updatePlace,
+ deletePlace,
 };

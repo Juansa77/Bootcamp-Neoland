@@ -1,19 +1,20 @@
 const express = require('express');
 const { upload } = require('../../middlewares/files.middleware');
-const { isAuthPlace } = require('../../middlewares/auth.midddleware');
-const  {
-    registerPlace,
-    checkNewPlace,
-    loginPlace,
-    resendPlaceCode,
-    forgotPlacePassword,
-    sendPlacePassword,
-   modifyPlacePassword,
-   addGameToCatalog,
-   deleteGameInCatalog,
-   gameInCatalogByCity,
-   updatePlace
-  } = require("../controllers/places.controller")
+const { isAuthPlace, isAuthAdmin } = require('../../middlewares/auth.midddleware');
+const {
+  registerPlace,
+  checkNewPlace,
+  loginPlace,
+  resendPlaceCode,
+  forgotPlacePassword,
+  sendPlacePassword,
+  modifyPlacePassword,
+  addGameToCatalog,
+  deleteGameInCatalog,
+  gameInCatalogByCity,
+  updatePlace,
+  deletePlace
+} = require('../controllers/places.controller');
 
 const PlacesRoutes = express.Router();
 
@@ -42,14 +43,21 @@ PlacesRoutes.get('/forgotpassword/sendpassword/:id', sendPlacePassword);
 PlacesRoutes.patch('/changepassword', [isAuthPlace], modifyPlacePassword);
 
 //?--------Ruta ADD GAME TO PLACE CATALOG--------
-PlacesRoutes.post('/:placeId/add-game-to-catalog/:gameId', [isAuthPlace], addGameToCatalog);
+PlacesRoutes.post(
+  '/:placeId/add-game-to-catalog/:gameId',
+  [isAuthPlace],
+  addGameToCatalog
+);
 
 //?--------Ruta DELETE GAME IN PLACE CATALOG--------
-PlacesRoutes.post('/:placeId/delete-game-catalog/:gameId', [isAuthPlace], deleteGameInCatalog);
+PlacesRoutes.post(
+  '/:placeId/delete-game-catalog/:gameId',
+  [isAuthPlace],
+  deleteGameInCatalog
+);
 
 //?-----Ruta GAME AVALIABLE IN CITY-------------
 PlacesRoutes.get('/:title/gamebycity/:city', gameInCatalogByCity);
-
 
 //?-------Ruta UPDATE  PLACE--------
 PlacesRoutes.patch(
@@ -59,5 +67,7 @@ PlacesRoutes.patch(
   updatePlace
 );
 
+//?-----Ruta DELETE PLACE--------
+PlacesRoutes.delete('/:id', [isAuthPlace] ,deletePlace);
 
 module.exports = PlacesRoutes;
