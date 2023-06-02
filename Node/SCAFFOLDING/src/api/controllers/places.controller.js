@@ -8,6 +8,8 @@ const { deleteImgCloudinary } = require('../../middlewares/files.middleware');
 const { generateToken } = require('../../utils/token');
 const randomPassword = require('../../utils/randomPassword');
 const Game = require('../models/game.model');
+const cityValidation = require('../../utils/cityValidation');
+
 
 dotenv.config();
 
@@ -424,6 +426,58 @@ const deleteGameInCatalog = async (req, res, next) => {
 };
 
 
+//!----------------------------------------------------
+//?-----------GAME IN CATALOG BY CITY------------
+//!----------------------------------------------------
+const gameInCatalogByCity = async (req, res, next) => {
+  const { title, city } = req.params;
+  //Utilizamos la función para verificar si la ciudad es válida antes de hacer nada
+  const cityIsValid = cityValidation(city);
+
+  if (cityIsValid === false) {
+    return res.status(404).json('City is not valid');
+  }
+  try {
+    //Obtenemos el juego
+    const games = await Game.find({ title: title });
+
+    if (games.length > 0) {
+      //Usamos un Promise all para poder usar el await y manejar la asincronía
+      const ownersInCity = await Promise.all(
+        games.flatMap(async (game) => {
+          //Sacamos todos los places que tienen el juego
+          const places = game.avaliable;
+          //mapeamos para ver cual de ellos lo tienen y lo devolvemos en el return
+          const mappedPlaces = await Promise.all(
+            places.map(async (place) => {
+              //sacamos todos los places y solo devolvemos en return los que conincida con la ciudad
+              const mappedPlace = await Place.findById(place);
+              if (mappedPlace.city === city) {
+                return place;
+              }
+            })
+          );
+          //retotnamos el array mappeado controlado que no sea undefined
+          return mappedPlaces.filter((owner) => owner !== undefined);
+        })
+      );
+      //aplanamos el array para devolverlo
+      const flattenedPlaces = ownersInCity.flat();
+      //Ternario para manejar si hay propietarios del título y manejar la respuesta
+
+      return flattenedPlaces.length === 0
+        ? res.status(404).json({ message: 'Game not found in city' })
+        : res.status(200).json(flattenedPlaces);
+    } else {
+      // La consulta del título no se realizó correctamente
+      return res.status(400).json({ message: 'Title not found in DB' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 
 
 module.exports = {
@@ -436,4 +490,5 @@ module.exports = {
  modifyPlacePassword,
  addGameToCatalog,
  deleteGameInCatalog,
+ gameInCatalogByCity,
 };

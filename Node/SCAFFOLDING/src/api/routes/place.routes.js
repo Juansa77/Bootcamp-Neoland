@@ -10,7 +10,8 @@ const  {
     sendPlacePassword,
    modifyPlacePassword,
    addGameToCatalog,
-   deleteGameInCatalog
+   deleteGameInCatalog,
+   gameInCatalogByCity
   } = require("../controllers/places.controller")
 
 const PlacesRoutes = express.Router();
@@ -44,5 +45,9 @@ PlacesRoutes.post('/:placeId/add-game-to-catalog/:gameId', [isAuthPlace], addGam
 
 //?--------Ruta DELETE GAME IN PLACE CATALOG--------
 PlacesRoutes.post('/:placeId/delete-game-catalog/:gameId', [isAuthPlace], deleteGameInCatalog);
+
+//?-----Ruta GAME AVALIABLE IN CITY-------------
+PlacesRoutes.get('/:title/gamebycity/:city', gameInCatalogByCity);
+
 
 module.exports = PlacesRoutes;
