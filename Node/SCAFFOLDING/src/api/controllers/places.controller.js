@@ -384,7 +384,7 @@ const addGameToCatalog = async (req, res, next) => {
       const populatedGame = await game.populate('avaliable');
 
       return res.status(200).json({
-        message: 'Game added to user',
+        message: 'Game added to PLACE',
         place: populatedPlace,
         game: populatedGame,
       });
@@ -432,7 +432,7 @@ const deleteGameInCatalog = async (req, res, next) => {
 const gameInCatalogByCity = async (req, res, next) => {
   const { title, city } = req.params;
   //Utilizamos la función para verificar si la ciudad es válida antes de hacer nada
-  const cityIsValid = cityValidation(city);
+  const cityIsValid =  cityValidation(city);
 
   if (cityIsValid === false) {
     return res.status(404).json('City is not valid');
@@ -452,7 +452,7 @@ const gameInCatalogByCity = async (req, res, next) => {
             places.map(async (place) => {
               //sacamos todos los places y solo devolvemos en return los que conincida con la ciudad
               const mappedPlace = await Place.findById(place);
-              if (mappedPlace.city === city) {
+              if (mappedPlace.city.toLowerCase() === city.toLowerCase()) {
                 return place;
               }
             })
@@ -478,6 +478,79 @@ const gameInCatalogByCity = async (req, res, next) => {
 };
 
 
+//!---------------------------------------
+//?-----------UPDATE PLACE--------------
+//!---------------------------------------
+
+const updatePlace = async (req, res, next) => {
+  
+  try {
+    // actualizamos los indexes de los elementos unicos por si han modificado
+    await Place.syncIndexes();
+    // Creamos un nuvo user
+    const patchPlace = new Place(req.body);
+    // si tenemos la req.file le metemos el path de cloudinary
+    if (req.file) {
+      patchPlace.image = req.file.path;
+    }
+    // Elementos que no queremos modificar
+    patchPlace._id = req.place._id;
+    patchPlace.password = req.place.password;
+    patchPlace.confirmationCode = req.place.confirmationCode;
+    patchPlace.email = req.place.email;
+
+    // actualizamos en la db con el id y la instancia del modelo de user
+    try {
+      await Place.findByIdAndUpdate(req.place._id, patchPlace);
+      // borrramos en cloudinary la imagen antigua
+      if (req.file) {
+        deleteImgCloudinary(req.place.image);
+      }
+
+      //! ----------------TEST RUNTIME 
+      // buscamos el usuario actualizado
+      const updatePlace = await Place.findById(req.place._id);
+
+      // cogemos la keys del body
+      const updateKeys = Object.keys(req.body);
+      console.log(updateKeys)
+
+      // creamos una variable para  guardar los test
+      const testUpdate = [];
+      // recorremos las keys y comparamos para ver si son iguales o se han modificado
+      updateKeys.forEach((item) => {
+        if (updatePlace[item] == req.body[item]) {
+          testUpdate.push({
+            [item]: true,
+          });
+        } else {
+          testUpdate.push({
+            [item]: false,
+          });
+        }
+      });
+
+      if (req.file) {
+        updatePlace.image == req.file.path
+          ? testUpdate.push({
+              file: true,
+            })
+          : testUpdate.push({
+              file: false,
+            });
+      }
+      return res.status(200).json({
+        testUpdate,
+      });
+    } catch (error) {
+      return res.status(404).json(error.message);
+    }
+  } catch (error) {
+    if (req.file) deleteImgCloudinary(catchImg);
+    return next(error);
+  }
+};
+
 
 
 module.exports = {
@@ -491,4 +564,5 @@ module.exports = {
  addGameToCatalog,
  deleteGameInCatalog,
  gameInCatalogByCity,
+ updatePlace,
 };

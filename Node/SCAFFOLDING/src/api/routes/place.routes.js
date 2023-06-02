@@ -11,7 +11,8 @@ const  {
    modifyPlacePassword,
    addGameToCatalog,
    deleteGameInCatalog,
-   gameInCatalogByCity
+   gameInCatalogByCity,
+   updatePlace
   } = require("../controllers/places.controller")
 
 const PlacesRoutes = express.Router();
@@ -48,6 +49,15 @@ PlacesRoutes.post('/:placeId/delete-game-catalog/:gameId', [isAuthPlace], delete
 
 //?-----Ruta GAME AVALIABLE IN CITY-------------
 PlacesRoutes.get('/:title/gamebycity/:city', gameInCatalogByCity);
+
+
+//?-------Ruta UPDATE  PLACE--------
+PlacesRoutes.patch(
+  '/update/update',
+  [isAuthPlace],
+  upload.single('image'),
+  updatePlace
+);
 
 
 module.exports = PlacesRoutes;

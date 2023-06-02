@@ -346,13 +346,13 @@ const updateUser = async (req, res, next) => {
   try {
     // actualizamos los indexes de los elementos unicos por si han modificado
     await User.syncIndexes();
-    // instanciamos un nuevo modelo de user
+    // Creamos un nuvo modelo de usar
     const patchUser = new User(req.body);
     // si tenemos la req.file le metemos el path de cloudinary
     if (req.file) {
       patchUser.image = req.file.path;
     }
-    // estas cosas no quiero que me cambien por lo cual lo cojo del req.user gracias a que esto es con auth
+    // Elementos que no queremos modificar
     patchUser._id = req.user._id;
     patchUser.password = req.user.password;
     patchUser.role = req.user.role;
