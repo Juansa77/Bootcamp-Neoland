@@ -352,13 +352,17 @@ const updateUser = async (req, res, next) => {
     if (req.file) {
       patchUser.image = req.file.path;
     }
+     //Para cambiar el email, si se solicita
+     if (req.body.email) {
+      patchUser.email = req.body.email;
+    }
     // Elementos que no queremos modificar
     patchUser._id = req.user._id;
     patchUser.password = req.user.password;
     patchUser.role = req.user.role;
     patchUser.confirmationCode = req.user.confirmationCode;
     patchUser.check = req.user.check;
-    patchUser.email = req.user.email;
+   
 
     // actualizamos en la db con el id y la instancia del modelo de user
     try {

@@ -260,69 +260,22 @@ const byType = async (req, res, next) => {
 const updateGame = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const {
-      title,
-      rating,
-      gameRank,
-      image,
-      year,
-      players,
-      playTime,
-      age,
-      weight,
-    } = req.params;
 
+    // Verificar si la ID del juego es válida
     const game = await Game.findById(id);
-
-    // Verificamos si la ID es válida
     if (!game) {
       return res.status(400).json({ message: 'Invalid game ID' });
     }
 
-    // Creamos un objeto con los datos a actualizar
-    const updatableData = {};
+    // Actualizar el juego con los datos proporcionados en req.body
+    const updatedGame = await Game.findByIdAndUpdate(id, req.body, { new: true });
 
-    // SHORT CIRCUIT EVALUATION (OPERADOR && NOS DICE QUE SI EXISTE, LA AÑADAMOS Y SI ES UNDEFINED O NULL LO DEJAMOS IGUAL) Verificamos los valores a actualizar y los agregamos al objeto
-    updatableData.title = title && title;
-    updatableData.rating = rating && rating;
-    updatableData.players = players && players;
-    updatableData.gameRank = gameRank && gameRank;
-    updatableData.image = image && image;
-    updatableData.year = year && year;
-    updatableData.playTime = playTime && playTime;
-    updatableData.age = age && age;
-    updatableData.weight = weight && weight;
-
-    // Verificamos si hay datos proporcionados para actualizar
-    if (Object.keys(updatableData).length === 0) {
-      return res.status(400).json({ message: 'No data provided for update' });
-    }
-
-    // Actualizamos el juego
-    const updatedGame = await Game.findByIdAndUpdate(id, updatableData, {
-      new: true,
-    });
-
-    // Verificamos si se ha actualizado correctamente
+    // Verificar si se actualizó correctamente
     if (!updatedGame) {
       return res.status(404).json({ message: 'Game not found' });
     }
 
-    // Creamos una respuesta con el resultado de la actualización
-    const updateResult = {
-      id: id,
-      title: updatedGame.title,
-      rating: updatedGame.rating,
-      year: updatedGame.year,
-      age: updatedGame.age,
-      playTime: updatedGame.playTime,
-      weight: updatedGame.weight,
-      players: updatedGame.players,
-      success: true,
-      image: updatedGame.image,
-    };
-
-    return res.status(200).json(updateResult);
+    return res.status(200).json(updatedGame);
   } catch (error) {
     return next(error);
   }

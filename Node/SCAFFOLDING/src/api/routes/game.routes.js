@@ -47,7 +47,7 @@ GamesRoutes.get('/bytype', byType);
 
 //?-----Ruta UPDATE GAME--------
 GamesRoutes.patch(
-  '/update/:id/:title/:rating',
+  '/update/update/:id',
   [isAuthAdmin],
   upload.single('image'),
   updateGame
