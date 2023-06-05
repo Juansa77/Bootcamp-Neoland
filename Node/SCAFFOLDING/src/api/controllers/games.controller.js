@@ -3,6 +3,8 @@ const Game = require('../models/game.model');
 const dotenv = require('dotenv');
 const User = require('../models/user.model');
 const cityValidation = require('../../utils/cityValidation');
+const firstToUpperCase = require('../../utils/firstToUpperCase');
+
 
 dotenv.config();
 
@@ -12,9 +14,10 @@ dotenv.config();
 
 const title = async (req, res, next) => {
   const { title } = req.params;
+const titleToSearch= firstToUpperCase(title)
 
   try {
-    const game = await Game.find({ title: title });
+    const game = await Game.find({ title: titleToSearch });
     if (game) {
       return res.status(200).json(game);
     }
@@ -33,7 +36,9 @@ const gameByID = async (req, res, next) => {
   try {
     const gameID = await Game.findById(id);
 
-    if (gameID) {
+    if (!gameID) {
+      return res.status(404).json('Game not found');
+    } else {
       return res.status(200).json(gameID);
     }
   } catch (error) {
@@ -162,12 +167,13 @@ const gamesByCities = async (req, res, next) => {
   //Utilizamos la función para verificar si la ciudad es válida antes de hacer nada
   const cityIsValid = cityValidation(city);
 
+  const titleToSearch = firstToUpperCase(title)
   if (cityIsValid === false) {
     return res.status(404).json('City is not valid');
   }
   try {
     //Obtenemos el juego
-    const games = await Game.find({ title: title });
+    const games = await Game.find({ title: titleToSearch });
 
     if (games.length > 0) {
       //Usamos un Promise all para poder usar el await y manejar la asincronía

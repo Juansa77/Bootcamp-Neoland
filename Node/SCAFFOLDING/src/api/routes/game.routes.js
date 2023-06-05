@@ -28,7 +28,7 @@ GamesRoutes.get('/id/:id', gameByID);
 GamesRoutes.post('/:userId/add-game/:gameId', [isAuth], addGameToUser);
 
 //?-------Ruta DELETE GAME IN USER-----
-GamesRoutes.post('/:userId/delete-game/:gameId', [isAuth], deleteGameInUser);
+GamesRoutes.post('/:userId/delete-game-user/:gameId', [isAuth], deleteGameInUser);
 
 //?------Ruta GAME BY RATING-------------
 GamesRoutes.get('/byrate/:rating', gameByRating);
@@ -47,7 +47,7 @@ GamesRoutes.get('/bytype', byType);
 
 //?-----Ruta UPDATE GAME--------
 GamesRoutes.patch(
-  '/update/:id/:title',
+  '/update/:id/:title/:rating',
   [isAuthAdmin],
   upload.single('image'),
   updateGame

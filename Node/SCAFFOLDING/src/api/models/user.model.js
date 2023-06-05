@@ -37,6 +37,8 @@ const UserSchema = new Schema(
       required: true,
     },
     role: { type: String, enum: ['admin', 'user'], required: true },
+    instagram: { type: String, required: false, unique: true },
+    twitter: { type: String, required: false, unique: true },
     image: { type: String },
     confirmationCode: { type: Number, required: true },
     check: { type: Boolean, required: true, default: false },
