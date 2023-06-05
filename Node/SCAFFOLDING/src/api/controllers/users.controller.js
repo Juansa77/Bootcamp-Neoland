@@ -53,7 +53,6 @@ const register = async (req, res, next) => {
     } else {
       const createUser = await newUser.save();
       createUser.password = null;
-    
 
       //ENVIAMOS EL CORREO DE CONFIRMACIÓN
 
@@ -188,7 +187,7 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     //buscamos el usuario
     const user = await User.findOne({ email });
-    console.log(req.body.email)
+    console.log(req.body.email);
     //si no hay user, devolvemos un 404
     if (!user) {
       return res.status(404).json('User not found');
@@ -300,9 +299,9 @@ const modifyPassword = async (req, res, next) => {
     // Nos traeemos los datos del body y el token
     const { password, newPassword } = req.body;
     const { _id } = req.user;
-    console.log(req.user.password)
-    console.log(password)
-   
+    console.log(req.user.password);
+    console.log(password);
+
     // Verificamos que password y newPassword sean strings
     if (typeof password !== 'string' || typeof newPassword !== 'string') {
       return res.status(400).json('Invalid password format');
@@ -342,7 +341,6 @@ const modifyPassword = async (req, res, next) => {
 //!---------------------------------------
 
 const updateUser = async (req, res, next) => {
-  
   try {
     // actualizamos los indexes de los elementos unicos por si han modificado
     await User.syncIndexes();
@@ -352,9 +350,9 @@ const updateUser = async (req, res, next) => {
     if (req.file) {
       patchUser.image = req.file.path;
     }
-     //Para cambiar el email, si se solicita
-     if (req.body.email) {
-      patchUser.email = req.body.email;
+    //Para cambiar el email, si se solicita
+    if (req.body.email) {
+   
 
       //Aplicamos la misma lógica que el send code
       const email = process.env.EMAIL;
@@ -366,35 +364,37 @@ const updateUser = async (req, res, next) => {
           pass: password,
         },
       });
-  
+
       //comprobamos si el usuario existe para enviar el password con findone
-  
-      const userExists = await User.findOne({ email: req.body.email });
-  
+
+      const userExists = await User.findOne({ email: req.user.email });
+
       if (userExists) {
-        await userExists.updateOne({ check: false })
-        const mailOptions = {
-          from: email,
-          to: req.body.email,
-          subjet: 'Confirmation code',
-          text: `Your confirmation code is ${userExists.confirmationCode}`,
-        };
-  
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.log(error);
-          } else {
-    
-            return res.status(200).json({
-              resend: true,
-            });
-          }
-        });
+        if (userExists.email == req.body.email) {
+          patchUser.email = req.user.email;
+        } else {
+          await userExists.updateOne({ check: false });
+          const mailOptions = {
+            from: email,
+            to: req.body.email,
+            subjet: 'Confirmation code',
+            text: `Your confirmation code is ${userExists.confirmationCode}`,
+          };
+
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.log(error);
+            } else {
+              return res.status(200).json({
+                resend: true,
+              });
+            }
+          });
+        }
+        patchUser.email = req.body.email;
       } else {
         return res.status(404).json('User not found');
       }
-      
-      
     }
     // Elementos que no queremos modificar
     patchUser._id = req.user._id;
@@ -402,7 +402,6 @@ const updateUser = async (req, res, next) => {
     patchUser.role = req.user.role;
     patchUser.confirmationCode = req.user.confirmationCode;
     patchUser.check = req.user.check;
-   
 
     // actualizamos en la db con el id y la instancia del modelo de user
     try {
@@ -412,13 +411,13 @@ const updateUser = async (req, res, next) => {
         deleteImgCloudinary(req.user.image);
       }
 
-      //! ----------------TEST RUNTIME 
+      //! ----------------TEST RUNTIME
       // buscamos el usuario actualizado
       const updateUser = await User.findById(req.user._id);
 
       // cogemos la keys del body
       const updateKeys = Object.keys(req.body);
-      console.log(updateKeys)
+      console.log(updateKeys);
 
       // creamos una variable para  guardar los test
       const testUpdate = [];
