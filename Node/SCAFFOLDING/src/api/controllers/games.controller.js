@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const User = require('../models/user.model');
 const cityValidation = require('../../utils/cityValidation');
 const firstToUpperCase = require('../../utils/firstToUpperCase');
+const { deleteImgCloudinary } = require('../../middlewares/files.middleware');
+const setError = require('../../helpers/handleError');
 
 
 dotenv.config();
@@ -18,11 +20,13 @@ const titleToSearch= firstToUpperCase(title)
 
   try {
     const game = await Game.find({ title: titleToSearch });
-    if (game) {
+    console.log(game.length)
+    if (game.length>0) {
       return res.status(200).json(game);
     }
+    else{  return res.status(404).json('Game not found');}
   } catch (error) {
-    return res.status(404).json('Game not found');
+    return res.status(500).json(error);
   }
 };
 
@@ -313,6 +317,53 @@ const deleteGameByID = async (req, res, next) => {
   }
 };
 
+//!---------------------------------------
+//?-----------ADD GAME TO DB---------
+//!---------------------------------------
+
+const addGameToDb = async (req, res, next) => {
+  let catchImg = req.file?.path;
+  try {
+    //Lo primero es actualizar los indexs
+    await Game.syncIndexes();
+    
+
+
+    //Hacer una nueva estancia de usuario
+    const newGame = new Game({ ...req.body });
+    if (req.file) {
+      newGame.image = req.file.path;
+    } else {
+      newGame.image = 'Imagen genérica';
+    }
+    const gameExits = await Game.findOne({
+      title: newGame.title
+    });
+
+    if (gameExits) {
+      return next(setError(409, 'Game already in DB'));
+    } else {
+      const createGame = await newGame.save();
+    
+
+      //ENVIAMOS EL CORREO DE CONFIRMACIÓN
+
+  
+
+      return res.status(201).json({
+        game: createGame,
+      });
+    }
+  } catch (error) {
+    deleteImgCloudinary(catchImg);
+    return next(
+      setError(error.code || 500, error.message || 'Error creating game')
+    );
+  }
+};
+
+
+
 //!----------------------------------------------
 //?-----------GAME  MULTI FILTER------------
 //!----------------------------------------------
@@ -361,4 +412,5 @@ module.exports = {
   updateGame,
   deleteGameByID,
   multIFilter,
+  addGameToDb
 };

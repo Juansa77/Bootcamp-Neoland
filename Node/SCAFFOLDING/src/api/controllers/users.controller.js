@@ -479,7 +479,7 @@ const deleteUser = async (req, res, next) => {
       { _id: { $in: userFriends } },
       { $pull: { friends: _id } }
     );
-
+//Quitamos la Id del usuario de la lista de poseedores
     await Game.updateMany(
       { _id: { $in: userGames } },
       { $pull: { owners: _id } }

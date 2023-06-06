@@ -12,7 +12,8 @@ const {
   byType,
   updateGame,
   deleteGameByID,
-  multIFilter
+  multIFilter,
+  addGameToDb
 } = require('../controllers/games.controller');
 const { isAuth, isAuthAdmin } = require('../../middlewares/auth.midddleware');
 
@@ -53,7 +54,11 @@ GamesRoutes.patch(
   updateGame
 );
 
-//?-----Ruta DELETE GAME--------
+//?----- RUTA ADD GAME TO DB--------
+GamesRoutes.post('/register-new-game', [isAuthAdmin], upload.single('image'), addGameToDb);
+
+
+//?-----Ruta DELETE GAME IN DB--------
 GamesRoutes.delete('/delete-game/:id', [isAuthAdmin], deleteGameByID);
 
 //?-----Ruta GAME MULTIFILTERING (TYPE, TIME, PLAYERS, RATING)-------------
