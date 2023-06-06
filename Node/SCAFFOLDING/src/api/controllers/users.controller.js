@@ -6,7 +6,8 @@ const setError = require('../../helpers/handleError');
 const { deleteImgCloudinary } = require('../../middlewares/files.middleware');
 const { generateToken } = require('../../utils/token');
 const randomPassword = require('../../utils/randomPassword');
-const { findById } = require('../models/game.model');
+const Game = require('../models/game.model');
+
 dotenv.config();
 
 //!---------------------------------------
@@ -344,7 +345,7 @@ const updateUser = async (req, res, next) => {
   try {
     // actualizamos los indexes de los elementos unicos por si han modificado
     await User.syncIndexes();
-    // Creamos un nuvo modelo de usar
+    // Creamos un nuvo modelo de usar, en el que añadiremos los cambios y después sobreescribimos el user existente con este
     const patchUser = new User(req.body);
     // si tenemos la req.file le metemos el path de cloudinary
     if (req.file) {
@@ -357,15 +358,16 @@ const updateUser = async (req, res, next) => {
       const userExists = await User.findOne({ email: req.user.email });
 
       if (userExists) {
-        //Si hay email en el Rqe.BODY pero es el mismo, se deja igual
+        //Si hay email en el Req.BODY pero es el mismo, se deja igual
         if (userExists.email == req.body.email) {
           patchUser.email = req.user.email;
         } else {
           //Si el email es diferentre, comprobamos que no lo use otro usuario
+          //Creo que esto no es necesario, lo gestiona mongo y no permite keys duplicadas, ya que está en unique
           const emailInUseByAnotherUser = await User.findOne({
             email: req.body.email,
           });
-//Si el email es diferente al del usuario y no lo usa otro usuario, enviamos el code
+          //Si el email es diferente al del usuario y no lo usa otro usuario, enviamos el code
           if (!emailInUseByAnotherUser) {
             //Aplicamos la misma lógica que el send code
             const email = process.env.EMAIL;
@@ -401,7 +403,7 @@ const updateUser = async (req, res, next) => {
         return res.status(404).json('User not found');
       }
     }
-    // Elementos que no queremos modificar
+    // Elementos que no queremos modificar, lo dejaremos igual
     patchUser._id = req.user._id;
     patchUser.password = req.user.password;
     patchUser.role = req.user.role;
@@ -426,7 +428,7 @@ const updateUser = async (req, res, next) => {
 
       // creamos una variable para  guardar los test
       const testUpdate = [];
-      // recorremos las keys y comparamos
+      // recorremos las keys y comparamos, si es igual lo que recibe del body con el usuario actualizado, ok
       updateKeys.forEach((item) => {
         if (updateUser[item] == req.body[item]) {
           testUpdate.push({
@@ -470,11 +472,19 @@ const deleteUser = async (req, res, next) => {
     //primero vamos a eliminar el usuario de los amigos
     const user = await User.findById(_id);
     const userFriends = user.friends;
+    //Después vamos a eliminar el usuario de la lista de poseedores de un juevgo
+    const userGames = user.games;
     //Usamos el método updatemany para que nos quite las ID del usuario en los amigos
     await User.updateMany(
       { _id: { $in: userFriends } },
       { $pull: { friends: _id } }
     );
+
+    await Game.updateMany(
+      { _id: { $in: userGames } },
+      { $pull: { owners: _id } }
+    );
+
     await User.findByIdAndDelete(_id);
     if (await User.findById(_id)) {
       return res.status(404).json('User not deleted');
