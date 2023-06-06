@@ -7,7 +7,6 @@ const firstToUpperCase = require('../../utils/firstToUpperCase');
 const { deleteImgCloudinary } = require('../../middlewares/files.middleware');
 const setError = require('../../helpers/handleError');
 
-
 dotenv.config();
 
 //!---------------------------------------
@@ -16,15 +15,16 @@ dotenv.config();
 
 const title = async (req, res, next) => {
   const { title } = req.params;
-const titleToSearch= firstToUpperCase(title)
+  const titleToSearch = firstToUpperCase(title);
 
   try {
     const game = await Game.find({ title: titleToSearch });
-    console.log(game.length)
-    if (game.length>0) {
+    console.log(game.length);
+    if (game.length > 0) {
       return res.status(200).json(game);
+    } else {
+      return res.status(404).json('Game not found');
     }
-    else{  return res.status(404).json('Game not found');}
   } catch (error) {
     return res.status(500).json(error);
   }
@@ -40,10 +40,10 @@ const gameByID = async (req, res, next) => {
   try {
     const gameID = await Game.findById(id);
 
-    if (!gameID) {
-      return res.status(404).json('Game not found');
-    } else {
+    if (gameID > 0) {
       return res.status(200).json(gameID);
+    } else {
+      return res.status(404).json('Game not found');
     }
   } catch (error) {
     res.status(500).json(error);
@@ -136,11 +136,15 @@ const gameByRating = async (req, res, next) => {
   try {
     //PARA ENCONTRAR ELEMENTOS IGUALES O SUPERIORES A LA PUNTUACIÓN ELEGIDA, PONEMOS EL OPERADOR DE MONGO $gte
     const games = await Game.find({ rating: { $gte: rating } });
-    if (games) {
+ 
+    if (games.length > 0) {
+      
       return res.status(200).json(games);
+    } else {
+      return res.status(404).json('Games with rating not found');
     }
   } catch (error) {
-    return res.status(404).json('Games with rating not found');
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -171,7 +175,7 @@ const gamesByCities = async (req, res, next) => {
   //Utilizamos la función para verificar si la ciudad es válida antes de hacer nada
   const cityIsValid = cityValidation(city);
 
-  const titleToSearch = firstToUpperCase(title)
+  const titleToSearch = firstToUpperCase(title);
   if (cityIsValid === false) {
     return res.status(404).json('City is not valid');
   }
@@ -222,11 +226,12 @@ const byPlayingTime = async (req, res, next) => {
   try {
     //PARA ENCONTRAR ELEMENTOS IGUALES O SUPERIORES A LA PUNTUACIÓN ELEGIDA, PONEMOS EL OPERADOR DE MONGO $gte
     const games = await Game.find({ playTime: playingTime });
-    if (games) {
+    if (games.length>0) {
       return res.status(200).json(games);
     }
+    else{ return res.status(404).json('Games not found')}
   } catch (error) {
-    return res.status(404).json('Games not found');
+    return res.status(500).json({ message: 'Internal server error' })
   }
 };
 
@@ -272,7 +277,9 @@ const updateGame = async (req, res, next) => {
     }
 
     // Actualizar el juego con los datos proporcionados en req.body
-    const updatedGame = await Game.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedGame = await Game.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
 
     // Verificar si se actualizó correctamente
     if (!updatedGame) {
@@ -326,8 +333,6 @@ const addGameToDb = async (req, res, next) => {
   try {
     //Lo primero es actualizar los indexs
     await Game.syncIndexes();
-    
-
 
     //Hacer una nueva estancia de usuario
     const newGame = new Game({ ...req.body });
@@ -337,18 +342,15 @@ const addGameToDb = async (req, res, next) => {
       newGame.image = 'Imagen genérica';
     }
     const gameExits = await Game.findOne({
-      title: newGame.title
+      title: newGame.title,
     });
 
     if (gameExits) {
       return next(setError(409, 'Game already in DB'));
     } else {
       const createGame = await newGame.save();
-    
 
       //ENVIAMOS EL CORREO DE CONFIRMACIÓN
-
-  
 
       return res.status(201).json({
         game: createGame,
@@ -361,8 +363,6 @@ const addGameToDb = async (req, res, next) => {
     );
   }
 };
-
-
 
 //!----------------------------------------------
 //?-----------GAME  MULTI FILTER------------
@@ -412,5 +412,5 @@ module.exports = {
   updateGame,
   deleteGameByID,
   multIFilter,
-  addGameToDb
+  addGameToDb,
 };

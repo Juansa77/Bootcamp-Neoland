@@ -337,6 +337,28 @@ const modifyPassword = async (req, res, next) => {
     return next(error);
   }
 };
+
+//!---------------------------------------
+//?-----------GET USER BY ID--------------
+//!---------------------------------------
+const getUserByID = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const userID = await User.findById(id);
+
+    if (userID>0) {
+      return res.status(200).json(userID);
+
+    } else {
+      return res.status(404).json('User not found');
+     
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 //!---------------------------------------
 //?-----------UPDATE USER--------------
 //!---------------------------------------
@@ -579,4 +601,5 @@ module.exports = {
   modifyPassword,
   addFriendToUser,
   deleteFriendInUser,
+  getUserByID,
 };
