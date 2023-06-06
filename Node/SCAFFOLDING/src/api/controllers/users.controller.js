@@ -352,44 +352,49 @@ const updateUser = async (req, res, next) => {
     }
     //Para cambiar el email, si se solicita
     if (req.body.email) {
-   
-
-      //Aplicamos la misma lógica que el send code
-      const email = process.env.EMAIL;
-      const password = process.env.PASSWORD;
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: email,
-          pass: password,
-        },
-      });
-
       //comprobamos si el usuario existe para enviar el password con findone
 
       const userExists = await User.findOne({ email: req.user.email });
 
       if (userExists) {
+        //Si hay email en el Rqe.BODY pero es el mismo, se deja igual
         if (userExists.email == req.body.email) {
           patchUser.email = req.user.email;
         } else {
-          await userExists.updateOne({ check: false });
-          const mailOptions = {
-            from: email,
-            to: req.body.email,
-            subjet: 'Confirmation code',
-            text: `Your confirmation code is ${userExists.confirmationCode}`,
-          };
-
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.log(error);
-            } else {
-              return res.status(200).json({
-                resend: true,
-              });
-            }
+          //Si el email es diferentre, comprobamos que no lo use otro usuario
+          const emailInUseByAnotherUser = await User.findOne({
+            email: req.body.email,
           });
+//Si el email es diferente al del usuario y no lo usa otro usuario, enviamos el code
+          if (!emailInUseByAnotherUser) {
+            //Aplicamos la misma lógica que el send code
+            const email = process.env.EMAIL;
+            const password = process.env.PASSWORD;
+            const transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: email,
+                pass: password,
+              },
+            });
+            await userExists.updateOne({ check: false });
+            const mailOptions = {
+              from: email,
+              to: req.body.email,
+              subjet: 'Confirmation code',
+              text: `Your confirmation code is ${userExists.confirmationCode}`,
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                console.log(error);
+              } else {
+                return res.status(200).json({
+                  resend: true,
+                });
+              }
+            });
+          }
         }
         patchUser.email = req.body.email;
       } else {
