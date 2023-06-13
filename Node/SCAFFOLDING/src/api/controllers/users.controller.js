@@ -177,7 +177,7 @@ const resendCode = async (req, res, next) => {
     return next(setError(500, error.message || 'General error sending code'));
   }
 };
-
+//que solo se puedaca,biar el correo cuando se haga check
 //!--------------------------------------------------
 //?-----------LOGIN--------------------------------
 //!--------------------------------------------------
