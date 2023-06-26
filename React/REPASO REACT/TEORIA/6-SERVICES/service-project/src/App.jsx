@@ -1,15 +1,18 @@
-
-import './App.css'
-import Register from './pages/Register'
+import "./App.css";
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
-
-
   return (
     <>
-<Register/>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
