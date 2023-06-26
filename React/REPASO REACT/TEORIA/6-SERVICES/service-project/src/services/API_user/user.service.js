@@ -1,4 +1,4 @@
-import { updateToken } from "../../utils/updateToken";
+
 import { APIuser } from "./serviceApiUser.config";
 
 export const registerUser = async (formData) => {

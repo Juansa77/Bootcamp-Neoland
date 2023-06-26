@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import "./Register.css";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -5,12 +6,16 @@ import { useEffect, useState } from "react";
 import Uploadfile from "../components/Uploadfile";
 import { registerUser } from "../services/API_user/user.service";
 import Spinner from "../components/Spinner";
+import useRegisterError from "../hooks/useRegisterError";
+
 
 const Register = () => {
+  //* MÉTODOS DE REACT HOOK FORM
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   //? Para setear cuando se llama al servicio y cuando termina la llamada
   const [send, setSend] = useState(false);
+  //* Estados para manejar que la respuesta es exitosa
   const [okRegister, setOkRegister] = useState(false);
 
   //! ------------------------------------------------------------------------------
@@ -29,7 +34,10 @@ const Register = () => {
         image: inputFile[0],
       };
 
+      //* Setsend pone el botón en disabled y activa el spinner de loading
+
       setSend(true);
+      //* registerUser accede al endpoint que hemos definido en el servicio 
       setRes(await registerUser(custonFormData));
       setSend(false);
 
@@ -47,15 +55,15 @@ const Register = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(res);
-  }, [res]);
+
   //! ------------------------------------------------------------------------------
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
-
+  useEffect(() => {
+    useRegisterError(res, setOkRegister, setRes)
+  }, [res]);
   //! ------------------------------------------------------------------------------
-  //? 3) Estados de navegacion ----> lo veremos en siguiente proyectos
+  //? 3) Estados de navegacion ----PENDIENTE
   //! ------------------------------------------------------------------------------
 
   if (okRegister) {
@@ -139,6 +147,7 @@ const Register = () => {
               disabled={send}
               style={{ background: send ? "#49c1a388" : "#49c1a2" }}
             >
+            {/* SI SEND ESTÁ EN TRUE, CARGAMOS EL SPINNER DE LOADING*/} 
               {send ? <Spinner /> : "Register"}
             </button>
           </div>
