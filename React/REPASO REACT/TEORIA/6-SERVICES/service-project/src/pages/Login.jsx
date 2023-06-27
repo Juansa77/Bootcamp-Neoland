@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="form-wrap">
+      <div className="form-wrap-login">
         <h1>Sign In</h1>
         <p>We are happy to see you again 💌</p>
         <form onSubmit={handleSubmit(formSubmit)}>

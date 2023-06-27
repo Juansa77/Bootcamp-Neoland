@@ -26,13 +26,14 @@ a {
 }
 
 .form-wrap {
-  width: 30vw;;
+  width: 30vw;
+  height: 70vh;
   margin-top: 2rem;
   background: #f7fffa;
   padding: 15px 25px 30px;
   color: #333;
   border-radius: 5px;
-  margin-bottom: 2vh;
+  margin-bottom: 4vh;
 }
 
 .form-wrap h1,
@@ -152,4 +153,8 @@ a {
 
 .anchorCustom {
   color: #276052;
+}
+
+.account-reminder{
+  margin-bottom: 2vh;
 }

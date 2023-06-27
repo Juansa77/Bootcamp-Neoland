@@ -16,8 +16,8 @@ const Header = () => {
             className="logo"
           />
           <div className="titleContainer">
-            <h1 className="titleHeader">USER PAGE</h1>
-            <h1 className="titleHeaderBlack">USER PAGE</h1>
+            <h3 className="titleHeader">USER PAGE</h3>
+            <h3 className="titleHeaderBlack">USER PAGE</h3>
           </div>
         </div>
         <nav>

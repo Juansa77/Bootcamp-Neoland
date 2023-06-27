@@ -160,11 +160,11 @@ const Register = () => {
           </p>
         </form>
       </div>
-      <footer>
+      <div className="account-reminder">
         <p>
           Already have an account? <a href="#">Login Here</a>
         </p>
-      </footer>
+      </div>
     </>
   );
 };
