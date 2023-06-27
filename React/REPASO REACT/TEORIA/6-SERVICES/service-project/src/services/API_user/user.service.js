@@ -1,10 +1,18 @@
 import { APIuser } from "./serviceApiUser.config";
+import { updateToken } from "../../utils/updateToken";
 
 export const registerUser = async (formData) => {
-  return APIuser.post("/users/register", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
+  const updatedToken = updateToken();
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "multipart/form-data",
+    "Access-Control-Allow-Origin": "*",
+    Authorization: `Bearer ${updatedToken}`
+  };
+
+  return APIuser.post("http://localhost:8095/api/v1/users/register", formData, { headers })
     .then((res) => res)
+    .then(console.log(formData))
     .catch((error) => error);
 };
 

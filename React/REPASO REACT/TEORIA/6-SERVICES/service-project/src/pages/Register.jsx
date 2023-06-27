@@ -23,35 +23,23 @@ const Register = () => {
   //! ------------------------------------------------------------------------------
 
   const formSubmit = async (formData) => {
-    //?Apuntamos al input file por ID
     const inputFile = document.getElementById("file-upload").files;
-    //?Si hay archivo, creamos un objeto con una copia de formData y le metemos el archivo
+
     if (inputFile.length !== 0) {
-      // cuando me han hayan puesto una imagen por el input
-
-      const custonFormData = {
-        ...formData,
-        image: inputFile[0],
-      };
-
-      //* Setsend pone el botón en disabled y activa el spinner de loading
-
+      const customFormData = new FormData();
+      customFormData.append("name", formData.name);
+      customFormData.append("password", formData.password);
+      customFormData.append("email", formData.email);
+      customFormData.append("gender", formData.gender);
+      customFormData.append("image", inputFile[0]);
+  
       setSend(true);
-      //* registerUser accede al endpoint que hemos definido en el servicio 
-      setRes(await registerUser(custonFormData));
+      setRes(await registerUser(customFormData));
       setSend(false);
-
-      //* me llamo al servicio
     } else {
-      const custonFormData = {
-        ...formData,
-      };
-
       setSend(true);
-      setRes(await registerUser(custonFormData));
+      setRes(await registerUser(formData));
       setSend(false);
-
-      ///* me llamo al servicio
     }
   };
 
