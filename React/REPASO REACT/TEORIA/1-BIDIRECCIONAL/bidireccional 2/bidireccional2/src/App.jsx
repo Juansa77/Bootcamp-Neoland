@@ -36,19 +36,19 @@ useEffect(() => {
   //? Para tener acceso al valor actualizado de un state cada vez que se actualiza, con aray de dependencias del valor que queremos seguir
   useEffect(() => {
     //? este console.log siempre saldra al montaje del componente
-    console.log("Count actualizado", count);
+    console.log("Count actualizado con array de dependencias", count);
   }, [count]);
 
   //? si queremos sacar el desmontaje del componente, debemos añadir un return en el useEffect, solo se hará una vez ya que el array está vacio
 
 
   useEffect(()=>{
-    console.log("me monto")
+    console.log("me monto, useEffect con array de dependencias vacio ")
     return ()=> console.log("me desmonto")
   },[])
   //? si no hay array de dependencias, saltará cada vez que se actualice
   useEffect(() => {
-    console.log("me actualizo");
+    console.log("me actualizo, useeffect sin array de dependencias");
   });
 
 
