@@ -21,6 +21,16 @@ export const AuthContextProvider = ({children}) =>{
     })
 
 
+const [allUser, setAllUser] = useState({
+    data:{
+        confirmationCode: "",
+        user:{
+            password:"",
+            email:""
+        }
+    }
+})
+
 //*-----------------LOGIN---------------------------
 
 const userLogin =(data)=>{
@@ -30,6 +40,26 @@ const parseUser = JSON.parse(data)
 setUser(()=>parseUser)
 }
 
+
+
+//*----------------PUENTE PARA EVITAR PROBLEMAS DE ASINCRONIA---------------------------
+const bridgeData = (state)=>{
+
+    const data  = localStorage.getItem("data")
+    const dataJson = JSON.parse(data)
+    switch (state) {
+        case "ALLUSER":
+            setAllUser(dataJson)
+            localStorage.removeItem("data")
+            
+            break;
+    
+        default:
+            break;
+    }
+
+
+}
 
 //*-----------------LOG-OUT---------------------------
 
@@ -41,7 +71,7 @@ navigate(Login)
 }
 
 //? Usememo memoriza el retunr de una función 
-    const value = useMemo(()=>({user, setUser, userLogin, logOut}),[])
+    const value = useMemo(()=>({user, setUser, userLogin, logOut, allUser, setAllUser, bridgeData}),[user, setAllUser])
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 

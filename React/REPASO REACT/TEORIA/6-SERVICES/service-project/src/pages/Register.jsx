@@ -7,9 +7,13 @@ import Uploadfile from "../components/Uploadfile";
 import { registerUser } from "../services/API_user/user.service";
 import Spinner from "../components/Spinner";
 import useRegisterError from "../hooks/useRegisterError";
+import { Navigate } from "react-router-dom";
+
 
 
 const Register = () => {
+
+
   //* MÉTODOS DE REACT HOOK FORM
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
@@ -26,23 +30,31 @@ const Register = () => {
     const inputFile = document.getElementById("file-upload").files;
 
     if (inputFile.length !== 0) {
-      const customFormData = new FormData();
-      customFormData.append("name", formData.name);
-      customFormData.append("password", formData.password);
-      customFormData.append("email", formData.email);
-      customFormData.append("gender", formData.gender);
-      customFormData.append("image", inputFile[0]);
-  
+      // cuando me han hayan puesto una imagen por el input
+
+      const custonFormData = {
+        ...formData,
+        image: inputFile[0],
+      };
+
       setSend(true);
-      setRes(await registerUser(customFormData));
+      setRes(await registerUser(custonFormData));
       setSend(false);
+
+      
     } else {
+      const custonFormData = {
+        ...formData,
+      };
+
       setSend(true);
-      setRes(await registerUser(formData));
+      setRes(await registerUser(custonFormData));
       setSend(false);
+
+     
     }
   };
-
+console.log(res)
 
   //! ------------------------------------------------------------------------------
   //? 2) funcion que se encarga del formulario- de la data del formulario
@@ -55,8 +67,10 @@ const Register = () => {
   //! ------------------------------------------------------------------------------
 
   if (okRegister) {
+    console.log("entra en el ok")
     console.log("res", res);
     console.log("registro correcto ya puedes navegar");
+    return <Navigate to="/verifyCode"/>
   }
   return (
     <>

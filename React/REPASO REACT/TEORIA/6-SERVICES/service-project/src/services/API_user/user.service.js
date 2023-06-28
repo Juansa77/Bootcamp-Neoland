@@ -32,7 +32,22 @@ export const checkCodeConfirmationUser = async (formData) => {
 //?------------------------------------------------------
 
 export const loginUser = async (formData) => {
-  return APIuser.post("/users/login", formData)
+
+  //*Creamos un objeto de configuración con los headers de la solicitud
+  const config = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+
+  //*Creamos unos params para modificar los parámetros de la url
+  const params = new URLSearchParams();
+//* Por cada clave y valor en formdata, los metemos en los params de la URL. Convertimos sus propiedades en parámetros
+  Object.entries(formData).forEach(([key, value]) => {
+    params.append(key, value);
+  });
+//* Para hacer la solicitud post, metemos los params y la config
+  return APIuser.post("http://localhost:8095/api/v1/users/login", params, config)
     .then((res) => res)
     .catch((error) => error);
 };
@@ -64,11 +79,34 @@ export const forgotPassword = async (formData) => {
 
 
 //?------------------------------------------------------
-//*-----------------CHANGE PASSWORD-------------------------
+//*-----------------CHANGE PASSWORD-------------------------REVISAR
 //?------------------------------------------------------
 
 export const changePassword = async (formData) => {
   return APIuser.patch("/users/changepassword", formData)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+
+
+//?------------------------------------------------------
+//*-----------------UPDATE-------------------------REVISAR
+//?------------------------------------------------------
+
+export const updateUser = async (formData) => {
+  return APIuser.patch("/users/update", formData)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+
+//?------------------------------------------------------
+//*-----------------DELETE-------------------------REVISAR
+//?------------------------------------------------------
+
+export const deleteUser = async () => {
+  return APIuser.delete("/users")
     .then((res) => res)
     .catch((error) => error);
 };
