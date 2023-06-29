@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Login from "../pages/Login";
+
 
 
 //* -------------CREAMOS EL CONTEXTO-----------------------
@@ -21,15 +22,16 @@ export const AuthContextProvider = ({children}) =>{
     })
 
 
-const [allUser, setAllUser] = useState({
-    data:{
-        confirmationCode: "",
-        user:{
-            password:"",
-            email:""
-        }
-    }
-})
+    const [allUser, setAllUser] = useState({
+        data: {
+          confirmationCode: "",
+          user: {
+            password: "",
+            email: "",
+          },
+        },
+      });
+    
 
 //*-----------------LOGIN---------------------------
 
@@ -43,23 +45,22 @@ setUser(()=>parseUser)
 
 
 //*----------------PUENTE PARA EVITAR PROBLEMAS DE ASINCRONIA---------------------------
-const bridgeData = (state)=>{
 
-    const data  = localStorage.getItem("data")
-    const dataJson = JSON.parse(data)
+const bridgeData = (state) => {
+    const data = localStorage.getItem("data");
+    const dataJson = JSON.parse(data);
+    console.log(dataJson);
     switch (state) {
-        case "ALLUSER":
-            setAllUser(dataJson)
-            localStorage.removeItem("data")
-            
-            break;
+      case "ALLUSER":
+        setAllUser(dataJson);
     
-        default:
-            break;
+
+        break;
+
+      default:
+        break;
     }
-
-
-}
+  };
 
 //*-----------------LOG-OUT---------------------------
 

@@ -8,12 +8,9 @@ import { registerUser } from "../services/API_user/user.service";
 import Spinner from "../components/Spinner";
 import useRegisterError from "../hooks/useRegisterError";
 import { Navigate } from "react-router-dom";
-
-
+import { useAuth } from "../context/authContext";
 
 const Register = () => {
-
-
   //* MÉTODOS DE REACT HOOK FORM
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
@@ -21,6 +18,7 @@ const Register = () => {
   const [send, setSend] = useState(false);
   //* Estados para manejar que la respuesta es exitosa
   const [okRegister, setOkRegister] = useState(false);
+  const { allUser, setAllUser, bridgeData } = useAuth();
 
   //! ------------------------------------------------------------------------------
   //? 1) funcion que se encarga del formulario - de la data del formulario
@@ -40,8 +38,6 @@ const Register = () => {
       setSend(true);
       setRes(await registerUser(custonFormData));
       setSend(false);
-
-      
     } else {
       const custonFormData = {
         ...formData,
@@ -50,27 +46,26 @@ const Register = () => {
       setSend(true);
       setRes(await registerUser(custonFormData));
       setSend(false);
-
-     
     }
   };
-console.log(res)
 
   //! ------------------------------------------------------------------------------
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
-    useRegisterError(res, setOkRegister, setRes)
+    useRegisterError(res, setOkRegister, setRes, setAllUser);
+
+    if (res.status == 201) {
+      localStorage.setItem("data", JSON.stringify(res.data));
+    
+    }
   }, [res]);
   //! ------------------------------------------------------------------------------
   //? 3) Estados de navegacion ----PENDIENTE
   //! ------------------------------------------------------------------------------
 
   if (okRegister) {
-    console.log("entra en el ok")
-    console.log("res", res);
-    console.log("registro correcto ya puedes navegar");
-    return <Navigate to="/verifyCode"/>
+    return <Navigate to="/verifyCode" />;
   }
   return (
     <>
@@ -149,7 +144,7 @@ console.log(res)
               disabled={send}
               style={{ background: send ? "#49c1a388" : "#49c1a2" }}
             >
-            {/* SI SEND ESTÁ EN TRUE, CARGAMOS EL SPINNER DE LOADING*/} 
+              {/* SI SEND ESTÁ EN TRUE, CARGAMOS EL SPINNER DE LOADING*/}
               {send ? <Spinner /> : "Register"}
             </button>
           </div>

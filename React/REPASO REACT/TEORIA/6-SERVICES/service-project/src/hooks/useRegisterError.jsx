@@ -1,7 +1,7 @@
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
 
-const useRegisterError = (res, setOkRegister, setRes) => {
+const useRegisterError = (res, setOkRegister, setRes, setAllUser) => {
   //! SI LA RESPUESTA ES OK, RES.STATUS
   //!SI NO ES OK, RES.RESPONSE.STATUS
 
@@ -9,11 +9,15 @@ const useRegisterError = (res, setOkRegister, setRes) => {
   //* ----MANEJAMOS EL 200-----------------------
 
   if (res?.status == 201) {
+    
+    const dataToString = JSON.stringify(res);
+    localStorage.setItem("data", dataToString);
     setOkRegister(true)
-console.log("entra en el setador")
+    setAllUser(()=> res.data)
+ console.log(res.data)
     
     Swal.fire({
-      icon: "sucess",
+      icon: "success",
       title: "Welcome",
       showConfirmButton: false,
       timer: 1500,

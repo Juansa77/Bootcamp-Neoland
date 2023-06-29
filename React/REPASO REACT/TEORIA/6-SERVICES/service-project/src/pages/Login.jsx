@@ -19,7 +19,6 @@ const Login = () => {
   //* 1) ------------------ FUNCION QUE GESTIONA EL FORMULARIO----------
   const formSubmit =async (formData) => {
     setSend(true);
-    console.log(formData)
     setRes(await loginUser(formData));
     setSend(false);
   };
@@ -27,9 +26,10 @@ const Login = () => {
   //* 2) ------------------ LOS USEEFFECT QUE GESTIONAN LA RESPUESTA: ERRORES Y 200
 
   useEffect(()=>{
+    console.log(res)
     setUser(()=>null)
     useLoginError(res, setLoginOk, userLogin)
-    console.log(res)
+   
   },[res])
   //* 3) ------------------ ESTADOS DE NAVEGACION O ESTADOS DE FUNCIONALIDADES OK
 
