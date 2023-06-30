@@ -7,32 +7,27 @@ const useCheckCodeError = (res,
   setReloadPageError,
   setRes) => {
   //* ------------------ 200 : todo ok
-
-  if (res?.data?.user?.check.toString() == "false") {
-    //* comprobamos que el usuario venga del login con localstorage
+  if (res?.data?.testCheckOk?.toString() == "true") {
+    // comprobamos que vengas del login con el localStorage
     if (localStorage.getItem("user")) {
       const currentUser = localStorage.getItem("user");
-      const parseCurrentUser = JSON.stringify(currentUser);
+      const parseCurrentUser = JSON.parse(currentUser);
       const customUser = {
         ...parseCurrentUser,
         check: true,
       };
-      //*Función custom para convertirlo a string y volver a meterlo a localStorage
-
+      // como quiero volver a meterlo al local tengo que volver a convertirlo en un string
       const customUserString = JSON.stringify(customUser);
-      setUser(()=> customUser)
-      localStorage.setItem("user", customUserString)
+      setUser(() => customUser);
+      localStorage.setItem("user", customUserString);
     }
     setOkCheck(() => true);
     Swal.fire({
       icon: "success",
-      title: "Welcome to my Page",
-      text: "Login ok",
+      title: "Ok correct code ✅",
       showConfirmButton: false,
       timer: 1500,
     });
-    //*Vaciamos la res 
-    setRes(()=>{})
   }
 
 

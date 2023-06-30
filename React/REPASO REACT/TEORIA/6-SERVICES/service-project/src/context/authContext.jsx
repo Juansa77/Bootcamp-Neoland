@@ -1,59 +1,81 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useMemo, useState } from "react";
 import {  useNavigate } from "react-router-dom";
-import Login from "../pages/Login";
 
 
 
-//* -------------CREAMOS EL CONTEXTO-----------------------
-const AuthContext = createContext()
 
+//! 1) ---------------PRIMERO CREAR EL CONTEXTO CON EL METODO CREATECONTEXT------
+const AuthContext = createContext();
 
+//! 2) -------------- CREAR LA FUNCION QUE PROVEE DEL CONTEXTO Y QUE GRAPEA A LAS PAGINAS-----
 
-//* -------------FUNCIÓN QUE PROVEE EL CONTEXTO Y WRAPEA LAS PÁGINAS-----------------------
+export const AuthContextProvider = ({ children }) => {
+  const [user, setUser] = useState(() => {
+    const data = localStorage.getItem("user");
+    const parseUser = JSON.parse(data);
 
-export const AuthContextProvider = ({children}) =>{
-    const navigate = useNavigate()
-    const [user, setUser] = useState(()=>{
-        const data = localStorage.getItem("user")
-        const parseUser = JSON.parse(data)
-        
-        return data? parseUser :null
-    })
+    if (data) {
+      return parseUser;
+    } else {
+      return null;
+    }
+  });
 
+  //! ALLUSER -----solo cuando me registro para guardar la respuesta--
 
-    const [allUser, setAllUser] = useState({
-        data: {
-          confirmationCode: "",
-          user: {
-            password: "",
-            email: "",
-          },
-        },
-      });
-    
+  const [allUser, setAllUser] = useState({
+    data: {
+      confirmationCode: "",
+      user: {
+        password: "",
+        email: "",
+      },
+    },
+  });
 
-//*-----------------LOGIN---------------------------
+  const navigate = useNavigate();
 
-const userLogin =(data)=>{
-    //? esto hay que meterlo después a session
-localStorage.setItem("user", data)
-const parseUser = JSON.parse(data)
-setUser(()=>parseUser)
-}
+  //! -----------------------------------------------------------------------
+  //? -------------------- LOGIN -------------------------------------------
+  //! -----------------------------------------------------------------------
 
+  const userLogin = (data) => {
+    // data{
+    //     token: jsajfsdkgsdhj
+    //     name: akjlsfsklklhjhjdklg
+    //     imagen: asjjsdkgkl
+    // }
 
+    // primero lo meto en el localstorage, recordar luego meterlo en el sessionStorage
+    localStorage.setItem("user", data);
 
-//*----------------PUENTE PARA EVITAR PROBLEMAS DE ASINCRONIA---------------------------
+    // despues lo metemos parseado al estado global que setea nuestro usuario logado
+    const parseUser = JSON.parse(data);
+    setUser(() => parseUser);
+  };
+  //! -----------------------------------------------------------------------
+  //? -------------------- LOGOUT -------------------------------------------
+  //! -----------------------------------------------------------------------
 
-const bridgeData = (state) => {
+  const logOut = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/login");
+  };
+
+  //! -----------------------------------------------------------------------
+  //? -------- PUENTE PARA CUANDO TENGAMOS PROBLEMAS DE ASINCRONIA ----------
+  //! -----------------------------------------------------------------------
+
+  const bridgeData = (state) => {
     const data = localStorage.getItem("data");
     const dataJson = JSON.parse(data);
     console.log(dataJson);
     switch (state) {
       case "ALLUSER":
         setAllUser(dataJson);
-    
+        localStorage.removeItem("data");
 
         break;
 
@@ -62,25 +84,25 @@ const bridgeData = (state) => {
     }
   };
 
-//*-----------------LOG-OUT---------------------------
+  // UseMemo memoriza el return de una funcion
+  const value = useMemo(
+    () => ({
+      user,
+      setUser,
+      userLogin,
+      logOut,
+      allUser,
+      setAllUser,
+      bridgeData,
+    }),
+    [user, allUser]
+  );
 
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
 
- const logOut = () => {
-localStorage.removeItem("user")
-setUser(null)
-navigate(Login)
-}
+//! 3) --------------CREAR UN CUSTOM HOOK QUE NOS ayude a utilizar EEL CONTEXTO -------
 
-//? Usememo memoriza el retunr de una función 
-    const value = useMemo(()=>({user, setUser, userLogin, logOut, allUser, setAllUser, bridgeData}),[user, setAllUser])
-
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-
-}
-
-//* -------------CUSTOM HOOK QUE NOS AYUDA A UTILIZAR EL  CONTEXTO-----------------------
-
-
-export const useAuth= ()=>{
-    return useContext(AuthContext)
-}
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

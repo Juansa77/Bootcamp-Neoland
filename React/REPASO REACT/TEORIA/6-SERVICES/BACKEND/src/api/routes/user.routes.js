@@ -12,7 +12,8 @@ const {
   modifyPassword,
   addFriendToUser,
   deleteFriendInUser,
-  getUserByID
+  getUserByID,
+  autoLogin
 } = require('../controllers/users.controller');
 const { isAuth } = require('../../middlewares/auth.midddleware');
 
@@ -29,6 +30,9 @@ UserRoutes.post('/resend', resendCode);
 
 //?-------Ruta LOGIN--------
 UserRoutes.post('/login', login);
+
+//?-------Ruta AUTO LOGIN--------
+UserRoutes.post('/login/autologin', autoLogin);
 
 //?-------Ruta FORGOT PASSWORD--------
 UserRoutes.post('/forgotpassword', forgotPassword);

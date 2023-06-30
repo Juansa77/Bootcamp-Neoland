@@ -2,6 +2,7 @@ import "./Header.css";
 import { useAuth } from "../context/authContext";
 import { NavLink } from "react-router-dom";
 
+
 const Header = () => {
   //* Sacamos user y logOut del useAuth
   const { user, logOut } = useAuth();

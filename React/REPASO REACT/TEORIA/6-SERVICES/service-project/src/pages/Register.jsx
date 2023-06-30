@@ -53,12 +53,9 @@ const Register = () => {
   //? 2) funcion que se encarga del formulario- de la data del formulario
   //! ------------------------------------------------------------------------------
   useEffect(() => {
+    console.log("res.status",res.status);
     useRegisterError(res, setOkRegister, setRes, setAllUser);
-
-    if (res.status == 201) {
-      localStorage.setItem("data", JSON.stringify(res.data));
-    
-    }
+    if (res?.status == 201) bridgeData("ALLUSER");
   }, [res]);
   //! ------------------------------------------------------------------------------
   //? 3) Estados de navegacion ----PENDIENTE

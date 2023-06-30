@@ -10,6 +10,8 @@ export const registerUser = async (formData) => {
     Authorization: `Bearer ${updatedToken}`
   };
 
+  console.log(formData)
+
   return APIuser.post("http://localhost:8095/api/v1/users/register", formData, { headers })
     .then((res) => res)
     .then(console.log(formData))
@@ -21,27 +23,19 @@ export const registerUser = async (formData) => {
 //?------------------------------------------------------
 
 export const checkCodeConfirmationUser = async (formData) => {
-
-    //*Creamos un objeto de configuración con los headers de la solicitud
-    const config = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    };
-
-    
-  //*Creamos unos params para modificar los parámetros de la url
-  const params = new URLSearchParams();
+  const headers = {
   
-//* Por cada clave y valor en formdata, los metemos en los params de la URL. Convertimos sus propiedades en parámetros
-Object.entries(formData).forEach(([key, value]) => {
-  params.append(key, value);
-});
+    "Access-Control-Allow-Origin":	"*",
+    "Content-Type":	"application/json; charset=utf-8"
+  
+  };
 
-  return APIuser.post("http://localhost:8095/api/v1/users/check", params, config)
+  console.log(formData)
+  return APIuser.post("http://localhost:8095/api/v1/users/check", formData, {headers})
     .then((res) => res)
     .catch((error) => error);
 };
+
 
 
 //?------------------------------------------------------
@@ -50,6 +44,7 @@ Object.entries(formData).forEach(([key, value]) => {
 
 export const loginUser = async (formData) => {
 
+  console.log(formData)
   //*Creamos un objeto de configuración con los headers de la solicitud
   const config = {
     headers: {
@@ -76,7 +71,22 @@ export const loginUser = async (formData) => {
 //?------------------------------------------------------
 
 export const autoLoginUser = async (formData) => {
-  return APIuser.post("/users/login/autologin", formData)
+
+  console.log(formData)
+    //*Creamos un objeto de configuración con los headers de la solicitud
+    const config = {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    };
+  
+    //*Creamos unos params para modificar los parámetros de la url
+    const params = new URLSearchParams();
+  //* Por cada clave y valor en formdata, los metemos en los params de la URL. Convertimos sus propiedades en parámetros
+    Object.entries(formData).forEach(([key, value]) => {
+      params.append(key, value);
+    });
+  return APIuser.post("http://localhost:8095/api/v1//users/login/autologin", params, config)
     .then((res) => res)
     .catch((error) => error);
 };

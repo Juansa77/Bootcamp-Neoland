@@ -6,15 +6,18 @@ import { checkCodeConfirmationUser } from "../services/API_user/user.service";
 import "./CheckCode.css";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import useAutoLogin from "../hooks/useAutoLogin";
 
 const CheckCode = () => {
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
   const [okCheck, setOkCheck] = useState(false);
   const [reloadPageError, setReloadPageError] = useState(false);
+  const [okAutoLogin, setOkAutoLogin] = useState(false)
   const [deleteUser, setDeleteUser] = useState(false);
   const { register, handleSubmit } = useForm();
   const { allUser, userLogin, setUser, user } = useAuth();
+
 
   //*-----1. FUNCIONES QUE GESTIONAN LAS PETICIONES---------
 
@@ -63,7 +66,14 @@ const CheckCode = () => {
   }, [res]);
 
   if (okCheck) {
-    return <Navigate to="/dashboard" />;
+    if(!localStorage.getItem("user")){
+      console.log(allUser)
+      setOkCheck(()=>false)
+      useAutoLogin(allUser, userLogin, setOkCheck)
+    }
+    else{
+      return <Navigate to="/dashboard" />;}
+
   }
 
 
