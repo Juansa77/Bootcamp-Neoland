@@ -18,7 +18,7 @@ const Register = () => {
   const [send, setSend] = useState(false);
   //* Estados para manejar que la respuesta es exitosa
   const [okRegister, setOkRegister] = useState(false);
-  const { allUser, setAllUser, bridgeData } = useAuth();
+  const { allUser, setAllUser, bridgeData, setDatalogin } = useAuth();
 
   //! ------------------------------------------------------------------------------
   //? 1) funcion que se encarga del formulario - de la data del formulario
@@ -43,6 +43,11 @@ const Register = () => {
         ...formData,
       };
 
+      setDatalogin({
+        password: formData.password,
+        email: formData.email,
+      })
+
       setSend(true);
       setRes(await registerUser(custonFormData));
       setSend(false);
@@ -54,7 +59,7 @@ const Register = () => {
   //! ------------------------------------------------------------------------------
   useEffect(() => {
     console.log("res.status",res.status);
-    useRegisterError(res, setOkRegister, setRes, setAllUser);
+    useRegisterError(res, setOkRegister, setRes, setAllUser, setDatalogin);
     if (res?.status == 201) bridgeData("ALLUSER");
   }, [res]);
   //! ------------------------------------------------------------------------------

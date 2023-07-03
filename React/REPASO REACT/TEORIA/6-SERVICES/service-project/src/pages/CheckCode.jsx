@@ -16,7 +16,7 @@ const CheckCode = () => {
   const [okAutoLogin, setOkAutoLogin] = useState(false)
   const [deleteUser, setDeleteUser] = useState(false);
   const { register, handleSubmit } = useForm();
-  const { allUser, userLogin, setUser, user } = useAuth();
+  const { allUser, userLogin, setUser, user, dataLogin } = useAuth();
 
 
   //*-----1. FUNCIONES QUE GESTIONAN LAS PETICIONES---------
@@ -28,6 +28,7 @@ const CheckCode = () => {
       //* Alluser es la res que recibimos del registro, solo cuando venimos del registro
       //*usuario que viene del registro
       console.log("esto es all user",allUser)
+      console.log("esto es Data Login",dataLogin)
       const customFormData = {
         email: allUser.data.user.email,
         confirmationCode: parseInt(formData.confirmationCode),
@@ -69,7 +70,7 @@ const CheckCode = () => {
     if(!localStorage.getItem("user")){
       console.log(allUser)
       setOkCheck(()=>false)
-      useAutoLogin(allUser, userLogin, setOkCheck)
+      useAutoLogin(allUser, userLogin, setOkCheck, dataLogin)
     }
     else{
       return <Navigate to="/dashboard" />;}

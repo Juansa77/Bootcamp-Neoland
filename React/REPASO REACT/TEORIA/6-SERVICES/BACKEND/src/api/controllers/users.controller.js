@@ -220,9 +220,10 @@ const autoLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const userDB = await User.findOne({ email });
+    console.log(password, email)
 
     if (userDB) {
-      if ((password == userDB.password)) {
+      if (bcrypt.compareSync(password, userDB.password)) {
         const token = generateToken(userDB._id, email);
         return res.status(200).json({
           user: userDB,

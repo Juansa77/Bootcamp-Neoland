@@ -76,7 +76,7 @@ export const autoLoginUser = async (formData) => {
     //*Creamos un objeto de configuración con los headers de la solicitud
     const config = {
       headers: {
-        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
     };
   
@@ -86,7 +86,7 @@ export const autoLoginUser = async (formData) => {
     Object.entries(formData).forEach(([key, value]) => {
       params.append(key, value);
     });
-  return APIuser.post("http://localhost:8095/api/v1//users/login/autologin", params, config)
+  return APIuser.post("http://localhost:8095/api/v1/users/login/autologin", params, config)
     .then((res) => res)
     .catch((error) => error);
 };

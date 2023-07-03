@@ -22,6 +22,11 @@ export const AuthContextProvider = ({ children }) => {
     }
   });
 
+  const [dataLogin, setDatalogin] = useState({
+    password: '',
+    email: '',
+  })
+
   //! ALLUSER -----solo cuando me registro para guardar la respuesta--
 
   const [allUser, setAllUser] = useState({
@@ -94,6 +99,7 @@ export const AuthContextProvider = ({ children }) => {
       allUser,
       setAllUser,
       bridgeData,
+      dataLogin, setDatalogin
     }),
     [user, allUser]
   );

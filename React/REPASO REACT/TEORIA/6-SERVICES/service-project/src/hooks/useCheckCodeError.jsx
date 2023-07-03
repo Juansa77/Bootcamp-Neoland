@@ -6,6 +6,8 @@ const useCheckCodeError = (res,
   setUser,
   setReloadPageError,
   setRes) => {
+
+    console.log("entra en checkcode")
   //* ------------------ 200 : todo ok
   if (res?.data?.testCheckOk?.toString() == "true") {
     // comprobamos que vengas del login con el localStorage

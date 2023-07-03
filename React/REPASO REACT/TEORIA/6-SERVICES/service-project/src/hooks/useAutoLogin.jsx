@@ -1,17 +1,25 @@
 
 import { autoLoginUser } from "../services/API_user/user.service";
 
-const useAutoLogin = async (allUser, userLogin, setOkCheck) => {
+const useAutoLogin = async (allUser, userLogin, setOkCheck, dataLogin) => {
   try {
+
     const { email, password } = allUser?.data?.user;
+
     const customFormData = {
       email,
       password,
     };
+    const customFormDataAutoLogin = {
+      email:dataLogin?.email,
+      password:dataLogin?.password
+    };
 
-    console.log(customFormData)
-    const setData = await autoLoginUser(customFormData);
+    console.log(customFormDataAutoLogin)
+    const setData = await autoLoginUser(customFormDataAutoLogin);
+    console.log("setdata.status", setData)
     if (setData?.status == 200) {
+      
       const dataCustom = {
         token: setData.data.token,
         user: setData.data.user.name,

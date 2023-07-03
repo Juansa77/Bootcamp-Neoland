@@ -8,14 +8,18 @@ const useRegisterError = (res, setOkRegister, setRes, setAllUser) => {
 
   //* ----MANEJAMOS EL 200-----------------------
 
-  if (res?.status == 201) {
+
     
-    const dataToString = JSON.stringify(res);
-    localStorage.setItem("data", dataToString);
-    setOkRegister(true)
-    setAllUser(()=> res.data)
- console.log(res.data)
+
+
     
+ if (res?.status == 201) {
+  const dataToString = JSON.stringify(res);
+  localStorage.setItem("data", dataToString);
+  setOkRegister(()=>true)
+  //setAllUser(()=> res.data)
+ 
+
     Swal.fire({
       icon: "success",
       title: "Welcome",
